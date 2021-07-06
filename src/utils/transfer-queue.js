@@ -1,12 +1,17 @@
-let transferIndex = 0;
-let lastVisibleIndex = 0;
+let transferIndex = 0
+let lastVisibleIndex = 0
 
 function transferIncrease() {
-    transferIndex++;
+  transferIndex++
 }
 
 function lastVisibleIncrease() {
-    lastVisibleIndex++;
+  lastVisibleIndex++
 }
 
-export { transferIndex, transferIncrease, lastVisibleIndex, lastVisibleIncrease };
+export {
+  transferIndex,
+  transferIncrease,
+  lastVisibleIndex,
+  lastVisibleIncrease,
+}

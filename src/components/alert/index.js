@@ -1,2 +1,2 @@
-import Alert from './alert.vue';
-export default Alert;
+import Alert from './alert.vue'
+export default Alert

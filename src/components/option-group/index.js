@@ -1,3 +1,3 @@
-import OptionGroup from '../select/option-group.vue';
+import OptionGroup from '../select/option-group.vue'
 
-export default OptionGroup;
+export default OptionGroup
