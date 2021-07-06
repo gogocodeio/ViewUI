@@ -1,3 +1,3 @@
-import Divider from './divider.vue';
+import Divider from './divider.vue'
 
-export default Divider;
+export default Divider

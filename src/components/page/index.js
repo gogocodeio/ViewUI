@@ -1,2 +1,2 @@
-import Page from './page.vue';
-export default Page;
+import Page from './page.vue'
+export default Page

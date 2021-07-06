@@ -1,2 +1,2 @@
-import Anchor from './anchor.vue';
-export default Anchor;
+import Anchor from './anchor.vue'
+export default Anchor
