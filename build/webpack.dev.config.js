@@ -3,7 +3,7 @@
  */
 
 const path = require('path');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 // const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const merge = require('webpack-merge');
@@ -34,7 +34,6 @@ module.exports = merge(webpackBaseConfig, {
         }
     },
     plugins: [
-        new webpack.optimize.CommonsChunkPlugin({ name: 'vendors', filename: 'vendor.bundle.js' }),
         new HtmlWebpackPlugin({
             inject: true,
             filename: path.join(__dirname, '../examples/dist/index.html'),

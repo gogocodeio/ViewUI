@@ -2,8 +2,9 @@
  * 公共配置
  */
 const path = require('path');
-const webpack = require('webpack');
-const pkg = require('../package.json');
+// const webpack = require('webpack');
+// const pkg = require('../package.json');
+const { VueLoaderPlugin } = require('vue-loader');
 
 function resolve (dir) {
     return path.join(__dirname, '..', dir);
@@ -19,6 +20,11 @@ module.exports = {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
+                    compilerOptions: {
+                        compatConfig: {
+                          MODE: 2
+                        }
+                    },
                     loaders: {
                         css: [
                             'vue-style-loader',
@@ -138,14 +144,11 @@ module.exports = {
     resolve: {
         extensions: ['.js', '.vue'],
         alias: {
-            'vue': 'vue/dist/vue.esm.js',
+            'vue': 'vue/dist/vue.runtime.esm.js',
             '@': resolve('src')
         }
     },
     plugins: [
-        new webpack.optimize.ModuleConcatenationPlugin(),
-        new webpack.DefinePlugin({
-            'process.env.VERSION': `'${pkg.version}'`
-        }),
+        new VueLoaderPlugin(),
     ]
 };

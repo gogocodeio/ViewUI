@@ -15,7 +15,6 @@
     "extends": "eslint:recommended",
     "plugins": ["vue"],
     "rules": {
-        "indent": ["warn", 2, { "SwitchCase": 1 }],
         "quotes": ["error", "single"],
         "vue/jsx-uses-vars": 2,
         "no-console": ["error"]

@@ -1,7 +1,7 @@
 const path = require('path');
-const webpack = require('webpack');
+// const webpack = require('webpack');
 const entry = require('./locale');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 process.env.NODE_ENV = 'production';
 
@@ -37,14 +37,5 @@ module.exports = {
         }
     },
     plugins: [
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"production"'
-            }
-        }),
-        new UglifyJsPlugin({
-            parallel: true,
-            sourceMap: true,
-        })
     ]
 };
