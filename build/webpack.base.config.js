@@ -20,41 +20,41 @@ module.exports = {
                 test: /\.vue$/,
                 loader: 'vue-loader',
                 options: {
-                    compilerOptions: {
-                        compatConfig: {
-                          MODE: 2
-                        }
-                    },
-                    loaders: {
-                        css: [
-                            'vue-style-loader',
-                            {
-                                loader: 'css-loader',
-                                options: {
-                                    sourceMap: true,
-                                },
-                            },
-                        ],
-                        less: [
-                            'vue-style-loader',
-                            {
-                                loader: 'css-loader',
-                                options: {
-                                    sourceMap: true,
-                                },
-                            },
-                            {
-                                loader: 'less-loader',
-                                options: {
-                                    sourceMap: true,
-                                },
-                            },
-                        ],
-                    },
-                    postLoaders: {
-                        html: 'babel-loader?sourceMap'
-                    },
-                    sourceMap: true,
+                    // compilerOptions: {
+                    //     compatConfig: {
+                    //       MODE: 2
+                    //     }
+                    // },
+                    // loaders: {
+                    //     css: [
+                    //         'vue-style-loader',
+                    //         {
+                    //             loader: 'css-loader',
+                    //             options: {
+                    //                 sourceMap: true,
+                    //             },
+                    //         },
+                    //     ],
+                    //     less: [
+                    //         'vue-style-loader',
+                    //         {
+                    //             loader: 'css-loader',
+                    //             options: {
+                    //                 sourceMap: true,
+                    //             },
+                    //         },
+                    //         {
+                    //             loader: 'less-loader',
+                    //             options: {
+                    //                 sourceMap: true,
+                    //             },
+                    //         },
+                    //     ],
+                    // },
+                    // postLoaders: {
+                    //     html: 'babel-loader?sourceMap'
+                    // },
+                    // sourceMap: true,
                 }
             },
             {
