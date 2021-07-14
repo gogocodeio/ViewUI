@@ -3,6 +3,7 @@
     <slot>{{ showLabel }}</slot>
   </li>
 </template>
+
 <script>
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
@@ -15,7 +16,7 @@ export default {
   componentName: 'select-item',
   mixins: [Emitter, mixinsForm],
   props: {
-    value: {
+    modelValue: {
       type: [String, Number],
       required: true,
     },
@@ -83,5 +84,6 @@ export default {
     const Select = findComponentUpward(this, 'iSelect')
     if (Select) this.autoComplete = Select.autoComplete
   },
+  emits: ['on-select-selected'],
 }
 </script>

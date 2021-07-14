@@ -31,6 +31,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import CellItem from './cell-item.vue'
 import Icon from '../icon/icon.vue'

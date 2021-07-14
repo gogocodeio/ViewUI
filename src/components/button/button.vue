@@ -1,10 +1,10 @@
 <template>
   <component
+    v-bind="tagProps"
     :is="tagName"
     :class="classes"
     :disabled="itemDisabled"
     @click="handleClickLink"
-    v-bind="tagProps"
   >
     <Icon class="ivu-load-loop" type="ios-loading" v-if="loading"></Icon>
     <Icon
@@ -15,6 +15,7 @@
     <span v-if="showSlot" ref="slot"><slot></slot></span>
   </component>
 </template>
+
 <script>
 import Icon from '../icon'
 import { oneOf } from '../../utils/assist'
@@ -85,7 +86,7 @@ export default {
   },
   computed: {
     showSlot() {
-      return !!this.$slots.default
+      return !!this.$slots.default()
     },
     classes() {
       return [
@@ -132,5 +133,6 @@ export default {
       this.handleCheckClick(event, openInNewWindow)
     },
   },
+  emits: ['click'],
 }
 </script>

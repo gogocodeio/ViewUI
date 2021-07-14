@@ -1,6 +1,7 @@
 <template>
   <div :class="prefixCls" :style="styles"><slot></slot></div>
 </template>
+
 <script>
 const prefixCls = 'ivu-carousel-item'
 

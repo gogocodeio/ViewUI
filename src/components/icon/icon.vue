@@ -1,6 +1,7 @@
 <template>
   <i :class="classes" :style="styles" @click="handleClick"></i>
 </template>
+
 <script>
 const prefixCls = 'ivu-icon'
 
@@ -47,5 +48,6 @@ export default {
       this.$emit('click', event)
     },
   },
+  emits: ['click'],
 }
 </script>

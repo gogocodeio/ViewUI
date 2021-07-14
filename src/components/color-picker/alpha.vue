@@ -37,9 +37,7 @@ import { clamp, toRGBAString } from './utils'
 
 export default {
   name: 'Alpha',
-
   mixins: [HSAMixin, Prefixes],
-
   data() {
     const normalStep = 1
     const jumpStep = 10
@@ -52,7 +50,6 @@ export default {
       powerKey: 'shiftKey',
     }
   },
-
   computed: {
     gradientStyle() {
       const { r, g, b } = this.value.rgba
@@ -64,7 +61,6 @@ export default {
       }
     },
   },
-
   methods: {
     change(newAlpha) {
       const { h, s, l } = this.value.hsl
@@ -109,5 +105,6 @@ export default {
       this.change(Math.round((left * 100) / clientWidth) / 100)
     },
   },
+  emits: ['change'],
 }
 </script>

@@ -1,5 +1,5 @@
-import Vue from 'vue'
-const isServer = Vue.prototype.$isServer
+import * as Vue from 'vue'
+const isServer = window.$vueApp.config.globalProperties.$isServer
 
 /* istanbul ignore next */
 export const on = (function () {

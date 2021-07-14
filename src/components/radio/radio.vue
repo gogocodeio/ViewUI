@@ -15,6 +15,7 @@
     ><slot>{{ label }}</slot>
   </label>
 </template>
+
 <script>
 import { findComponentUpward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
@@ -26,7 +27,7 @@ export default {
   name: 'Radio',
   mixins: [Emitter, mixinsForm],
   props: {
-    value: {
+    modelValue: {
       type: [String, Number, Boolean],
       default: false,
     },
@@ -139,7 +140,7 @@ export default {
       this.currentValue = checked
 
       const value = checked ? this.trueValue : this.falseValue
-      this.$emit('input', value)
+      this.$emit('modelValue', value)
 
       if (this.group) {
         if (this.label !== undefined) {
@@ -177,5 +178,6 @@ export default {
       }
     },
   },
+  emits: ['update:modelValue', 'on-change'],
 }
 </script>

@@ -14,6 +14,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { oneOf } from '../../utils/assist'
 

@@ -3,6 +3,7 @@
     <slot></slot>
   </div>
 </template>
+
 <script>
 import {
   oneOf,

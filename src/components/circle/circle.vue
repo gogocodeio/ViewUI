@@ -29,6 +29,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { oneOf } from '../../utils/assist'
 import random from '../../utils/random_str'

@@ -15,6 +15,7 @@
     ></span>
   </span>
 </template>
+
 <script>
 import Icon from '../icon'
 import { oneOf } from '../../utils/assist'
@@ -123,16 +124,17 @@ export default {
     },
   },
   beforeCreate() {
-    this.slotTemp = this.$slots.default
+    this.slotTemp = this.$slots.default()
   },
   mounted() {
     this.setScale()
   },
   updated() {
     if (this.$slots.default !== this.slotTemp) {
-      this.slotTemp = this.$slots.default
+      this.slotTemp = this.$slots.default()
       this.setScale()
     }
   },
+  emits: ['on-error'],
 }
 </script>

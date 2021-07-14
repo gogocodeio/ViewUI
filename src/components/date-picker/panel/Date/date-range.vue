@@ -120,12 +120,12 @@
       </div>
       <div :class="[prefixCls + '-content']" v-show="isTime">
         <time-picker
+          v-bind="timePickerOptions"
           ref="timePicker"
           v-if="currentView === 'time'"
           :value="dates"
           :format="format"
           :time-disabled="timeDisabled"
-          v-bind="timePickerOptions"
           @on-pick="handleRangePick"
           @on-pick-click="handlePickClick"
           @on-pick-clear="handlePickClear"
@@ -145,6 +145,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Icon from '../../../icon/icon.vue'
 import DateTable from '../../base/date-table.vue'

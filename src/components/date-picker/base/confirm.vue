@@ -10,23 +10,20 @@
     >
       {{ labels.time }}
     </i-button>
-    <i-button
-      size="small"
-      @click.native="handleClear"
-      @keydown.enter.native="handleClear"
-    >
+    <i-button size="small" @click="handleClear" @keydown.enter="handleClear">
       {{ labels.clear }}
     </i-button>
     <i-button
       size="small"
       type="primary"
-      @click.native="handleSuccess"
-      @keydown.enter.native="handleSuccess"
+      @click="handleSuccess"
+      @keydown.enter="handleSuccess"
     >
       {{ labels.ok }}
     </i-button>
   </div>
 </template>
+
 <script>
 import iButton from '../../button/button.vue'
 import Locale from '../../../mixins/locale'
@@ -84,5 +81,6 @@ export default {
       }
     },
   },
+  emits: ['on-pick-clear', 'on-pick-success', 'on-pick-toggle-time'],
 }
 </script>

@@ -28,6 +28,7 @@
     ></upload-list>
   </div>
 </template>
+
 <script>
 import UploadList from './upload-list.vue'
 import ajax from './ajax'
@@ -345,7 +346,9 @@ export default {
   },
   watch: {
     defaultFileList: {
+      deep: true,
       immediate: true,
+
       handler(fileList) {
         this.fileList = fileList.map((item) => {
           item.status = 'finished'

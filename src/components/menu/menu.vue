@@ -3,6 +3,7 @@
     <slot></slot>
   </ul>
 </template>
+
 <script>
 import {
   oneOf,
@@ -165,5 +166,6 @@ export default {
       this.updateActiveName()
     },
   },
+  emits: ['on-open-change', 'on-select'],
 }
 </script>

@@ -13,6 +13,7 @@
     <slot></slot>
   </tr>
 </template>
+
 <script>
 export default {
   props: {

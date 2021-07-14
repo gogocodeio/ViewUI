@@ -19,6 +19,7 @@
     </div>
   </component>
 </template>
+
 <script>
 import {
   scrollTop,
@@ -239,5 +240,6 @@ export default {
   beforeDestroy() {
     this.removeListener()
   },
+  emits: ['on-change'],
 }
 </script>

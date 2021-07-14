@@ -22,6 +22,7 @@
     </template>
   </li>
 </template>
+
 <script>
 export default {
   name: 'ListItem',
@@ -41,7 +42,7 @@ export default {
       return result
     },
     isFlexMode() {
-      const extra = this.$slots.extra
+      const extra = this.$slots.extra()
 
       if (this.itemLayout === 'vertical') {
         return !!extra

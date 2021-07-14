@@ -3,6 +3,7 @@
     <slot></slot>
   </div>
 </template>
+
 <script>
 export default {
   name: 'CellGroup',
@@ -16,5 +17,6 @@ export default {
       this.$emit('on-click', name)
     },
   },
+  emits: ['on-click'],
 }
 </script>

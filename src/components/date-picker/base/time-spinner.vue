@@ -38,6 +38,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Options from '../time-mixins'
 import { deepCopy, scrollTop, firstUpperCase } from '../../../utils/assist'
@@ -271,5 +272,6 @@ export default {
   mounted() {
     this.$nextTick(() => (this.compiled = true))
   },
+  emits: ['on-change', 'on-pick-click'],
 }
 </script>

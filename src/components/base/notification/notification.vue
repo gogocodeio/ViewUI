@@ -21,6 +21,7 @@
     </Notice>
   </div>
 </template>
+
 <script>
 import Notice from './notice.vue'
 

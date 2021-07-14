@@ -21,10 +21,10 @@
           @on-input-change="handleInputChange"
           @on-focus="handleFocus"
           @on-blur="handleBlur"
-          @click.native="handleFocus"
-          @keydown.native="handleKeydown"
-          @mouseenter.native="handleInputMouseenter"
-          @mouseleave.native="handleInputMouseleave"
+          @click="handleFocus"
+          @keydown="handleKeydown"
+          @mouseenter="handleInputMouseenter"
+          @mouseleave="handleInputMouseleave"
         >
           <Icon
             @click="handleIconClick"
@@ -38,7 +38,7 @@
     </div>
     <transition name="transition-drop">
       <Drop
-        @click.native="handleTransferClick"
+        @click="handleTransferClick"
         v-show="opened"
         :class="dropdownCls"
         :placement="placement"
@@ -50,6 +50,7 @@
       >
         <div>
           <component
+            v-bind="ownPickerProps"
             :is="panel"
             ref="pickerPanel"
             :visible="visible"
@@ -66,7 +67,6 @@
             :multiple="multiple"
             :focused-date="focusedDate"
             :time-picker-options="timePickerOptions"
-            v-bind="ownPickerProps"
             @on-pick="onPick"
             @on-pick-clear="handleClear"
             @on-pick-success="onPickSuccess"
@@ -78,6 +78,7 @@
     </transition>
   </div>
 </template>
+
 <script>
 import iInput from '../../components/input/input.vue'
 import Drop from '../../components/select/dropdown.vue'
@@ -230,7 +231,7 @@ export default {
       type: Array,
       default: () => [],
     },
-    value: {
+    modelValue: {
       type: [Date, String, Array],
     },
     options: {
@@ -878,7 +879,7 @@ export default {
       const oldValue = JSON.stringify(before)
       const shouldEmitInput =
         newValue !== oldValue || typeof now !== typeof before
-      if (shouldEmitInput) this.$emit('input', now) // to update v-model
+      if (shouldEmitInput) this.$emit('modelValue', now) // to update v-model
     },
   },
   mounted() {
@@ -888,7 +889,7 @@ export default {
       typeof initialValue !== typeof parsedValue ||
       JSON.stringify(initialValue) !== JSON.stringify(parsedValue)
     ) {
-      this.$emit('input', this.publicVModelValue) // to update v-model
+      this.$emit('modelValue', this.publicVModelValue) // to update v-model
     }
     if (this.open !== null) this.visible = this.open
 
@@ -900,5 +901,13 @@ export default {
     this.$off('focus-input')
     this.$off('update-popper')
   },
+  emits: [
+    'on-clickoutside',
+    'on-change',
+    'on-open-change',
+    'update:modelValue',
+    'on-clear',
+    'on-ok',
+  ],
 }
 </script>

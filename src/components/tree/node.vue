@@ -36,8 +36,7 @@
           ></Render>
           <template v-else>{{ data.title }}</template>
         </span>
-        <Tree-node
-          v-if="data.expand"
+        <template
           :appear="appearByClickArrow"
           v-for="(item, i) in children"
           :key="i"
@@ -45,12 +44,13 @@
           :multiple="multiple"
           :show-checkbox="showCheckbox"
           :children-key="childrenKey"
-        >
-        </Tree-node>
+          ><Tree-node v-if="data.expand"> </Tree-node
+        ></template>
       </li>
     </ul>
   </collapse-transition>
 </template>
+
 <script>
 import Checkbox from '../checkbox/checkbox.vue'
 import Icon from '../icon/icon.vue'

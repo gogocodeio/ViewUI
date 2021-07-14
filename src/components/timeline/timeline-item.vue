@@ -9,6 +9,7 @@
     </div>
   </li>
 </template>
+
 <script>
 const prefixCls = 'ivu-timeline'
 

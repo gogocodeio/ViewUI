@@ -3,6 +3,7 @@
     <slot></slot>
   </ul>
 </template>
+
 <script>
 const prefixCls = 'ivu-timeline'
 

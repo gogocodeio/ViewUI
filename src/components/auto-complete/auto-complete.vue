@@ -43,6 +43,7 @@
     </slot>
   </i-select>
 </template>
+
 <script>
 import iSelect from '../select/select.vue'
 import iOption from '../select/option.vue'
@@ -56,7 +57,7 @@ export default {
   mixins: [Emitter, mixinsForm],
   components: { iSelect, iOption, iInput },
   props: {
-    value: {
+    modelValue: {
       type: [String, Number],
       default: '',
     },
@@ -174,7 +175,7 @@ export default {
     },
     currentValue(val) {
       this.$refs.select.setQuery(val)
-      this.$emit('input', val)
+      this.$emit('modelValue', val)
       if (this.disableEmitChange) {
         this.disableEmitChange = false
         return
@@ -212,5 +213,14 @@ export default {
       })
     },
   },
+  emits: [
+    'update:modelValue',
+    'on-change',
+    'on-search',
+    'on-select',
+    'on-focus',
+    'on-blur',
+    'on-clear',
+  ],
 }
 </script>

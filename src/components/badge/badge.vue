@@ -28,6 +28,7 @@
     >
   </span>
 </template>
+
 <script>
 import { oneOf } from '../../utils/assist'
 const initColorList = [

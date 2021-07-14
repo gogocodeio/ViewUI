@@ -8,6 +8,7 @@
     </div>
   </transition>
 </template>
+
 <script>
 import { oneOf } from '../../utils/assist'
 import ScrollbarMixins from '../modal/mixins-scrollbar'

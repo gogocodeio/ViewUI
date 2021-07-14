@@ -38,6 +38,7 @@
     <div :class="prefixCls + '-footer'" v-if="showFooter"><slot></slot></div>
   </div>
 </template>
+
 <script>
 import Search from './search.vue'
 import Checkbox from '../checkbox/checkbox.vue'
@@ -163,5 +164,6 @@ export default {
   mounted() {
     this.showFooter = this.$slots.default !== undefined
   },
+  emits: ['on-checked-keys-change'],
 }
 </script>

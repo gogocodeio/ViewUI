@@ -13,6 +13,7 @@
     </span>
   </span>
 </template>
+
 <script>
 import { oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
@@ -24,7 +25,7 @@ export default {
   name: 'iSwitch',
   mixins: [Emitter, mixinsForm],
   props: {
-    value: {
+    modelValue: {
       type: [String, Number, Boolean],
       default: false,
     },
@@ -105,7 +106,7 @@ export default {
         this.currentValue === this.trueValue ? this.falseValue : this.trueValue
 
       this.currentValue = checked
-      this.$emit('input', checked)
+      this.$emit('modelValue', checked)
       this.$emit('on-change', checked)
       this.dispatch('FormItem', 'on-form-change', checked)
     },
@@ -138,5 +139,6 @@ export default {
       this.currentValue = val
     },
   },
+  emits: ['update:modelValue', 'on-change'],
 }
 </script>

@@ -36,10 +36,10 @@
               </div>
             </div>
             <div :class="[prefixCls + '-footer']">
-              <i-button type="text" size="small" @click.native="cancel">{{
+              <i-button type="text" size="small" @click="cancel">{{
                 localeCancelText
               }}</i-button>
-              <i-button type="primary" size="small" @click.native="ok">{{
+              <i-button type="primary" size="small" @click="ok">{{
                 localeOkText
               }}</i-button>
             </div>
@@ -72,6 +72,7 @@
     </transition>
   </div>
 </template>
+
 <script>
 import Popper from '../base/popper'
 import iButton from '../button/button.vue'
@@ -364,5 +365,6 @@ export default {
       $children.removeEventListener('blur', this.handleBlur, false)
     }
   },
+  emits: ['on-cancel', 'on-ok'],
 }
 </script>

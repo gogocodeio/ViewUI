@@ -33,9 +33,7 @@ import { clamp } from './utils'
 
 export default {
   name: 'Hue',
-
   mixins: [HASMixin, Prefixes],
-
   data() {
     const normalStep = (1 / 360) * 25
     const jumpStep = 20 * normalStep
@@ -49,13 +47,11 @@ export default {
       percent: clamp((this.value.hsl.h * 100) / 360, 0, 100),
     }
   },
-
   watch: {
     value() {
       this.percent = clamp((this.value.hsl.h * 100) / 360, 0, 100)
     },
   },
-
   methods: {
     change(percent) {
       this.percent = clamp(percent, 0, 100)
@@ -99,5 +95,6 @@ export default {
       this.change((left * 100) / clientWidth)
     },
   },
+  emits: ['change'],
 }
 </script>

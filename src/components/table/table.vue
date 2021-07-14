@@ -218,6 +218,7 @@
     </Spin>
   </div>
 </template>
+
 <script>
 import tableHead from './table-head.vue'
 import tableBody from './table-body.vue'
@@ -1674,5 +1675,20 @@ export default {
       this.handleResize()
     },
   },
+  emits: [
+    'on-current-change',
+    'on-row-click',
+    'on-row-dblclick',
+    'on-contextmenu',
+    ,
+    'on-selection-change',
+    'on-expand',
+    'on-expand-tree',
+    'on-select-all',
+    'on-select-all-cancel',
+    'on-sort-change',
+    'on-filter-change',
+    'on-drag-drop',
+  ],
 }
 </script>

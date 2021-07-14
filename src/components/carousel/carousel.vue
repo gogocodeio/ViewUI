@@ -46,6 +46,7 @@
     </ul>
   </div>
 </template>
+
 <script>
 import Icon from '../icon/icon.vue'
 import { getStyle, oneOf } from '../../utils/assist'
@@ -98,7 +99,7 @@ export default {
         return oneOf(value, ['click', 'hover'])
       },
     },
-    value: {
+    modelValue: {
       type: Number,
       default: 0,
     },
@@ -285,7 +286,7 @@ export default {
       }
       this.currentIndex = index === this.slides.length ? 0 : index
       this.$emit('on-change', oldIndex, this.currentIndex)
-      this.$emit('input', this.currentIndex)
+      this.$emit('modelValue', this.currentIndex)
     },
     arrowEvent(offset) {
       this.setAutoplay()
@@ -297,7 +298,7 @@ export default {
       if (event === this.trigger && curIndex !== n) {
         this.updateTrackIndex(n)
         this.$emit('on-change', oldCurrentIndex, this.currentIndex)
-        this.$emit('input', n)
+        this.$emit('modelValue', n)
         // Reset autoplay timer when trigger be activated
         this.setAutoplay()
       }
@@ -356,5 +357,6 @@ export default {
     //            window.removeEventListener('resize', this.handleResize, false);
     off(window, 'resize', this.handleResize)
   },
+  emits: ['on-change', 'update:modelValue', 'on-click'],
 }
 </script>

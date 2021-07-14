@@ -22,9 +22,18 @@
     </div>
   </div>
 </template>
+
 <script>
+import tiny_emitter from 'tiny-emitter/instance'
 import AsyncValidator from 'async-validator'
 import Emitter from '../../mixins/emitter'
+
+const tiny_emitter_override = {
+  $on: (...args) => tiny_emitter.on(...args),
+  $once: (...args) => tiny_emitter.once(...args),
+  $off: (...args) => tiny_emitter.off(...args),
+  $emit: (...args) => tiny_emitter.emit(...args),
+}
 
 const prefixCls = 'ivu-form-item'
 
@@ -100,10 +109,13 @@ export default {
   },
   watch: {
     error: {
+      deep: true,
+
       handler(val) {
         this.validateMessage = val
         this.validateState = val ? 'error' : ''
       },
+
       immediate: true,
     },
     validateStatus(val) {
@@ -235,6 +247,8 @@ export default {
 
         callback(this.validateMessage)
 
+        Object.assign(this.FormInstance, tiny_emitter_override)
+
         this.FormInstance &&
           this.FormInstance.$emit(
             'on-validate',
@@ -299,5 +313,6 @@ export default {
   beforeDestroy() {
     this.dispatch('iForm', 'on-form-item-remove', this)
   },
+  emits: ['on-validate'],
 }
 </script>

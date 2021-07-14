@@ -28,6 +28,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Emitter from '../../mixins/emitter'
 import { oneOf } from '../../utils/assist'
@@ -70,7 +71,7 @@ export default {
         `${prefixCls}-item`,
         `${prefixCls}-status-${this.currentStatus}`,
         {
-          [`${prefixCls}-custom`]: !!this.icon || !!this.$slots.icon,
+          [`${prefixCls}-custom`]: !!this.icon || !!this.$slots.icon(),
           [`${prefixCls}-next-error`]: this.nextError,
         },
       ]

@@ -217,5 +217,5 @@ export const directive = Object.defineProperties(
  * @param {Vue} Vue - The Vue function.
  */
 export function install(Vue) {
-  Vue.directive('click-outside', directive)
+  window.$vueApp.directive('click-outside', directive)
 }

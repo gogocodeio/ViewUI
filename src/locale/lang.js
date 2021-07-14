@@ -1,7 +1,5 @@
-// using with vue-i18n in CDN
-/*eslint-disable */
-import Vue from 'vue'
-const isServer = Vue.prototype.$isServer
+import * as Vue from 'vue'
+const isServer = window.$vueApp.config.globalProperties.$isServer
 
 export default function (lang) {
   if (!isServer) {

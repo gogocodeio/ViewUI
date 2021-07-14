@@ -1,3 +1,5 @@
+import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
+import * as Vue from 'vue'
 export default {
   name: 'SliderMarker',
   props: {
@@ -5,15 +7,15 @@ export default {
       type: [String, Object],
     },
   },
-  render(h) {
+  render() {
     let label = typeof this.mark === 'string' ? this.mark : [this.mark.label]
 
-    return h(
+    return Vue.h(
       'div',
-      {
+      plantRenderPara({
         class: 'ivu-slider-marks-item',
         style: this.mark.style || {},
-      },
+      }),
       label
     )
   },

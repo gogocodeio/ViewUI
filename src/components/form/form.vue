@@ -1,6 +1,7 @@
 <template>
   <form :class="classes" :autocomplete="autocomplete"><slot></slot></form>
 </template>
+
 <script>
 import { oneOf } from '../../utils/assist'
 

@@ -63,7 +63,7 @@ export default {
     Trigger,
   },
   props: {
-    value: {
+    modelValue: {
       type: [Number, String],
       default: 0.5,
     },
@@ -175,7 +175,7 @@ export default {
         ? this.getAnotherOffset(this.value) === this.computedMax
         : this.getAnotherOffset(this.value).toFixed(5) ===
           this.computedMax.toFixed(5)
-      this.$emit('input', value)
+      this.$emit('modelValue', value)
       this.$emit('on-moving', e)
     },
     handleUp() {
@@ -228,5 +228,6 @@ export default {
   beforeDestroy() {
     off(window, 'resize', this.computeOffset)
   },
+  emits: ['update:modelValue', 'on-moving', 'on-move-end', 'on-move-start'],
 }
 </script>

@@ -1,9 +1,10 @@
 <template>
   <span :class="classes" @click="handleClick">{{ date }}</span>
 </template>
+
 <script>
-import Vue from 'vue'
-const isServer = Vue.prototype.$isServer
+import * as Vue from 'vue'
+const isServer = window.$vueApp.config.globalProperties.$isServer
 import { oneOf } from '../../utils/assist'
 import Locale from '../../mixins/locale'
 import Time from './time'

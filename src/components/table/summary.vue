@@ -22,6 +22,7 @@
     </table>
   </div>
 </template>
+
 <script>
 import Mixin from './mixin'
 

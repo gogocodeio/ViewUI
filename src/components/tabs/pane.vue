@@ -3,6 +3,7 @@
     <slot></slot>
   </div>
 </template>
+
 <script>
 const prefixCls = 'ivu-tabs-tabpane'
 

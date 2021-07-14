@@ -42,15 +42,12 @@
             <div :class="[prefixCls + '-body']"><slot></slot></div>
             <div :class="[prefixCls + '-footer']" v-if="!footerHide">
               <slot name="footer">
-                <i-button type="text" @click.native="cancel">{{
+                <i-button type="text" @click="cancel">{{
                   localeCancelText
                 }}</i-button>
-                <i-button
-                  type="primary"
-                  :loading="buttonLoading"
-                  @click.native="ok"
-                  >{{ localeOkText }}</i-button
-                >
+                <i-button type="primary" :loading="buttonLoading" @click="ok">{{
+                  localeOkText
+                }}</i-button>
               </slot>
             </div>
           </div>
@@ -59,6 +56,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Icon from '../icon'
 import iButton from '../button/button.vue'
@@ -94,7 +92,7 @@ export default {
   components: { Icon, iButton },
   directives: { TransferDom },
   props: {
-    value: {
+    modelValue: {
       type: Boolean,
       default: false,
     },
@@ -307,7 +305,7 @@ export default {
   methods: {
     close() {
       this.visible = false
-      this.$emit('input', false)
+      this.$emit('modelValue', false)
       this.$emit('on-cancel')
     },
     handleMask() {
@@ -336,7 +334,7 @@ export default {
         this.buttonLoading = true
       } else {
         this.visible = false
-        this.$emit('input', false)
+        this.$emit('modelValue', false)
       }
       this.$emit('on-ok')
     },
@@ -526,5 +524,12 @@ export default {
       }
     },
   },
+  emits: [
+    'update:modelValue',
+    'on-visible-change',
+    'on-cancel',
+    'on-ok',
+    'on-hidden',
+  ],
 }
 </script>

@@ -86,6 +86,7 @@
     </transition>
   </div>
 </template>
+
 <script>
 import iInput from '../input/input.vue'
 import Drop from '../select/dropdown.vue'
@@ -113,7 +114,7 @@ export default {
         return []
       },
     },
-    value: {
+    modelValue: {
       type: Array,
       default() {
         return []
@@ -497,7 +498,7 @@ export default {
       if (!val.length) this.selected = []
     },
     currentValue() {
-      this.$emit('input', this.currentValue)
+      this.$emit('modelValue', this.currentValue)
       if (this.updatingValue) {
         this.updatingValue = false
         return
@@ -520,5 +521,6 @@ export default {
       },
     },
   },
+  emits: ['on-change', 'on-visible-change', 'update:modelValue'],
 }
 </script>

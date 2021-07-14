@@ -24,6 +24,7 @@
     ></Icon>
   </div>
 </template>
+
 <script>
 import Icon from '../icon'
 import { oneOf } from '../../utils/assist'
@@ -250,5 +251,6 @@ export default {
       this.isChecked = val
     },
   },
+  emits: ['on-close', 'on-change'],
 }
 </script>

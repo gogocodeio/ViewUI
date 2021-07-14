@@ -11,6 +11,7 @@
     </collapse-transition>
   </div>
 </template>
+
 <script>
 import Icon from '../icon/icon.vue'
 import CollapseTransition from '../base/collapse-transition'

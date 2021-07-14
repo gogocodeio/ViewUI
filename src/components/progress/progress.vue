@@ -20,6 +20,7 @@
     </span>
   </div>
 </template>
+
 <script>
 import Icon from '../icon'
 import { oneOf } from '../../utils/assist'
@@ -177,5 +178,6 @@ export default {
       this.currentStatus = val
     },
   },
+  emits: ['on-status-change'],
 }
 </script>

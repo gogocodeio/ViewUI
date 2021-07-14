@@ -24,6 +24,7 @@
     </span>
   </span>
 </template>
+
 <script>
 import mixinsLink from '../../mixins/link'
 const prefixCls = 'ivu-breadcrumb-item'

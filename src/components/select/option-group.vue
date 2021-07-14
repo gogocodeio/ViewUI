@@ -6,6 +6,7 @@
     </ul>
   </li>
 </template>
+
 <script>
 const prefixCls = 'ivu-select-group'
 

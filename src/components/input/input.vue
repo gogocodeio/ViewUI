@@ -151,6 +151,7 @@
     </template>
   </div>
 </template>
+
 <script>
 import { oneOf, findComponentUpward } from '../../utils/assist'
 import calcTextareaHeight from '../../utils/calcTextareaHeight'
@@ -178,7 +179,7 @@ export default {
       },
       default: 'text',
     },
-    value: {
+    modelValue: {
       type: [String, Number],
       default: '',
     },
@@ -422,7 +423,7 @@ export default {
       let value = event.target.value
       if (this.number && value !== '')
         value = Number.isNaN(Number(value)) ? value : Number(value)
-      this.$emit('input', value)
+      this.$emit('modelValue', value)
       this.setCurrentValue(value)
       this.$emit('on-change', event)
     },
@@ -491,7 +492,7 @@ export default {
     },
     handleClear() {
       const e = { target: { value: '' } }
-      this.$emit('input', '')
+      this.$emit('modelValue', '')
       this.setCurrentValue('')
       this.$emit('on-change', e)
       this.$emit('on-clear')
@@ -520,5 +521,19 @@ export default {
     this.slotReady = true
     this.resizeTextarea()
   },
+  emits: [
+    'on-enter',
+    'on-search',
+    'on-keydown',
+    'on-keypress',
+    'on-keyup',
+    'on-click',
+    'on-focus',
+    'on-blur',
+    'update:modelValue',
+    'on-change',
+    'on-input-change',
+    'on-clear',
+  ],
 }
 </script>

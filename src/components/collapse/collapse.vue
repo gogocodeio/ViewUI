@@ -3,6 +3,7 @@
     <slot></slot>
   </div>
 </template>
+
 <script>
 const prefixCls = 'ivu-collapse'
 
@@ -13,7 +14,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    value: {
+    modelValue: {
       type: [Array, String],
     },
     simple: {
@@ -94,7 +95,7 @@ export default {
       }
 
       this.currentValue = newActiveKey
-      this.$emit('input', newActiveKey)
+      this.$emit('modelValue', newActiveKey)
       this.$emit('on-change', newActiveKey)
     },
   },
@@ -106,5 +107,6 @@ export default {
       this.setActive()
     },
   },
+  emits: ['update:modelValue', 'on-change'],
 }
 </script>

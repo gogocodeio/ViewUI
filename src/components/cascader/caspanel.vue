@@ -21,10 +21,19 @@
     ></Caspanel>
   </span>
 </template>
+
 <script>
+import tiny_emitter from 'tiny-emitter/instance'
 import Casitem from './casitem.vue'
 import Emitter from '../../mixins/emitter'
 import { findComponentUpward, findComponentDownward } from '../../utils/assist'
+
+const tiny_emitter_override = {
+  $on: (...args) => tiny_emitter.on(...args),
+  $once: (...args) => tiny_emitter.once(...args),
+  $off: (...args) => tiny_emitter.off(...args),
+  $emit: (...args) => tiny_emitter.emit(...args),
+}
 
 let key = 1
 
@@ -111,6 +120,7 @@ export default {
         // #1553
         if (this.changeOnSelect) {
           const Caspanel = findComponentDownward(this, 'Caspanel')
+          Object.assign(Caspanel, tiny_emitter_override)
           if (Caspanel) {
             Caspanel.$emit('on-clear', true)
           }
@@ -176,11 +186,13 @@ export default {
       this.tmpItem = {}
       if (deep) {
         const Caspanel = findComponentDownward(this, 'Caspanel')
+        Object.assign(Caspanel, tiny_emitter_override)
         if (Caspanel) {
           Caspanel.$emit('on-clear', true)
         }
       }
     })
   },
+  emits: ['on-clear'],
 }
 </script>

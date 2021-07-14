@@ -12,11 +12,8 @@
     @blur="blurColor"
     @focus="focusColor"
   >
-    <template v-for="(item, index) in list">
-      <div
-        :key="item + ':' + index"
-        :class="[prefixCls + '-picker-colors-wrapper']"
-      >
+    <template v-for="(item, index) in list" :key="item + ':' + index">
+      <div :class="[prefixCls + '-picker-colors-wrapper']">
         <div :data-color-id="index">
           <div
             :style="{ background: item }"
@@ -41,16 +38,13 @@ import { clamp } from './utils'
 
 export default {
   name: 'RecommendedColors',
-
   mixins: [Emitter, HandleEscapeMixin, Prefixes],
-
   props: {
     list: {
       type: Array,
       default: undefined,
     },
   },
-
   data() {
     const columns = 12
     const rows = Math.ceil(this.list.length / columns)
@@ -67,7 +61,6 @@ export default {
       columns,
     }
   },
-
   computed: {
     hideClass() {
       return `${this.prefixCls}-hide`
@@ -79,7 +72,6 @@ export default {
       return this.$refs[`color-circle-${this.linearIndex}`][0]
     },
   },
-
   methods: {
     getLinearIndex(grid) {
       return this.columns * (grid.y - 1) + grid.x - 1
@@ -152,5 +144,6 @@ export default {
       return nextIndex < list.length && nextIndex % this.columns === 0
     },
   },
+  emits: ['picker-color', 'change'],
 }
 </script>

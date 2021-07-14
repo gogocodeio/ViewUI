@@ -28,6 +28,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import throttle from 'lodash.throttle'
 import loader from './loading-component.vue'

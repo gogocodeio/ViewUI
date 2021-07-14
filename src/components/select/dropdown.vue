@@ -3,9 +3,10 @@
     <slot></slot>
   </div>
 </template>
+
 <script>
-import Vue from 'vue'
-const isServer = Vue.prototype.$isServer
+import * as Vue from 'vue'
+const isServer = window.$vueApp.config.globalProperties.$isServer
 import { getStyle } from '../../utils/assist'
 const Popper = isServer
   ? function () {}

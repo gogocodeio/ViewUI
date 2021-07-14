@@ -29,6 +29,7 @@
     </div>
   </transition>
 </template>
+
 <script>
 import RenderCell from '../render'
 export default {

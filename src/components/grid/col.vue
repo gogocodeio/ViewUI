@@ -3,6 +3,7 @@
     <slot></slot>
   </div>
 </template>
+
 <script>
 import { findComponentUpward } from '../../utils/assist'
 const prefixCls = 'ivu-col'

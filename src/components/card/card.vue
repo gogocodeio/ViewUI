@@ -1,8 +1,8 @@
 <template>
   <component
+    v-bind="tagProps"
     :is="tagName"
     :class="classes"
-    v-bind="tagProps"
     @click="handleClickLink"
   >
     <div :class="headClasses" v-if="showHead">
@@ -17,6 +17,7 @@
     <div :class="bodyClasses" :style="bodyStyles"><slot></slot></div>
   </component>
 </template>
+
 <script>
 const prefixCls = 'ivu-card'
 const defaultPadding = 16

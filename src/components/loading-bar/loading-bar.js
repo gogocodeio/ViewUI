@@ -1,15 +1,19 @@
+import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
 import LoadingBar from './loading-bar.vue'
-import Vue from 'vue'
+import * as Vue from 'vue'
 
 LoadingBar.newInstance = (properties) => {
   const _props = properties || {}
 
   const Instance = new Vue({
     data: _props,
-    render(h) {
-      return h(LoadingBar, {
-        props: _props,
-      })
+    render() {
+      return Vue.h(
+        LoadingBar,
+        plantRenderPara({
+          props: _props,
+        })
+      )
     },
   })
 

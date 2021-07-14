@@ -103,6 +103,7 @@
     </transition>
   </div>
 </template>
+
 <script>
 import Drop from './dropdown.vue'
 import Icon from '../icon'
@@ -198,7 +199,7 @@ export default {
   components: { FunctionalOptions, Drop, SelectHead, Icon },
   directives: { clickOutside, TransferDom },
   props: {
-    value: {
+    modelValue: {
       type: [String, Number, Array],
       default: '',
     },
@@ -383,7 +384,7 @@ export default {
       query: '',
       initialLabel: this.label,
       hasMouseHoverHead: false,
-      slotOptions: this.$slots.default,
+      slotOptions: this.$slots.default(),
       caretPosition: -1,
       lastRemoteQuery: '',
       unchangedQuery: true,
@@ -597,7 +598,7 @@ export default {
     clearSingleSelect() {
       // PUBLIC API
       // fix #446
-      if (!this.multiple) this.$emit('input', '')
+      if (!this.multiple) this.$emit('modelValue', '')
       this.$emit('on-clear')
       this.hideMenu()
       if (this.clearable) this.reset()
@@ -878,7 +879,7 @@ export default {
       this.isFocused = type === 'focus'
     },
     updateSlotOptions() {
-      this.slotOptions = this.$slots.default
+      this.slotOptions = this.$slots.default()
     },
     checkUpdateStatus() {
       if (
@@ -945,7 +946,7 @@ export default {
             emitValue = this.values[0]
           }
         }
-        this.$emit('input', vModelValue) // to update v-model
+        this.$emit('modelValue', vModelValue) // to update v-model
         this.$emit('on-change', emitValue)
         this.dispatch('FormItem', 'on-form-change', emitValue)
       }
@@ -1064,5 +1065,16 @@ export default {
       }
     },
   },
+  emits: [
+    'on-set-default-options',
+    'update:modelValue',
+    'on-clickoutside',
+    'on-select',
+    'on-create',
+    'on-change',
+    'on-query-change',
+    'on-open-change',
+    'on-clear',
+  ],
 }
 </script>

@@ -5,22 +5,21 @@
         <Icon :type="prefix" v-if="prefix" />
       </slot>
     </span>
-    <div
+    <template
       class="ivu-tag ivu-tag-checked"
       v-for="(item, index) in selectedMultiple"
-      v-if="maxTagCount === undefined || index < maxTagCount"
-    >
-      <span
-        class="ivu-tag-text"
-        :class="{ 'ivu-select-multiple-tag-hidden': item.disabled }"
-        >{{ item.tag !== undefined ? item.tag : item.label }}</span
-      >
-      <Icon
-        type="ios-close"
-        v-if="!item.disabled"
-        @click.native.stop="removeTag(item)"
-      ></Icon>
-    </div>
+      ><div v-if="maxTagCount === undefined || index < maxTagCount">
+        <span
+          class="ivu-tag-text"
+          :class="{ 'ivu-select-multiple-tag-hidden': item.disabled }"
+          >{{ item.tag !== undefined ? item.tag : item.label }}</span
+        >
+        <Icon
+          type="ios-close"
+          v-if="!item.disabled"
+          @click.native.stop="removeTag(item)"
+        ></Icon></div
+    ></template>
     <div
       class="ivu-tag ivu-tag-checked"
       v-if="maxTagCount !== undefined && selectedMultiple.length > maxTagCount"
@@ -70,6 +69,7 @@
     ></Icon>
   </div>
 </template>
+
 <script>
 import Icon from '../icon'
 import Emitter from '../../mixins/emitter'
@@ -319,5 +319,13 @@ export default {
       if (query !== this.query) this.query = query
     },
   },
+  emits: [
+    'on-query-change',
+    'on-input-focus',
+    'on-input-blur',
+    'on-keydown',
+    'on-enter',
+    'on-clear',
+  ],
 }
 </script>

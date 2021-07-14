@@ -18,6 +18,7 @@
     ></i>
   </li>
 </template>
+
 <script>
 import Icon from '../icon/icon.vue'
 

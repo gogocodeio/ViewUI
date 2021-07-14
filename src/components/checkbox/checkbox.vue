@@ -31,6 +31,7 @@
     >
   </label>
 </template>
+
 <script>
 import { findComponentUpward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
@@ -46,7 +47,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    value: {
+    modelValue: {
       type: [String, Number, Boolean],
       default: false,
     },
@@ -152,7 +153,7 @@ export default {
       this.currentValue = checked
 
       const value = checked ? this.trueValue : this.falseValue
-      this.$emit('input', value)
+      this.$emit('modelValue', value)
 
       if (this.group) {
         this.parent.change(this.model)
@@ -180,5 +181,6 @@ export default {
       }
     },
   },
+  emits: ['update:modelValue', 'on-change'],
 }
 </script>

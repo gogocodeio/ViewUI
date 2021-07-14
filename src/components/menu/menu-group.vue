@@ -8,6 +8,7 @@
     </ul>
   </li>
 </template>
+
 <script>
 import mixin from './mixin'
 const prefixCls = 'ivu-menu'

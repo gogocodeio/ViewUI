@@ -9,6 +9,7 @@
     ></i-input>
   </div>
 </template>
+
 <script>
 import iInput from '../input/input.vue'
 
@@ -45,5 +46,6 @@ export default {
       this.$emit('on-query-clear')
     },
   },
+  emits: ['on-query-change', 'on-query-clear'],
 }
 </script>

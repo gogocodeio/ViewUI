@@ -1,4 +1,5 @@
-import Vue from 'vue'
+import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
+import * as Vue from 'vue'
 import Spin from './spin.vue'
 
 import { transferIndex, transferIncrease } from '../../utils/transfer-queue'
@@ -15,36 +16,39 @@ Spin.newInstance = (properties) => {
 
   const Instance = new Vue({
     data: Object.assign({}, _props, {}),
-    render(h) {
+    render() {
       let vnode = ''
       if (this.render) {
-        vnode = h(
+        vnode = Vue.h(
           Spin,
-          {
+          plantRenderPara({
             props: {
               fix: true,
               fullscreen: true,
             },
-          },
-          [this.render(h)]
+          }),
+          [this.render(Vue.h)]
         )
       } else {
-        vnode = h(Spin, {
-          props: {
-            size: 'large',
-            fix: true,
-            fullscreen: true,
-          },
-        })
+        vnode = Vue.h(
+          Spin,
+          plantRenderPara({
+            props: {
+              size: 'large',
+              fix: true,
+              fullscreen: true,
+            },
+          })
+        )
       }
-      return h(
+      return Vue.h(
         'div',
-        {
+        plantRenderPara({
           class: 'ivu-spin-fullscreen ivu-spin-fullscreen-wrapper',
           style: {
             'z-index': 2010 + tIndex,
           },
-        },
+        }),
         [vnode]
       )
     },

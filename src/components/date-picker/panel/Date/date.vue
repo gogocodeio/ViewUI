@@ -54,6 +54,7 @@
       </div>
       <div :class="[prefixCls + '-content']" v-show="isTime">
         <time-picker
+          v-bind="timePickerOptions"
           ref="timePicker"
           v-if="currentView === 'time'"
           :value="dates"
@@ -61,7 +62,6 @@
           :time-disabled="timeDisabled"
           :disabled-date="disabledDate"
           :focused-date="focusedDate"
-          v-bind="timePickerOptions"
           @on-pick="handlePick"
           @on-pick-click="handlePickClick"
           @on-pick-clear="handlePickClear"
@@ -80,6 +80,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Icon from '../../../icon/icon.vue'
 import DateTable from '../../base/date-table.vue'
@@ -233,5 +234,6 @@ export default {
       this.$emit('on-pick', value, false, type || selectionMode)
     },
   },
+  emits: ['on-selection-mode-change', 'on-pick'],
 }
 </script>

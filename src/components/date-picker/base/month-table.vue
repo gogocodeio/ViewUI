@@ -10,6 +10,7 @@
     </span>
   </div>
 </template>
+
 <script>
 import { clearHours } from '../util'
 import { deepCopy } from '../../../utils/assist'

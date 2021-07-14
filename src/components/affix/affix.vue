@@ -6,6 +6,7 @@
     <div v-show="slot" :style="slotStyle"></div>
   </div>
 </template>
+
 <script>
 import { on, off } from '../../utils/dom'
 const prefixCls = 'ivu-affix'
@@ -162,5 +163,6 @@ export default {
       }
     },
   },
+  emits: ['on-change'],
 }
 </script>

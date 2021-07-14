@@ -82,6 +82,7 @@
     ></table-slot>
   </div>
 </template>
+
 <script>
 import TableExpand from './expand'
 import TableSlot from './slot'

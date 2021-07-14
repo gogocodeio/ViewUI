@@ -3,6 +3,7 @@
     <slot></slot>
   </div>
 </template>
+
 <script>
 import { findComponentsDownward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
@@ -13,7 +14,7 @@ export default {
   name: 'CheckboxGroup',
   mixins: [Emitter],
   props: {
-    value: {
+    modelValue: {
       type: Array,
       default() {
         return []
@@ -66,7 +67,7 @@ export default {
     },
     change(data) {
       this.currentValue = data
-      this.$emit('input', data)
+      this.$emit('modelValue', data)
       this.$emit('on-change', data)
       this.dispatch('FormItem', 'on-form-change', data)
     },
@@ -76,5 +77,6 @@ export default {
       this.updateModel(true)
     },
   },
+  emits: ['update:modelValue', 'on-change'],
 }
 </script>

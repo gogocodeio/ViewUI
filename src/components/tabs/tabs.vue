@@ -91,6 +91,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Icon from '../icon/icon.vue'
 import Render from '../base/render'
@@ -138,7 +139,7 @@ export default {
     return { TabsInstance: this }
   },
   props: {
-    value: {
+    modelValue: {
       type: [String, Number],
     },
     type: {
@@ -378,7 +379,7 @@ export default {
       const nav = this.navList[index]
       if (!nav || nav.disabled) return
       this.activeKey = nav.name
-      this.$emit('input', nav.name)
+      this.$emit('modelValue', nav.name)
       this.$emit('on-click', nav.name)
     },
     handleDblclick(index) {
@@ -468,7 +469,7 @@ export default {
           }
         }
         this.activeKey = activeKey
-        this.$emit('input', activeKey)
+        this.$emit('modelValue', activeKey)
       }
       this.$emit('on-tab-remove', tab.currentName)
       this.updateNav()
@@ -684,5 +685,13 @@ export default {
     this.observer.removeListener(this.$refs.navWrap, this.handleResize)
     if (this.mutationObserver) this.mutationObserver.disconnect()
   },
+  emits: [
+    'update:modelValue',
+    'on-click',
+    'on-dblclick',
+    'on-contextmenu',
+    'on-tab-remove',
+    'on-drag-drop',
+  ],
 }
 </script>

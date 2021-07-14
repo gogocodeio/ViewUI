@@ -1,9 +1,17 @@
 <template>
   <li :class="classes" @click="handleClick"><slot></slot></li>
 </template>
+
 <script>
+import tiny_emitter from 'tiny-emitter/instance'
 const prefixCls = 'ivu-dropdown-item'
 import { findComponentUpward } from '../../utils/assist'
+const tiny_emitter_override = {
+  $on: (...args) => tiny_emitter.on(...args),
+  $once: (...args) => tiny_emitter.once(...args),
+  $off: (...args) => tiny_emitter.off(...args),
+  $emit: (...args) => tiny_emitter.emit(...args),
+}
 export default {
   name: 'DropdownItem',
   props: {
@@ -39,10 +47,12 @@ export default {
     handleClick() {
       if (this.disabled) return
       const $parent = findComponentUpward(this, 'Dropdown')
+      Object.assign($parent, tiny_emitter_override)
       const hasChildren =
         this.$parent && this.$parent.$options.name === 'Dropdown'
 
       if (hasChildren) {
+        Object.assign(this.$parent, tiny_emitter_override)
         this.$parent.$emit('on-haschild-click')
       } else {
         if ($parent && $parent.$options.name === 'Dropdown') {
@@ -52,5 +62,6 @@ export default {
       $parent.$emit('on-click', this.name)
     },
   },
+  emits: ['on-click', 'on-haschild-click', 'on-hover-click'],
 }
 </script>

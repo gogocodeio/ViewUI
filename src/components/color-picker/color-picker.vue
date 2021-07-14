@@ -87,7 +87,7 @@
                 ref="clear"
                 :tabindex="0"
                 size="small"
-                @click.native="handleClear"
+                @click="handleClear"
                 @keydown.enter="handleClear"
                 @keydown.native.esc="closer"
                 >{{ t('i.datepicker.clear') }}</i-button
@@ -97,7 +97,7 @@
                 :tabindex="0"
                 size="small"
                 type="primary"
-                @click.native="handleSuccess"
+                @click="handleSuccess"
                 @keydown.native.tab="handleLastTab"
                 @keydown.enter="handleSuccess"
                 @keydown.native.esc="closer"
@@ -132,7 +132,6 @@ import { changeColor, toRGBAString } from './utils'
 
 export default {
   name: 'ColorPicker',
-
   components: {
     Drop,
     RecommendColors,
@@ -143,13 +142,10 @@ export default {
     iButton,
     Icon,
   },
-
   directives: { clickOutside, TransferDom },
-
   mixins: [Emitter, Locale, Prefixes, mixinsForm],
-
   props: {
-    value: {
+    modelValue: {
       type: String,
       default: undefined,
     },
@@ -248,7 +244,6 @@ export default {
       default: false,
     },
   },
-
   data() {
     return {
       val: changeColor(this.value),
@@ -283,7 +278,6 @@ export default {
       ],
     }
   },
-
   computed: {
     arrowClasses() {
       return [
@@ -423,7 +417,6 @@ export default {
       return size
     },
   },
-
   watch: {
     value(newVal) {
       this.val = changeColor(newVal)
@@ -434,12 +427,10 @@ export default {
       this.$emit('on-open-change', Boolean(val))
     },
   },
-
   mounted() {
     this.$on('on-escape-keydown', this.closer)
     this.$on('on-dragging', this.setDragging)
   },
-
   methods: {
     setDragging(value) {
       this.dragging = value
@@ -496,7 +487,7 @@ export default {
     },
     handleButtons(event, value) {
       this.currentValue = value
-      this.$emit('input', value)
+      this.$emit('modelValue', value)
       this.$emit('on-change', value)
       this.dispatch('FormItem', 'on-form-change', value)
       this.closer(event)
@@ -549,5 +540,13 @@ export default {
       }
     },
   },
+  emits: [
+    'on-active-change',
+    'on-open-change',
+    'update:modelValue',
+    'on-change',
+    'on-pick-success',
+    'on-pick-clear',
+  ],
 }
 </script>

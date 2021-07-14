@@ -18,6 +18,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Avatar from '../../components/avatar/avatar.vue'
 

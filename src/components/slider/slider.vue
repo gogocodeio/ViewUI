@@ -40,7 +40,7 @@
             :key="key"
             :mark="item.mark"
             :style="{ left: item.position + '%' }"
-            @click.native="sliderClick"
+            @click="sliderClick"
           />
         </div>
       </template>
@@ -100,6 +100,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import InputNumber from '../../components/input-number/input-number.vue'
 import Tooltip from '../../components/tooltip/tooltip.vue'
@@ -133,7 +134,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    value: {
+    modelValue: {
       type: [Number, Array],
       default: 0,
     },
@@ -220,7 +221,7 @@ export default {
         }
       })
       const value = this.range ? values : values[0]
-      this.$emit('input', value)
+      this.$emit('modelValue', value)
       this.$emit('on-input', value)
     },
   },
@@ -504,5 +505,6 @@ export default {
   beforeDestroy() {
     this.observer.removeListener(this.$refs.slider, this.handleSetSliderWidth)
   },
+  emits: ['update:modelValue', 'on-input', 'on-change'],
 }
 </script>

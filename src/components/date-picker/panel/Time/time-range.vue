@@ -49,6 +49,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import TimeSpinner from '../../base/time-spinner.vue'
 import Confirm from '../../base/confirm.vue'
@@ -77,7 +78,7 @@ export default {
       type: String,
       default: 'HH:mm:ss',
     },
-    value: {
+    modelValue: {
       type: Array,
       required: true,
     },
@@ -165,5 +166,6 @@ export default {
     if (this.$parent && this.$parent.$options.name === 'DatePicker')
       this.showDate = true
   },
+  emits: ['on-pick'],
 }
 </script>

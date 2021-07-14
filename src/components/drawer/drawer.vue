@@ -48,6 +48,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Icon from '../icon'
 import {
@@ -69,7 +70,7 @@ export default {
   components: { Icon },
   directives: { TransferDom },
   props: {
-    value: {
+    modelValue: {
       type: Boolean,
       default: false,
     },
@@ -243,7 +244,7 @@ export default {
     },
     handleClose() {
       this.visible = false
-      this.$emit('input', false)
+      this.$emit('modelValue', false)
       this.$emit('on-close')
     },
     handleMask() {
@@ -361,5 +362,11 @@ export default {
       this.dragHeight = val
     },
   },
+  emits: [
+    'update:modelValue',
+    'on-resize-width',
+    'on-visible-change',
+    'on-close',
+  ],
 }
 </script>

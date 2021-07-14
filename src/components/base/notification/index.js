@@ -1,14 +1,18 @@
+import { plantRenderPara } from '../../../utils/gogocodeTransfer.js'
 import Notification from './notification.vue'
-import Vue from 'vue'
+import * as Vue from 'vue'
 
 Notification.newInstance = (properties) => {
   const _props = properties || {}
 
   const Instance = new Vue({
-    render(h) {
-      return h(Notification, {
-        props: _props,
-      })
+    render() {
+      return Vue.h(
+        Notification,
+        plantRenderPara({
+          props: _props,
+        })
+      )
     },
   })
 

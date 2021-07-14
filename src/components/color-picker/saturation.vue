@@ -32,9 +32,7 @@ import { on, off } from '../../utils/dom'
 
 export default {
   name: 'Saturation',
-
   mixins: [HSAMixin, Prefixes],
-
   data() {
     const normalStep = 0.01
 
@@ -47,7 +45,6 @@ export default {
       powerKey: 'shiftKey',
     }
   },
-
   computed: {
     bgColorStyle() {
       return { background: `hsl(${this.value.hsv.h}, 100%, 50%)` }
@@ -59,7 +56,6 @@ export default {
       }
     },
   },
-
   methods: {
     change(h, s, v, a) {
       this.$emit('change', { h, s, v, a, source: 'hsva' })
@@ -107,5 +103,6 @@ export default {
       off(window, 'mouseup', this.handleChange)
     },
   },
+  emits: ['change'],
 }
 </script>

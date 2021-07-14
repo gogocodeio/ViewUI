@@ -35,6 +35,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import Locale from '../../mixins/locale'
 import Emitter from '../../mixins/emitter'
@@ -53,7 +54,7 @@ export default {
       type: Number,
       default: 5,
     },
-    value: {
+    modelValue: {
       type: Number,
       default: 0,
     },
@@ -187,10 +188,11 @@ export default {
       }
 
       this.currentValue = value
-      this.$emit('input', value)
+      this.$emit('modelValue', value)
       this.$emit('on-change', value)
       this.dispatch('FormItem', 'on-form-change', value)
     },
   },
+  emits: ['update:modelValue', 'on-change'],
 }
 </script>

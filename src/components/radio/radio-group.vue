@@ -3,6 +3,7 @@
     <slot></slot>
   </div>
 </template>
+
 <script>
 import { oneOf, findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
@@ -17,7 +18,7 @@ export default {
   name: 'RadioGroup',
   mixins: [Emitter],
   props: {
-    value: {
+    modelValue: {
       type: [String, Number],
       default: '',
     },
@@ -89,7 +90,7 @@ export default {
     change(data) {
       this.currentValue = data.value
       this.updateValue()
-      this.$emit('input', data.value)
+      this.$emit('modelValue', data.value)
       this.$emit('on-change', data.value)
       this.dispatch('FormItem', 'on-form-change', data.value)
     },
@@ -104,5 +105,6 @@ export default {
       }
     },
   },
+  emits: ['update:modelValue', 'on-change'],
 }
 </script>

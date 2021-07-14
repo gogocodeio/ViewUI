@@ -167,10 +167,10 @@ const install = function (Vue, opts = {}) {
   locale.i18n(opts.i18n)
 
   Object.keys(iview).forEach((key) => {
-    Vue.component(key, iview[key])
+    window.$vueApp.component(key, iview[key])
   })
 
-  Vue.prototype.$IVIEW = {
+  window.$vueApp.config.globalProperties.$IVIEW = {
     size: opts.size || '',
     transfer: 'transfer' in opts ? opts.transfer : '',
     capture: 'capture' in opts ? opts.capture : true,
@@ -335,11 +335,11 @@ const install = function (Vue, opts = {}) {
     },
   }
 
-  Vue.prototype.$Loading = LoadingBar
-  Vue.prototype.$Message = Message
-  Vue.prototype.$Modal = Modal
-  Vue.prototype.$Notice = Notice
-  Vue.prototype.$Spin = Spin
+  window.$vueApp.config.globalProperties.$Loading = LoadingBar
+  window.$vueApp.config.globalProperties.$Message = Message
+  window.$vueApp.config.globalProperties.$Modal = Modal
+  window.$vueApp.config.globalProperties.$Notice = Notice
+  window.$vueApp.config.globalProperties.$Spin = Spin
 }
 
 // auto install

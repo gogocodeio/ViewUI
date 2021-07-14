@@ -66,7 +66,6 @@
               </span>
               <Poptip
                 v-if="isPopperShow(column)"
-                v-model="getColumn(rowIndex, index)._filterVisible"
                 placement="bottom"
                 popper-class="ivu-table-popper"
                 transfer
@@ -89,7 +88,7 @@
                 >
                   <div :class="[prefixCls + '-filter-list-item']">
                     <checkbox-group
-                      v-model="getColumn(rowIndex, index)._filterChecked"
+
                     >
                       <checkbox
                         v-for="(item, index) in column.filters"
@@ -106,17 +105,13 @@
                       :disabled="
                         !getColumn(rowIndex, index)._filterChecked.length
                       "
-                      @click.native="
-                        handleFilter(getColumn(rowIndex, index)._index)
-                      "
+                      @click="handleFilter(getColumn(rowIndex, index)._index)"
                       >{{ t('i.table.confirmFilter') }}</i-button
                     >
                     <i-button
                       type="text"
                       size="small"
-                      @click.native="
-                        handleReset(getColumn(rowIndex, index)._index)
-                      "
+                      @click="handleReset(getColumn(rowIndex, index)._index)"
                       >{{ t('i.table.resetFilter') }}</i-button
                     >
                   </div>
@@ -168,7 +163,9 @@
     </thead>
   </table>
 </template>
+
 <script>
+import tiny_emitter from 'tiny-emitter/instance'
 import CheckboxGroup from '../checkbox/checkbox-group.vue'
 import Checkbox from '../checkbox/checkbox.vue'
 import Poptip from '../poptip/poptip.vue'
@@ -177,6 +174,12 @@ import renderHeader from './header'
 import Mixin from './mixin'
 import Locale from '../../mixins/locale'
 
+const tiny_emitter_override = {
+  $on: (...args) => tiny_emitter.on(...args),
+  $once: (...args) => tiny_emitter.once(...args),
+  $off: (...args) => tiny_emitter.off(...args),
+  $emit: (...args) => tiny_emitter.emit(...args),
+}
 export default {
   name: 'TableHead',
   mixins: [Mixin, Locale],
@@ -370,6 +373,7 @@ export default {
         this.dragging = true
 
         const table = this.$parent
+        Object.assign(table, tiny_emitter_override)
         const tableEl = table.$el
         const tableLeft = tableEl.getBoundingClientRect().left
         const columnEl = this.$el.querySelector(
@@ -508,5 +512,6 @@ export default {
       return status
     },
   },
+  emits: ['on-column-width-resize'],
 }
 </script>

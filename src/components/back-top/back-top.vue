@@ -7,6 +7,7 @@
     </slot>
   </div>
 </template>
+
 <script>
 import { scrollTop } from '../../utils/assist'
 import { on, off } from '../../utils/dom'
@@ -77,5 +78,6 @@ export default {
       this.$emit('on-click')
     },
   },
+  emits: ['on-click'],
 }
 </script>

@@ -16,6 +16,7 @@
     </div>
   </transition>
 </template>
+
 <script>
 import Icon from '../icon'
 import { oneOf } from '../../utils/assist'
@@ -106,5 +107,6 @@ export default {
   mounted() {
     this.desc = this.$slots.desc !== undefined
   },
+  emits: ['on-close'],
 }
 </script>

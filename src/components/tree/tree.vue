@@ -27,6 +27,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import TreeNode from './node.vue'
 import Dropdown from '../dropdown/dropdown.vue'
@@ -276,5 +277,11 @@ export default {
     this.$on('toggle-expand', (node) => this.$emit('on-toggle-expand', node))
     this.$on('contextmenu', this.handleContextmenu)
   },
+  emits: [
+    'on-select-change',
+    'on-check-change',
+    'on-contextmenu',
+    'on-toggle-expand',
+  ],
 }
 </script>

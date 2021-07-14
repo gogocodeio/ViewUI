@@ -16,6 +16,7 @@
     </span>
   </div>
 </template>
+
 <script>
 import { clearHours, isInRange } from '../util'
 import Locale from '../../../mixins/locale'

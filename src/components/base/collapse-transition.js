@@ -1,3 +1,4 @@
+import * as Vue from 'vue'
 import { addClass, removeClass } from '../../utils/assist'
 
 const Transition = {
@@ -64,20 +65,20 @@ const Transition = {
   },
 }
 
-export default {
-  name: 'CollapseTransition',
-  functional: true,
-  props: {
-    appear: Boolean,
-  },
-  render(h, { children, props }) {
-    const data = {
-      on: Transition,
-      props: {
-        appear: props.appear,
-      },
-    }
+export default function render(_props, _context) {
+  const context = {
+    ..._context,
+    props: _props,
+    data: _context.attr,
+    children: _context.slots,
+  }
+  const { children, props } = context
+  const data = {
+    on: Transition,
+    props: {
+      appear: props.appear,
+    },
+  }
 
-    return h('transition', data, children)
-  },
+  return Vue.h('transition', data, children)
 }

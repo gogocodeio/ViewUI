@@ -54,6 +54,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import { oneOf, findComponentUpward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
@@ -104,7 +105,7 @@ export default {
       type: Boolean,
       default: true,
     },
-    value: {
+    modelValue: {
       type: Number,
       default: 1,
     },
@@ -297,7 +298,7 @@ export default {
 
       this.$nextTick(() => {
         this.currentValue = val
-        this.$emit('input', val)
+        this.$emit('modelValue', val)
         this.$emit('on-change', val)
         this.dispatch('FormItem', 'on-form-change', val)
       })
@@ -384,5 +385,6 @@ export default {
       this.changeVal(this.currentValue)
     },
   },
+  emits: ['update:modelValue', 'on-change', 'on-focus', 'on-blur'],
 }
 </script>

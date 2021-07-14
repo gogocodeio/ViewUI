@@ -8,7 +8,7 @@
         type="ios-close"
         :class="[prefixCls + '-list-remove']"
         v-show="file.status === 'finished'"
-        @click.native="handleRemove(file)"
+        @click="handleRemove(file)"
       ></Icon>
       <transition name="fade">
         <i-progress
@@ -25,6 +25,7 @@
     </li>
   </ul>
 </template>
+
 <script>
 import Icon from '../icon/icon.vue'
 import iProgress from '../progress/progress.vue'
@@ -97,5 +98,6 @@ export default {
       return parseInt(val, 10)
     },
   },
+  emits: ['on-file-click', 'on-file-preview', 'on-file-remove'],
 }
 </script>

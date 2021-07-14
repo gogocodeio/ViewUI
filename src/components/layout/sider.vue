@@ -22,6 +22,7 @@
     </slot>
   </div>
 </template>
+
 <script>
 import { on, off } from '../../utils/dom'
 import { oneOf, dimensionMap, setMatchMedia } from '../../utils/assist'
@@ -30,7 +31,7 @@ setMatchMedia()
 export default {
   name: 'Sider',
   props: {
-    value: {
+    modelValue: {
       // if it's collpased now
       type: Boolean,
       default: false,
@@ -134,7 +135,7 @@ export default {
   methods: {
     toggleCollapse() {
       let value = this.collapsible ? !this.value : false
-      this.$emit('input', value)
+      this.$emit('modelValue', value)
     },
     matchMedia() {
       let matchMedia
@@ -147,7 +148,7 @@ export default {
       ).matches
 
       if (this.mediaMatched !== mediaMatched) {
-        this.$emit('input', this.mediaMatched)
+        this.$emit('modelValue', this.mediaMatched)
       }
     },
     onWindowResize() {
@@ -161,7 +162,7 @@ export default {
   },
   mounted() {
     if (this.defaultCollapsed) {
-      this.$emit('input', this.defaultCollapsed)
+      this.$emit('modelValue', this.defaultCollapsed)
     }
     if (this.breakpoint !== undefined) {
       on(window, 'resize', this.onWindowResize)
@@ -173,5 +174,6 @@ export default {
       off(window, 'resize', this.onWindowResize)
     }
   },
+  emits: ['update:modelValue', 'on-collapse'],
 }
 </script>

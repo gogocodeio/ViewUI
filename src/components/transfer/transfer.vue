@@ -1,4 +1,6 @@
 <script>
+import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
+import * as Vue from 'vue'
 import List from './list.vue'
 import Operation from './operation.vue'
 import Locale from '../../mixins/locale'
@@ -9,11 +11,11 @@ const prefixCls = 'ivu-transfer'
 export default {
   name: 'Transfer',
   mixins: [Emitter, Locale],
-  render(h) {
+  render() {
     function cloneVNode(vnode) {
       const clonedChildren =
         vnode.children && vnode.children.map((vnode) => cloneVNode(vnode))
-      const cloned = h(vnode.tag, vnode.data, clonedChildren)
+      const cloned = Vue.h(vnode.tag, vnode.data, clonedChildren)
       cloned.text = vnode.text
       cloned.isComment = vnode.isComment
       cloned.componentOptions = vnode.componentOptions
@@ -32,15 +34,15 @@ export default {
         ? []
         : vNodes.map((vnode) => cloneVNode(vnode))
 
-    return h(
+    return Vue.h(
       'div',
-      {
+      plantRenderPara({
         class: this.classes,
-      },
+      }),
       [
-        h(
+        Vue.h(
           List,
-          {
+          plantRenderPara({
             ref: 'left',
             props: {
               prefixCls: this.prefixCls + '-list',
@@ -58,23 +60,26 @@ export default {
             on: {
               'on-checked-keys-change': this.handleLeftCheckedKeysChange,
             },
-          },
+          }),
           vNodes
         ),
 
-        h(Operation, {
-          props: {
-            prefixCls: this.prefixCls,
-            operations: this.operations,
-            leftActive: this.leftValidKeysCount > 0,
-            rightActive: this.rightValidKeysCount > 0,
-            reverseOperation: this.reverseOperation,
-          },
-        }),
+        Vue.h(
+          Operation,
+          plantRenderPara({
+            props: {
+              prefixCls: this.prefixCls,
+              operations: this.operations,
+              leftActive: this.leftValidKeysCount > 0,
+              rightActive: this.rightValidKeysCount > 0,
+              reverseOperation: this.reverseOperation,
+            },
+          })
+        ),
 
-        h(
+        Vue.h(
           List,
-          {
+          plantRenderPara({
             ref: 'right',
             props: {
               prefixCls: this.prefixCls + '-list',
@@ -92,7 +97,7 @@ export default {
             on: {
               'on-checked-keys-change': this.handleRightCheckedKeysChange,
             },
-          },
+          }),
           clonedVNodes
         ),
       ]
@@ -290,5 +295,6 @@ export default {
   mounted() {
     this.splitData(true)
   },
+  emits: ['on-change', 'on-selected-change'],
 }
 </script>

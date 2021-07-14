@@ -28,6 +28,7 @@
     </transition>
   </div>
 </template>
+
 <script>
 import Popper from '../base/popper'
 import TransferDom from '../../directives/transfer-dom'

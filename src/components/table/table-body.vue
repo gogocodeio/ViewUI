@@ -1,52 +1,19 @@
-<!--
-<template>
-    <table cellspacing="0" cellpadding="0" border="0" :style="styleObject">
-        <colgroup>
-            <col v-for="(column, index) in columns" :width="setCellWidth(column)">
-        </colgroup>
-        <tbody :class="[prefixCls + '-tbody']">
-            <template v-for="(row, index) in data">
-                <table-tr
-                    :draggable="draggable"
-                    :row="row"
-                    :key="rowKey ? row._rowKey : index"
-                    :prefix-cls="prefixCls"
-                    @mouseenter.native.stop="handleMouseIn(row._index)"
-                    @mouseleave.native.stop="handleMouseOut(row._index)"
-                    @click.native="clickCurrentRow(row._index)"
-                    @dblclick.native.stop="dblclickCurrentRow(row._index)">
-                    <td v-for="(column, colIndex) in columns" :class="alignCls(column, row)" v-bind="getSpan(row, column, index, colIndex)" v-if="showWithSpan(row, column, index, colIndex)">
-                        <table-cell
-                            :fixed="fixed"
-                            :prefix-cls="prefixCls"
-                            :row="row"
-                            :key="column._columnKey"
-                            :column="column"
-                            :natural-index="index"
-                            :index="row._index"
-                            :checked="rowChecked(row._index)"
-                            :disabled="rowDisabled(row._index)"
-                            :expanded="rowExpanded(row._index)"
-                        ></table-cell>
-                    </td>
-                </table-tr>
-                <tr v-if="rowExpanded(row._index)" :class="{[prefixCls + '-expanded-hidden']: fixed}">
-                    <td :colspan="columns.length" :class="prefixCls + '-expanded-cell'">
-                        <Expand :key="rowKey ? row._rowKey : index" :row="row" :render="expandRender" :index="row._index"></Expand>
-                    </td>
-                </tr>
-            </template>
-        </tbody>
-    </table>
-</template>
--->
 <script>
+import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
+import * as Vue from 'vue'
+import tiny_emitter from 'tiny-emitter/instance'
 // todo :key="row"
 import TableTr from './table-tr.vue'
 import TableCell from './cell.vue'
 import Expand from './expand.js'
 import Mixin from './mixin'
 
+const tiny_emitter_override = {
+  $on: (...args) => tiny_emitter.on(...args),
+  $once: (...args) => tiny_emitter.once(...args),
+  $off: (...args) => tiny_emitter.off(...args),
+  $emit: (...args) => tiny_emitter.emit(...args),
+}
 export default {
   name: 'TableBody',
   mixins: [Mixin],
@@ -115,6 +82,7 @@ export default {
       this.$parent.dblclickCurrentRow(_index, rowKey)
     },
     clickCell(row, column, key, event) {
+      Object.assign(this.$parent, tiny_emitter_override)
       this.$parent.$emit('on-cell-click', row, column, row[key], event)
     },
     contextmenuCurrentRow(_index, event, rowKey) {
@@ -320,17 +288,20 @@ export default {
       }
     },
   },
-  render(h) {
+  render() {
     let $cols = []
     this.columns.forEach((column) => {
-      const $col = h('col', {
-        attrs: {
-          width: this.setCellWidth(column),
-        },
-      })
+      const $col = Vue.h(
+        'col',
+        plantRenderPara({
+          attrs: {
+            width: this.setCellWidth(column),
+          },
+        })
+      )
       $cols.push($col)
     })
-    const $colgroup = h('colgroup', {}, $cols)
+    const $colgroup = Vue.h('colgroup', {}, $cols)
 
     let $tableTrs = []
     this.data.forEach((row, index) => {
@@ -338,39 +309,42 @@ export default {
 
       this.columns.forEach((column, colIndex) => {
         if (this.showWithSpan(row, column, index, colIndex)) {
-          const $tableCell = h(TableCell, {
-            props: {
-              fixed: this.fixed,
-              'prefix-cls': this.prefixCls,
-              row: row,
-              column: column,
-              'natural-index': index,
-              index: row._index,
-              checked: this.rowChecked(row._index),
-              disabled: this.rowDisabled(row._index),
-              expanded: this.rowExpanded(row._index),
-            },
-            key: column._columnKey,
-          })
+          const $tableCell = Vue.h(
+            TableCell,
+            plantRenderPara({
+              props: {
+                fixed: this.fixed,
+                'prefix-cls': this.prefixCls,
+                row: row,
+                column: column,
+                'natural-index': index,
+                index: row._index,
+                checked: this.rowChecked(row._index),
+                disabled: this.rowDisabled(row._index),
+                expanded: this.rowExpanded(row._index),
+              },
+              key: column._columnKey,
+            })
+          )
 
-          const $td = h(
+          const $td = Vue.h(
             'td',
-            {
+            plantRenderPara({
               class: this.alignCls(column, row),
               attrs: this.getSpan(row, column, index, colIndex),
               on: {
                 click: (e) => this.clickCell(row, column, column.key, e),
               },
-            },
+            }),
             [$tableCell]
           )
           $tds.push($td)
         }
       })
 
-      const $tableTr = h(
+      const $tableTr = Vue.h(
         TableTr,
-        {
+        plantRenderPara({
           props: {
             draggable: this.draggable,
             row: row,
@@ -385,38 +359,41 @@ export default {
             contextmenu: (e) => this.contextmenuCurrentRow(row._index, e),
             selectstart: (e) => this.selectStartCurrentRow(row._index, e),
           },
-        },
+        }),
         $tds
       )
       $tableTrs.push($tableTr)
 
       // 可展开
       if (this.rowExpanded(row._index)) {
-        const $Expand = h(Expand, {
-          props: {
-            row: row,
-            render: this.expandRender,
-            index: row._index,
-          },
-          key: this.rowKey ? row._rowKey : index,
-        })
-        const $td = h(
+        const $Expand = Vue.h(
+          Expand,
+          plantRenderPara({
+            props: {
+              row: row,
+              render: this.expandRender,
+              index: row._index,
+            },
+            key: this.rowKey ? row._rowKey : index,
+          })
+        )
+        const $td = Vue.h(
           'td',
-          {
+          plantRenderPara({
             attrs: {
               colspan: this.columns.length,
             },
             class: this.prefixCls + '-expanded-cell',
-          },
+          }),
           [$Expand]
         )
-        const $tr = h(
+        const $tr = Vue.h(
           'tr',
-          {
+          plantRenderPara({
             class: {
               [this.prefixCls + '-expanded-hidden']: this.fixed,
             },
-          },
+          }),
           [$td]
         )
         $tableTrs.push($tr)
@@ -424,33 +401,34 @@ export default {
 
       // 子数据
       if (row.children && row.children.length) {
-        const $childNodes = this.getChildNode(h, row, [])
+        const $childNodes = this.getChildNode(Vue.h, row, [])
         $childNodes.forEach((item) => {
           $tableTrs.push(item)
         })
       }
     })
 
-    const $tbody = h(
+    const $tbody = Vue.h(
       'tbody',
-      {
+      plantRenderPara({
         class: this.prefixCls + '-tbody',
-      },
+      }),
       [$tableTrs]
     )
 
-    return h(
+    return Vue.h(
       'table',
-      {
+      plantRenderPara({
         attrs: {
           cellspacing: '0',
           cellpadding: '0',
           border: '0',
         },
         style: this.styleObject,
-      },
+      }),
       [$colgroup, $tbody]
     )
   },
+  emits: ['on-cell-click'],
 }
 </script>

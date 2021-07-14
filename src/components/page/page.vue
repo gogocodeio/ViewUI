@@ -146,6 +146,7 @@
     </Options>
   </ul>
 </template>
+
 <script>
 import { oneOf } from '../../utils/assist'
 import Options from './options.vue'
@@ -412,5 +413,6 @@ export default {
       }
     },
   },
+  emits: ['update:current', 'on-change', 'on-page-size-change'],
 }
 </script>

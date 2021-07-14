@@ -33,6 +33,7 @@
     </div>
   </div>
 </template>
+
 <script>
 import iSelect from '../../components/select/select.vue'
 import iOption from '../../components/select/option.vue'
@@ -115,5 +116,6 @@ export default {
       }
     },
   },
+  emits: ['on-size', 'on-page'],
 }
 </script>

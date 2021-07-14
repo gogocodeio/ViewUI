@@ -1,4 +1,5 @@
-import Vue from 'vue'
+import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
+import * as Vue from 'vue'
 import Modal from './modal.vue'
 import Button from '../button/button.vue'
 import Locale from '../../mixins/locale'
@@ -26,28 +27,28 @@ Modal.newInstance = (properties) => {
       closable: false,
       closing: false, // 关闭有动画，期间使用此属性避免重复点击
     }),
-    render(h) {
+    render() {
       let footerVNodes = []
       if (this.showCancel) {
         footerVNodes.push(
-          h(
+          Vue.h(
             Button,
-            {
+            plantRenderPara({
               props: {
                 type: 'text',
               },
               on: {
                 click: this.cancel,
               },
-            },
+            }),
             this.localeCancelText
           )
         )
       }
       footerVNodes.push(
-        h(
+        Vue.h(
           Button,
-          {
+          plantRenderPara({
             props: {
               type: 'primary',
               loading: this.buttonLoading,
@@ -55,7 +56,7 @@ Modal.newInstance = (properties) => {
             on: {
               click: this.ok,
             },
-          },
+          }),
           this.localeOkText
         )
       )
@@ -63,29 +64,32 @@ Modal.newInstance = (properties) => {
       // render content
       let body_render
       if (this.render) {
-        body_render = h(
+        body_render = Vue.h(
           'div',
-          {
+          plantRenderPara({
             attrs: {
               class: `${prefixCls}-body ${prefixCls}-body-render`,
             },
-          },
-          [this.render(h)]
+          }),
+          [this.render(Vue.h)]
         )
       } else {
-        body_render = h(
+        body_render = Vue.h(
           'div',
-          {
+          plantRenderPara({
             attrs: {
               class: `${prefixCls}-body`,
             },
-          },
+          }),
           [
-            h('div', {
-              domProps: {
-                innerHTML: this.body,
-              },
-            }),
+            Vue.h(
+              'div',
+              plantRenderPara({
+                domProps: {
+                  innerHTML: this.body,
+                },
+              })
+            ),
           ]
         )
       }
@@ -93,40 +97,46 @@ Modal.newInstance = (properties) => {
       // when render with no title, hide head
       let head_render
       if (this.title) {
-        head_render = h(
+        head_render = Vue.h(
           'div',
-          {
+          plantRenderPara({
             attrs: {
               class: `${prefixCls}-head`,
             },
-          },
+          }),
           [
-            h(
+            Vue.h(
               'div',
-              {
+              plantRenderPara({
                 class: this.iconTypeCls,
-              },
+              }),
               [
-                h('i', {
-                  class: this.iconNameCls,
-                }),
+                Vue.h(
+                  'i',
+                  plantRenderPara({
+                    class: this.iconNameCls,
+                  })
+                ),
               ]
             ),
-            h('div', {
-              attrs: {
-                class: `${prefixCls}-head-title`,
-              },
-              domProps: {
-                innerHTML: this.title,
-              },
-            }),
+            Vue.h(
+              'div',
+              plantRenderPara({
+                attrs: {
+                  class: `${prefixCls}-head-title`,
+                },
+                domProps: {
+                  innerHTML: this.title,
+                },
+              })
+            ),
           ]
         )
       }
 
-      return h(
+      return Vue.h(
         Modal,
-        {
+        plantRenderPara({
           props: Object.assign({}, _props, {
             width: this.width,
             scrollable: this.scrollable,
@@ -141,25 +151,25 @@ Modal.newInstance = (properties) => {
             },
             'on-cancel': this.cancel,
           },
-        },
+        }),
         [
-          h(
+          Vue.h(
             'div',
-            {
+            plantRenderPara({
               attrs: {
                 class: prefixCls,
               },
-            },
+            }),
             [
               head_render,
               body_render,
-              h(
+              Vue.h(
                 'div',
-                {
+                plantRenderPara({
                   attrs: {
                     class: `${prefixCls}-footer`,
                   },
-                },
+                }),
                 footerVNodes
               ),
             ]

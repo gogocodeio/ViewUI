@@ -1,8 +1,5 @@
-/**
- * https://github.com/freeze-component/vue-popper
- * */
-import Vue from 'vue'
-const isServer = Vue.prototype.$isServer
+import * as Vue from 'vue'
+const isServer = window.$vueApp.config.globalProperties.$isServer
 const Popper = isServer
   ? function () {}
   : require('popper.js/dist/umd/popper.js') // eslint-disable-line
