@@ -6,7 +6,7 @@
 
 <script>
 import * as Vue from 'vue'
-const isServer = window.$vueApp.config.globalProperties.$isServer
+const isServer = false
 import { getStyle } from '../../utils/assist'
 const Popper = isServer
   ? function () {}

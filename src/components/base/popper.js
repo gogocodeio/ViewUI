@@ -1,5 +1,5 @@
 import * as Vue from 'vue'
-const isServer = window.$vueApp.config.globalProperties.$isServer
+const isServer = false
 const Popper = isServer
   ? function () {}
   : require('popper.js/dist/umd/popper.js') // eslint-disable-line

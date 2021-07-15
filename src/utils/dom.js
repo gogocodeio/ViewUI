@@ -1,5 +1,5 @@
 import * as Vue from 'vue'
-const isServer = window.$vueApp.config.globalProperties.$isServer
+const isServer = false
 
 /* istanbul ignore next */
 export const on = (function () {
