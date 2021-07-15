@@ -40,7 +40,6 @@ export default {
   top: 50%;
   transform: translate(-50%, -50%);
 }
-
 .split-pane-page-wrapper {
   height: 600px;
   .pane {
@@ -74,6 +73,7 @@ export default {
   }
 }
 </style>
+
 <style>
 .demo-split {
   height: 300px;

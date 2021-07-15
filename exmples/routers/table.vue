@@ -129,7 +129,10 @@
     <Table border :columns="columns6" :data="data5"></Table>
   </div>
 </template>
+
 <script>
+import { plantRenderPara } from '../utils/gogocodeTransfer.js'
+import * as Vue from 'vue'
 export default {
   data() {
     return {
@@ -479,26 +482,26 @@ export default {
           key: 'action',
           fixed: 'right',
           width: 120,
-          render: (h, params) => {
-            return h('div', [
-              h(
+          render: (params) => {
+            return Vue.h('div', [
+              Vue.h(
                 'Button',
-                {
+                plantRenderPara({
                   props: {
                     type: 'text',
                     size: 'small',
                   },
-                },
+                }),
                 'View'
               ),
-              h(
+              Vue.h(
                 'Button',
-                {
+                plantRenderPara({
                   props: {
                     type: 'text',
                     size: 'small',
                   },
-                },
+                }),
                 'Edit'
               ),
             ])

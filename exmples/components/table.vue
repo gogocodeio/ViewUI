@@ -1,7 +1,10 @@
 <template>
   <Table width="550" border :columns="columns2" :data="data3"></Table>
 </template>
+
 <script>
+import { plantRenderPara } from '../utils/gogocodeTransfer.js'
+import * as Vue from 'vue'
 export default {
   name: 'etable',
   data() {
@@ -43,26 +46,26 @@ export default {
           key: 'action',
           fixed: 'right',
           width: 120,
-          render: (h, params) => {
-            return h('div', [
-              h(
+          render: (params) => {
+            return Vue.h('div', [
+              Vue.h(
                 'Button',
-                {
+                plantRenderPara({
                   props: {
                     type: 'text',
                     size: 'small',
                   },
-                },
+                }),
                 '查看'
               ),
-              h(
+              Vue.h(
                 'Button',
-                {
+                plantRenderPara({
                   props: {
                     type: 'text',
                     size: 'small',
                   },
-                },
+                }),
                 '编辑'
               ),
             ])

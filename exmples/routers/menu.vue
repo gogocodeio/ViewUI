@@ -29,6 +29,7 @@
     </MenuItem>
   </Menu>
 </template>
+
 <script>
 export default {
   data() {

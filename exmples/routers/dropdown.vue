@@ -49,6 +49,7 @@
     <ColorPicker v-model="color1" transfer />
   </div>
 </template>
+
 <script>
 export default {
   data() {

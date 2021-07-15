@@ -1,13 +1,3 @@
-<style>
-.demo-carousel {
-  height: 200px;
-  line-height: 200px;
-  text-align: center;
-  color: #fff;
-  font-size: 20px;
-  background: #506b9e;
-}
-</style>
 <template>
   <div style="width: 400px">
     <Carousel v-model="value1" loop arrow="always" @on-change="handleChange">
@@ -27,6 +17,7 @@
     <Button @click="value1 = 2">change</Button>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -41,3 +32,14 @@ export default {
   },
 }
 </script>
+
+<style>
+.demo-carousel {
+  height: 200px;
+  line-height: 200px;
+  text-align: center;
+  color: #fff;
+  font-size: 20px;
+  background: #506b9e;
+}
+</style>

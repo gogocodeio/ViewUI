@@ -43,6 +43,7 @@
     <i-switch v-model="switch1" true-color="#13ce66" false-color="#ff4949" />
   </div>
 </template>
+
 <script>
 export default {
   data() {

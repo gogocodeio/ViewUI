@@ -3,6 +3,7 @@
     <Cascader :data="data" v-model="value1"></Cascader>
   </div>
 </template>
+
 <script>
 export default {
   data() {

@@ -48,6 +48,7 @@
     </Layout>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -73,6 +74,7 @@ export default {
   },
 }
 </script>
+
 <style lang="less" scoped>
 .layout-demo-con {
   height: 100%;

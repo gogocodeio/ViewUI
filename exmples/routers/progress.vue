@@ -22,6 +22,7 @@
     <Progress :percent="90" :stroke-color="color2" status="active"></Progress>
   </div>
 </template>
+
 <script>
 export default {
   data() {

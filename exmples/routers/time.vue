@@ -11,6 +11,7 @@
     <Time :time="time4" />
   </div>
 </template>
+
 <script>
 const baseTime = parseInt(Date.now() / 10000000) * 10000000
 

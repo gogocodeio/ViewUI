@@ -12,6 +12,7 @@
     <Button @click="error(true)">Error</Button>
   </div>
 </template>
+
 <script>
 export default {
   methods: {

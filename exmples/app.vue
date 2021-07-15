@@ -1,6 +1,3 @@
-<style lang="less">
-@import '../src/styles/index.less';
-</style>
 <template>
   <div class="container">
     <div>
@@ -66,6 +63,7 @@
     </div>
   </div>
 </template>
+
 <script>
 module.exports = {
   data: function () {
@@ -76,3 +74,7 @@ module.exports = {
   methods: {},
 }
 </script>
+
+<style lang="less">
+@import '../src/styles/index.less';
+</style>

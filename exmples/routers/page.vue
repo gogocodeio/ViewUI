@@ -7,7 +7,7 @@
       show-sizer
       show-elevator
       show-total
-      :current.sync="current"
+      v-model:current="current"
     ></Page>
     {{ current }}
     <Button type="primary" @click="subject">- 1</Button>
@@ -56,6 +56,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data() {

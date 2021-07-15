@@ -19,6 +19,7 @@
     </ul>
   </Card>
 </template>
+
 <script>
 export default {
   data() {

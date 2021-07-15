@@ -14,20 +14,19 @@
         :container="scrollCon"
         show-ink
       >
-        <AnchorLink
-          v-if="(link - 1) % 30 === 0"
+        <template
           v-for="link in 300"
           :key="`link${link}`"
           :href="`#title-${link}`"
           :title="`title-${link}`"
-        >
-          <AnchorLink
-            :scroll-offset="20"
-            v-if="link === 61"
-            href="#title-child-69"
-            title="title-child-69"
-          />
-        </AnchorLink>
+          ><AnchorLink v-if="(link - 1) % 30 === 0">
+            <AnchorLink
+              :scroll-offset="20"
+              v-if="link === 61"
+              href="#title-child-69"
+              title="title-child-69"
+            /> </AnchorLink
+        ></template>
         <AnchorLink :scroll-offset="200" href="#lishi" title="李氏专跳" />
         <AnchorLink
           v-if="showNewLink"
@@ -44,17 +43,11 @@
     >
       <div style="height: 100px"></div>
       <template v-for="i in 300">
-        <h1 v-if="(i - 1) % 30 === 0" :key="`h1${i}`" :id="`title-${i}`">
-          {{ `title-${i}` }}
-        </h1>
-        <h1 v-if="i === 69" :key="`h1${i}`" :id="`title-child-${i}`">
-          {{ `title-${i}` }}
-        </h1>
-        <h1 v-if="i === 75" :key="`h1${i}`" :id="`title-child-${i}`">
-          {{ `title-${i}` }}
-        </h1>
-        <p v-else :key="`p${i}`">{{ `content-row-index-${i}` }}</p>
-        <Collapse v-if="i === 3" v-model="value1" :key="`collapse-${i}`">
+        <h1 v-if="(i - 1) % 30 === 0" :id="`title-${i}`">{{ `title-${i}` }}</h1>
+        <h1 v-if="i === 69" :id="`title-child-${i}`">{{ `title-${i}` }}</h1>
+        <h1 v-if="i === 75" :id="`title-child-${i}`">{{ `title-${i}` }}</h1>
+        <p v-else>{{ `content-row-index-${i}` }}</p>
+        <Collapse v-if="i === 3" v-model="value1">
           <Panel name="1">
             史蒂夫·乔布斯
             <p v-for="index in 50" :key="`ppp-${index}`" slot="content">
@@ -82,21 +75,15 @@
         这是信息司大是大非胜多负少的{{ i }}
       </p>
       <!-- <h1 id="new-link">这是新添加的哦哦哦哦哦 哦 </h1>
-            <p v-for="i in 50" :key="`new-${i}`">这是信息司大是大非胜多负少的{{i}}</p> -->
+              <p v-for="i in 50" :key="`new-${i}`">这是信息司大是大非胜多负少的{{i}}</p> -->
     </div>
     <div v-else>
       <template v-for="i in 300">
-        <h1 v-if="(i - 1) % 30 === 0" :key="`h1${i}`" :id="`title-${i}`">
-          {{ `title-${i}` }}
-        </h1>
-        <h1 v-if="i === 69" :key="`h1${i}`" :id="`title-child-${i}`">
-          {{ `title-${i}` }}
-        </h1>
-        <h1 v-if="i === 75" :key="`h1${i}`" :id="`title-child-${i}`">
-          {{ `title-${i}` }}
-        </h1>
-        <p v-else :key="`p${i}`">{{ `content-row-index-${i}` }}</p>
-        <Collapse v-if="i === 3" v-model="value1" :key="`collapse-${i}`">
+        <h1 v-if="(i - 1) % 30 === 0" :id="`title-${i}`">{{ `title-${i}` }}</h1>
+        <h1 v-if="i === 69" :id="`title-child-${i}`">{{ `title-${i}` }}</h1>
+        <h1 v-if="i === 75" :id="`title-child-${i}`">{{ `title-${i}` }}</h1>
+        <p v-else>{{ `content-row-index-${i}` }}</p>
+        <Collapse v-if="i === 3" v-model="value1">
           <Panel name="1">
             史蒂夫·乔布斯
             <p v-for="index in 50" :key="`ppp-${index}`" slot="content">
@@ -130,6 +117,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -161,6 +149,7 @@ export default {
   },
 }
 </script>
+
 <style lang="less">
 .anchor-wrapper {
   .link-wrapper {

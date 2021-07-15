@@ -7,6 +7,7 @@
     </section>
   </Scroll>
 </template>
+
 <script>
 export default {
   data() {
@@ -36,6 +37,7 @@ export default {
   },
 }
 </script>
+
 <style>
 section {
   margin: 20px;
@@ -49,7 +51,6 @@ section > div {
   border-radius: 5px;
   margin: 0 auto;
 }
-
 .ivu-scroll-container {
   height: 500px;
 }

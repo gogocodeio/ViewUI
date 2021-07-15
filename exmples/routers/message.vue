@@ -8,6 +8,7 @@
     <Button @click="closable">Display a closable message</Button>
   </div>
 </template>
+
 <script>
 export default {
   methods: {
