@@ -2,7 +2,7 @@
  * 公共配置
  */
 const path = require('path');
-// const webpack = require('webpack');
+const webpack = require('webpack');
 // const pkg = require('../package.json');
 const { VueLoaderPlugin } = require('vue-loader');
 
@@ -150,5 +150,9 @@ module.exports = {
     },
     plugins: [
         new VueLoaderPlugin(),
+        new webpack.DefinePlugin({
+            __VUE_OPTIONS_API__: JSON.stringify(true),
+            __VUE_PROD_DEVTOOLS__: JSON.stringify(false)
+        })
     ]
 };

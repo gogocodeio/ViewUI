@@ -161,16 +161,16 @@ const iview = {
   iTime: Time,
 }
 
-const install = function (Vue, opts = {}) {
+const install = function (app, opts = {}) {
   if (install.installed) return
   locale.use(opts.locale)
   locale.i18n(opts.i18n)
 
   Object.keys(iview).forEach((key) => {
-    window.$vueApp.component(key, iview[key])
+    app.component(key, iview[key])
   })
 
-  window.$vueApp.config.globalProperties.$IVIEW = {
+  app.config.globalProperties.$IVIEW = {
     size: opts.size || '',
     transfer: 'transfer' in opts ? opts.transfer : '',
     capture: 'capture' in opts ? opts.capture : true,
@@ -335,11 +335,11 @@ const install = function (Vue, opts = {}) {
     },
   }
 
-  window.$vueApp.config.globalProperties.$Loading = LoadingBar
-  window.$vueApp.config.globalProperties.$Message = Message
-  window.$vueApp.config.globalProperties.$Modal = Modal
-  window.$vueApp.config.globalProperties.$Notice = Notice
-  window.$vueApp.config.globalProperties.$Spin = Spin
+  app.config.globalProperties.$Loading = LoadingBar
+  app.config.globalProperties.$Message = Message
+  app.config.globalProperties.$Modal = Modal
+  app.config.globalProperties.$Notice = Notice
+  app.config.globalProperties.$Spin = Spin
 }
 
 // auto install

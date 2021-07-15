@@ -9,6 +9,9 @@ import iView from '../src/index'
 // import locale from '../src/locale/lang/en-US';
 import locale from '../src/locale/lang/zh-CN'
 
+
+window.$vueApp = Vue.createApp(App)
+
 window.$vueApp.use(iView, {
   locale,
   capture: true,
@@ -18,9 +21,8 @@ window.$vueApp.use(iView, {
 window.$vueApp.config.debug = true
 
 // 路由配置
-const router = new VueRouter({
-  esModule: false,
-  mode: 'history',
+const router = VueRouter.createRouter({
+  history: VueRouter.createWebHistory(),
   routes: [
     {
       path: '/split',
@@ -240,10 +242,9 @@ const router = new VueRouter({
     },
   ],
 })
+window.$vueApp.use(router)
 
-const app = (window.$vueApp = Vue.createApp(App))
 window.$vueApp.mount('#app')
 window.$vueApp.config.globalProperties.routerAppend = (path, pathToAppend) => {
   return path + (path.endsWith('/') ? '' : '/') + pathToAppend
 }
-window.$vueApp.use(router)

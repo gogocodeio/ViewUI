@@ -36,6 +36,7 @@
     "prepare": "npm run dist",
     "transform:src": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./src -o ./src",
     "transform:examples": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./examples -o ./examples",
+    "transform:pkgjson": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./package.json -o ./package.json",
     "pretty:src": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-prettier/index.js -s ./src -o ./src",
     "pretty:examples": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-prettier/index.js -s ./examples -o ./examples"
   },
@@ -56,7 +57,8 @@
     "lodash.throttle": "^4.1.1",
     "popper.js": "^1.14.6",
     "tinycolor2": "^1.4.1",
-    "v-click-outside-x": "^3.7.1"
+    "v-click-outside-x": "^3.7.1",
+    "tiny-emitter/instance": "^2.1.0"
   },
   "peerDependencies": {
     "vue": "^2.6.10"
@@ -118,7 +120,7 @@
     "vue-hot-reload-api": "^2.3.1",
     "vue-html-loader": "^1.2.4",
     "vue-loader": "^16.2.0",
-    "vue-router": "^3.1.3",
+    "vue-router": "^4.0.10",
     "vue-style-loader": "^4.1.2",
     "webpack": "^4.46.0",
     "webpack-cli": "^4.7.2",
