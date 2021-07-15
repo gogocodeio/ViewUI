@@ -73,7 +73,7 @@
       <Checkbox
         :indeterminate="indeterminate"
         :value="checkAll"
-        @click.prevent.native="handleCheckAll"
+        @click.prevent="handleCheckAll"
         >全选</Checkbox
       >
     </div>
@@ -106,6 +106,7 @@
     <Checkbox v-model="single" size="large" border>单独</Checkbox>
   </div>
 </template>
+
 <script>
 export default {
   data() {

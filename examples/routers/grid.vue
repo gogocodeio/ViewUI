@@ -1,141 +1,3 @@
-<style>
-.demo-row {
-  margin-bottom: 5px;
-  background-image: -webkit-linear-gradient(
-    0deg,
-    #f5f5f5 4.16666667%,
-    transparent 4.16666667%,
-    transparent 8.33333333%,
-    #f5f5f5 8.33333333%,
-    #f5f5f5 12.5%,
-    transparent 12.5%,
-    transparent 16.66666667%,
-    #f5f5f5 16.66666667%,
-    #f5f5f5 20.83333333%,
-    transparent 20.83333333%,
-    transparent 25%,
-    #f5f5f5 25%,
-    #f5f5f5 29.16666667%,
-    transparent 29.16666667%,
-    transparent 33.33333333%,
-    #f5f5f5 33.33333333%,
-    #f5f5f5 37.5%,
-    transparent 37.5%,
-    transparent 41.66666667%,
-    #f5f5f5 41.66666667%,
-    #f5f5f5 45.83333333%,
-    transparent 45.83333333%,
-    transparent 50%,
-    #f5f5f5 50%,
-    #f5f5f5 54.16666667%,
-    transparent 54.16666667%,
-    transparent 58.33333333%,
-    #f5f5f5 58.33333333%,
-    #f5f5f5 62.5%,
-    transparent 62.5%,
-    transparent 66.66666667%,
-    #f5f5f5 66.66666667%,
-    #f5f5f5 70.83333333%,
-    transparent 70.83333333%,
-    transparent 75%,
-    #f5f5f5 75%,
-    #f5f5f5 79.16666667%,
-    transparent 79.16666667%,
-    transparent 83.33333333%,
-    #f5f5f5 83.33333333%,
-    #f5f5f5 87.5%,
-    transparent 87.5%,
-    transparent 91.66666667%,
-    #f5f5f5 91.66666667%,
-    #f5f5f5 95.83333333%,
-    transparent 95.83333333%
-  );
-  background-image: linear-gradient(
-    90deg,
-    #f5f5f5 4.16666667%,
-    transparent 4.16666667%,
-    transparent 8.33333333%,
-    #f5f5f5 8.33333333%,
-    #f5f5f5 12.5%,
-    transparent 12.5%,
-    transparent 16.66666667%,
-    #f5f5f5 16.66666667%,
-    #f5f5f5 20.83333333%,
-    transparent 20.83333333%,
-    transparent 25%,
-    #f5f5f5 25%,
-    #f5f5f5 29.16666667%,
-    transparent 29.16666667%,
-    transparent 33.33333333%,
-    #f5f5f5 33.33333333%,
-    #f5f5f5 37.5%,
-    transparent 37.5%,
-    transparent 41.66666667%,
-    #f5f5f5 41.66666667%,
-    #f5f5f5 45.83333333%,
-    transparent 45.83333333%,
-    transparent 50%,
-    #f5f5f5 50%,
-    #f5f5f5 54.16666667%,
-    transparent 54.16666667%,
-    transparent 58.33333333%,
-    #f5f5f5 58.33333333%,
-    #f5f5f5 62.5%,
-    transparent 62.5%,
-    transparent 66.66666667%,
-    #f5f5f5 66.66666667%,
-    #f5f5f5 70.83333333%,
-    transparent 70.83333333%,
-    transparent 75%,
-    #f5f5f5 75%,
-    #f5f5f5 79.16666667%,
-    transparent 79.16666667%,
-    transparent 83.33333333%,
-    #f5f5f5 83.33333333%,
-    #f5f5f5 87.5%,
-    transparent 87.5%,
-    transparent 91.66666667%,
-    #f5f5f5 91.66666667%,
-    #f5f5f5 95.83333333%,
-    transparent 95.83333333%
-  );
-}
-.demo-col {
-  color: #fff;
-  padding: 30px 0;
-  text-align: center;
-  font-size: 18px;
-  background: rgba(0, 153, 229, 0.7);
-}
-.demo-col.light {
-  background: rgba(0, 153, 229, 0.5);
-}
-.demo-row.light .demo-col {
-  background: rgba(0, 153, 229, 0.5);
-}
-.demo-row.light .demo-col.light {
-  background: rgba(0, 153, 229, 0.3);
-}
-
-.example-demo .ivu-col,
-.example-demo .ivu-col div {
-  color: #fff;
-  padding: 10px 0;
-  text-align: center;
-  background: rgba(0, 153, 229, 0.9);
-}
-.example-demo .gutter .ivu-col {
-  background: transparent !important;
-}
-.example-demo .ivu-col:nth-child(odd),
-.example-demo .ivu-col:nth-child(odd) div {
-  background: rgba(0, 153, 229, 0.7);
-}
-
-.code-row-bg {
-  background: rgba(0, 0, 0, 0.05);
-}
-</style>
 <template>
   <div class="example-demo">
     <Row>
@@ -287,6 +149,7 @@
     </Row>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -301,3 +164,140 @@ export default {
   },
 }
 </script>
+
+<style>
+.demo-row {
+  margin-bottom: 5px;
+  background-image: -webkit-linear-gradient(
+    0deg,
+    #f5f5f5 4.16666667%,
+    transparent 4.16666667%,
+    transparent 8.33333333%,
+    #f5f5f5 8.33333333%,
+    #f5f5f5 12.5%,
+    transparent 12.5%,
+    transparent 16.66666667%,
+    #f5f5f5 16.66666667%,
+    #f5f5f5 20.83333333%,
+    transparent 20.83333333%,
+    transparent 25%,
+    #f5f5f5 25%,
+    #f5f5f5 29.16666667%,
+    transparent 29.16666667%,
+    transparent 33.33333333%,
+    #f5f5f5 33.33333333%,
+    #f5f5f5 37.5%,
+    transparent 37.5%,
+    transparent 41.66666667%,
+    #f5f5f5 41.66666667%,
+    #f5f5f5 45.83333333%,
+    transparent 45.83333333%,
+    transparent 50%,
+    #f5f5f5 50%,
+    #f5f5f5 54.16666667%,
+    transparent 54.16666667%,
+    transparent 58.33333333%,
+    #f5f5f5 58.33333333%,
+    #f5f5f5 62.5%,
+    transparent 62.5%,
+    transparent 66.66666667%,
+    #f5f5f5 66.66666667%,
+    #f5f5f5 70.83333333%,
+    transparent 70.83333333%,
+    transparent 75%,
+    #f5f5f5 75%,
+    #f5f5f5 79.16666667%,
+    transparent 79.16666667%,
+    transparent 83.33333333%,
+    #f5f5f5 83.33333333%,
+    #f5f5f5 87.5%,
+    transparent 87.5%,
+    transparent 91.66666667%,
+    #f5f5f5 91.66666667%,
+    #f5f5f5 95.83333333%,
+    transparent 95.83333333%
+  );
+  background-image: linear-gradient(
+    90deg,
+    #f5f5f5 4.16666667%,
+    transparent 4.16666667%,
+    transparent 8.33333333%,
+    #f5f5f5 8.33333333%,
+    #f5f5f5 12.5%,
+    transparent 12.5%,
+    transparent 16.66666667%,
+    #f5f5f5 16.66666667%,
+    #f5f5f5 20.83333333%,
+    transparent 20.83333333%,
+    transparent 25%,
+    #f5f5f5 25%,
+    #f5f5f5 29.16666667%,
+    transparent 29.16666667%,
+    transparent 33.33333333%,
+    #f5f5f5 33.33333333%,
+    #f5f5f5 37.5%,
+    transparent 37.5%,
+    transparent 41.66666667%,
+    #f5f5f5 41.66666667%,
+    #f5f5f5 45.83333333%,
+    transparent 45.83333333%,
+    transparent 50%,
+    #f5f5f5 50%,
+    #f5f5f5 54.16666667%,
+    transparent 54.16666667%,
+    transparent 58.33333333%,
+    #f5f5f5 58.33333333%,
+    #f5f5f5 62.5%,
+    transparent 62.5%,
+    transparent 66.66666667%,
+    #f5f5f5 66.66666667%,
+    #f5f5f5 70.83333333%,
+    transparent 70.83333333%,
+    transparent 75%,
+    #f5f5f5 75%,
+    #f5f5f5 79.16666667%,
+    transparent 79.16666667%,
+    transparent 83.33333333%,
+    #f5f5f5 83.33333333%,
+    #f5f5f5 87.5%,
+    transparent 87.5%,
+    transparent 91.66666667%,
+    #f5f5f5 91.66666667%,
+    #f5f5f5 95.83333333%,
+    transparent 95.83333333%
+  );
+}
+.demo-col {
+  color: #fff;
+  padding: 30px 0;
+  text-align: center;
+  font-size: 18px;
+  background: rgba(0, 153, 229, 0.7);
+}
+.demo-col.light {
+  background: rgba(0, 153, 229, 0.5);
+}
+.demo-row.light .demo-col {
+  background: rgba(0, 153, 229, 0.5);
+}
+.demo-row.light .demo-col.light {
+  background: rgba(0, 153, 229, 0.3);
+}
+.example-demo .ivu-col,
+.example-demo .ivu-col div {
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  background: rgba(0, 153, 229, 0.9);
+}
+.example-demo .gutter .ivu-col {
+  background: transparent !important;
+}
+.example-demo .ivu-col:nth-child(odd),
+.example-demo .ivu-col:nth-child(odd) div {
+  background: rgba(0, 153, 229, 0.7);
+}
+.code-row-bg {
+  background: rgba(0, 0, 0, 0.05);
+}
+</style>

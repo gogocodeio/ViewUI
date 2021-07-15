@@ -1,22 +1,6 @@
-<style lang="less">
-.vertical-center-modal {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  .ivu-modal {
-    top: 0;
-  }
-}
-
-.placeholder {
-  min-height: 2000px;
-  width: 1px;
-}
-</style>
 <template>
   <i-button @click="modal9 = true">距离顶部 20px</i-button>
-  <Modal title="对话框标题" :visible.sync="modal9" :style="{ top: '20px' }">
+  <Modal title="对话框标题" v-model:visible="modal9" :style="{ top: '20px' }">
     <p>对话框内容</p>
     <p>对话框内容</p>
     <p>对话框内容</p>
@@ -24,7 +8,7 @@
   <i-button @click="modal10 = true">垂直居中</i-button>
   <Modal
     title="对话框标题"
-    :visible.sync="modal10"
+    v-model:visible="modal10"
     class-name="vertical-center-modal"
   >
     <p>对话框内容</p>
@@ -35,6 +19,7 @@
   <i-button @click="instance(false)">Create Instance Non-scrollable</i-button>
   <div class="placeholder"></div>
 </template>
+
 <script>
 export default {
   data() {
@@ -63,3 +48,18 @@ export default {
   },
 }
 </script>
+
+<style lang="less">
+.vertical-center-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .ivu-modal {
+    top: 0;
+  }
+}
+.placeholder {
+  min-height: 2000px;
+  width: 1px;
+}
+</style>

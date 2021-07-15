@@ -1,9 +1,3 @@
-<style>
-.demo-breadcrumb-separator {
-  color: #ff5500;
-  padding: 0 5px;
-}
-</style>
 <template>
   <div>
     <Breadcrumb separator="<b class='demo-breadcrumb-separator'>=></b>">
@@ -33,6 +27,14 @@
     </Breadcrumb>
   </div>
 </template>
+
 <script>
 export default {}
 </script>
+
+<style>
+.demo-breadcrumb-separator {
+  color: #ff5500;
+  padding: 0 5px;
+}
+</style>

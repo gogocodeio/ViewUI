@@ -1,11 +1,7 @@
-<style>
-body {
-  /*height: 2000px;*/
-}
-</style>
 <template>
   <BackTop> </BackTop>
 </template>
+
 <script>
 export default {
   data() {
@@ -14,3 +10,8 @@ export default {
   mounted() {},
 }
 </script>
+
+<style>
+body {
+}
+</style>

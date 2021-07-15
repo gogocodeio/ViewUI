@@ -5,6 +5,7 @@
     <Slider v-model="value7" range :marks="marks"></Slider>
   </div>
 </template>
+
 <script>
 export default {
   data() {

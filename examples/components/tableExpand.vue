@@ -1,8 +1,3 @@
-<style scoped>
-.expand-row {
-  margin-bottom: 16px;
-}
-</style>
 <template>
   <div>
     <Row class="expand-row">
@@ -35,6 +30,7 @@
     </Row>
   </div>
 </template>
+
 <script>
 export default {
   props: {
@@ -42,3 +38,9 @@ export default {
   },
 }
 </script>
+
+<style scoped>
+.expand-row {
+  margin-bottom: 16px;
+}
+</style>

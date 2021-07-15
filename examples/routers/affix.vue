@@ -1,14 +1,3 @@
-<style>
-body {
-  /*height: 2000px;*/
-}
-.demo-affix {
-  width: 100px;
-  height: 30px;
-  background: #f60;
-  color: #fff;
-}
-</style>
 <template>
   <div>
     <Affix>
@@ -17,6 +6,7 @@ body {
     <div v-for="(item, index) in arr">{{ item }}</div>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -31,3 +21,14 @@ export default {
   },
 }
 </script>
+
+<style>
+body {
+}
+.demo-affix {
+  width: 100px;
+  height: 30px;
+  background: #f60;
+  color: #fff;
+}
+</style>

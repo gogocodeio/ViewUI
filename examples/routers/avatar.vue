@@ -49,6 +49,7 @@
     <Avatar size="42">U</Avatar>
   </div>
 </template>
+
 <script>
 const UserList = ['二', '小二', '三', '二个人']
 const ColorList = ['#f56a00', '#7265e6', '#ffbf00', '#00a2ae']

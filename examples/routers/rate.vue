@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Rate v-model="value"></Rate>
+    <Rate v-model="modelValue"></Rate>
     <Rate allow-half v-model="valueHalf"></Rate>
     <Rate clearable v-model="valueClear"></Rate>
     <Rate clearable allow-half v-model="valueClearHalf"></Rate>
@@ -13,6 +13,7 @@
     <!--<Rate disabled  allow-half v-model="valueDisabled"></Rate>-->
   </div>
 </template>
+
 <script>
 export default {
   data() {
