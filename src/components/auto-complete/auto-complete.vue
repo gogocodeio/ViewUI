@@ -85,9 +85,9 @@ export default {
         return oneOf(value, ['small', 'large', 'default'])
       },
       default() {
-        return !this.$IVIEW || this.$IVIEW.size === ''
+        return !window.$IVIEW || window.$IVIEW.size === ''
           ? 'default'
-          : this.$IVIEW.size
+          : window.$IVIEW.size
       },
     },
     icon: {
@@ -113,9 +113,9 @@ export default {
     transfer: {
       type: Boolean,
       default() {
-        return !this.$IVIEW || this.$IVIEW.transfer === ''
+        return !window.$IVIEW || window.$IVIEW.transfer === ''
           ? false
-          : this.$IVIEW.transfer
+          : window.$IVIEW.transfer
       },
     },
     name: {
@@ -131,7 +131,7 @@ export default {
     capture: {
       type: Boolean,
       default() {
-        return !this.$IVIEW ? true : this.$IVIEW.capture
+        return !window.$IVIEW ? true : window.$IVIEW.capture
       },
     },
     // 4.6.0

@@ -136,9 +136,9 @@ export default {
         return oneOf(value, ['small', 'large', 'default'])
       },
       default() {
-        return !this.$IVIEW || this.$IVIEW.size === ''
+        return !window.$IVIEW || window.$IVIEW.size === ''
           ? 'default'
-          : this.$IVIEW.size
+          : window.$IVIEW.size
       },
     },
     trigger: {
@@ -170,9 +170,9 @@ export default {
     transfer: {
       type: Boolean,
       default() {
-        return !this.$IVIEW || this.$IVIEW.transfer === ''
+        return !window.$IVIEW || window.$IVIEW.transfer === ''
           ? false
-          : this.$IVIEW.transfer
+          : window.$IVIEW.transfer
       },
     },
     name: {
@@ -185,7 +185,7 @@ export default {
     capture: {
       type: Boolean,
       default() {
-        return !this.$IVIEW ? true : this.$IVIEW.capture
+        return !window.$IVIEW ? true : window.$IVIEW.capture
       },
     },
     transferClassName: {
@@ -306,11 +306,11 @@ export default {
     arrowType() {
       let type = 'ios-arrow-down'
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.cascader.customArrow) {
+      if (window.$IVIEW) {
+        if (window.$IVIEW.cascader.customArrow) {
           type = ''
-        } else if (this.$IVIEW.cascader.arrow) {
-          type = this.$IVIEW.cascader.arrow
+        } else if (window.$IVIEW.cascader.arrow) {
+          type = window.$IVIEW.cascader.arrow
         }
       }
       return type
@@ -319,9 +319,9 @@ export default {
     customArrowType() {
       let type = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.cascader.customArrow) {
-          type = this.$IVIEW.cascader.customArrow
+      if (window.$IVIEW) {
+        if (window.$IVIEW.cascader.customArrow) {
+          type = window.$IVIEW.cascader.customArrow
         }
       }
       return type
@@ -330,9 +330,9 @@ export default {
     arrowSize() {
       let size = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.cascader.arrowSize) {
-          size = this.$IVIEW.cascader.arrowSize
+      if (window.$IVIEW) {
+        if (window.$IVIEW.cascader.arrowSize) {
+          size = window.$IVIEW.cascader.arrowSize
         }
       }
       return size

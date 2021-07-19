@@ -255,11 +255,11 @@ export default {
     arrowType() {
       let type = 'ios-close'
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.tabs.customCloseIcon) {
+      if (window.$IVIEW) {
+        if (window.$IVIEW.tabs.customCloseIcon) {
           type = ''
-        } else if (this.$IVIEW.tabs.closeIcon) {
-          type = this.$IVIEW.tabs.closeIcon
+        } else if (window.$IVIEW.tabs.closeIcon) {
+          type = window.$IVIEW.tabs.closeIcon
         }
       }
       return type
@@ -268,9 +268,9 @@ export default {
     customArrowType() {
       let type = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.tabs.customCloseIcon) {
-          type = this.$IVIEW.tabs.customCloseIcon
+      if (window.$IVIEW) {
+        if (window.$IVIEW.tabs.customCloseIcon) {
+          type = window.$IVIEW.tabs.customCloseIcon
         }
       }
       return type
@@ -279,9 +279,9 @@ export default {
     arrowSize() {
       let size = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.tabs.closeIconSize) {
-          size = this.$IVIEW.tabs.closeIconSize
+      if (window.$IVIEW) {
+        if (window.$IVIEW.tabs.closeIconSize) {
+          size = window.$IVIEW.tabs.closeIconSize
         }
       }
       return size

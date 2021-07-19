@@ -122,9 +122,9 @@ export default {
     transfer: {
       type: Boolean,
       default() {
-        return !this.$IVIEW || this.$IVIEW.transfer === ''
+        return !window.$IVIEW || window.$IVIEW.transfer === ''
           ? true
-          : this.$IVIEW.transfer
+          : window.$IVIEW.transfer
       },
     },
     className: {

@@ -84,9 +84,9 @@ export default {
     transfer: {
       type: Boolean,
       default() {
-        return !this.$IVIEW || this.$IVIEW.transfer === ''
+        return !window.$IVIEW || window.$IVIEW.transfer === ''
           ? false
-          : this.$IVIEW.transfer
+          : window.$IVIEW.transfer
       },
     },
     transferClassName: {
@@ -100,7 +100,7 @@ export default {
     capture: {
       type: Boolean,
       default() {
-        return !this.$IVIEW ? true : this.$IVIEW.capture
+        return !window.$IVIEW ? true : window.$IVIEW.capture
       },
     },
     // 4.6.0

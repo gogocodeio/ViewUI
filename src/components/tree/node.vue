@@ -164,11 +164,11 @@ export default {
     arrowType() {
       let type = 'ios-arrow-forward'
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.tree.customArrow) {
+      if (window.$IVIEW) {
+        if (window.$IVIEW.tree.customArrow) {
           type = ''
-        } else if (this.$IVIEW.tree.arrow) {
-          type = this.$IVIEW.tree.arrow
+        } else if (window.$IVIEW.tree.arrow) {
+          type = window.$IVIEW.tree.arrow
         }
       }
       return type
@@ -177,9 +177,9 @@ export default {
     customArrowType() {
       let type = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.tree.customArrow) {
-          type = this.$IVIEW.tree.customArrow
+      if (window.$IVIEW) {
+        if (window.$IVIEW.tree.customArrow) {
+          type = window.$IVIEW.tree.customArrow
         }
       }
       return type
@@ -188,9 +188,9 @@ export default {
     arrowSize() {
       let size = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.tree.arrowSize) {
-          size = this.$IVIEW.tree.arrowSize
+      if (window.$IVIEW) {
+        if (window.$IVIEW.tree.arrowSize) {
+          size = window.$IVIEW.tree.arrowSize
         }
       }
       return size

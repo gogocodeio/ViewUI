@@ -220,11 +220,11 @@ export default {
     arrowType() {
       let type = 'ios-arrow-down'
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.select.customArrow) {
+      if (window.$IVIEW) {
+        if (window.$IVIEW.select.customArrow) {
           type = ''
-        } else if (this.$IVIEW.select.arrow) {
-          type = this.$IVIEW.select.arrow
+        } else if (window.$IVIEW.select.arrow) {
+          type = window.$IVIEW.select.arrow
         }
       }
       return type
@@ -233,9 +233,9 @@ export default {
     customArrowType() {
       let type = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.select.customArrow) {
-          type = this.$IVIEW.select.customArrow
+      if (window.$IVIEW) {
+        if (window.$IVIEW.select.customArrow) {
+          type = window.$IVIEW.select.customArrow
         }
       }
       return type
@@ -244,9 +244,9 @@ export default {
     arrowSize() {
       let size = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.select.arrowSize) {
-          size = this.$IVIEW.select.arrowSize
+      if (window.$IVIEW) {
+        if (window.$IVIEW.select.arrowSize) {
+          size = window.$IVIEW.select.arrowSize
         }
       }
       return size

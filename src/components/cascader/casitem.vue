@@ -54,11 +54,11 @@ export default {
     arrowType() {
       let type = 'ios-arrow-forward'
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.cascader.customItemArrow) {
+      if (window.$IVIEW) {
+        if (window.$IVIEW.cascader.customItemArrow) {
           type = ''
-        } else if (this.$IVIEW.cascader.itemArrow) {
-          type = this.$IVIEW.cascader.itemArrow
+        } else if (window.$IVIEW.cascader.itemArrow) {
+          type = window.$IVIEW.cascader.itemArrow
         }
       }
       return type
@@ -67,9 +67,9 @@ export default {
     customArrowType() {
       let type = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.cascader.customItemArrow) {
-          type = this.$IVIEW.cascader.customItemArrow
+      if (window.$IVIEW) {
+        if (window.$IVIEW.cascader.customItemArrow) {
+          type = window.$IVIEW.cascader.customItemArrow
         }
       }
       return type
@@ -78,9 +78,9 @@ export default {
     arrowSize() {
       let size = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.cascader.itemArrowSize) {
-          size = this.$IVIEW.cascader.itemArrowSize
+      if (window.$IVIEW) {
+        if (window.$IVIEW.cascader.itemArrowSize) {
+          size = window.$IVIEW.cascader.itemArrowSize
         }
       }
       return size

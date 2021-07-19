@@ -183,9 +183,9 @@ export default {
         return oneOf(value, ['small', 'large', 'default'])
       },
       default() {
-        return !this.$IVIEW || this.$IVIEW.size === ''
+        return !window.$IVIEW || window.$IVIEW.size === ''
           ? 'default'
-          : this.$IVIEW.size
+          : window.$IVIEW.size
       },
     },
     hideDropDown: {
@@ -215,9 +215,9 @@ export default {
     transfer: {
       type: Boolean,
       default() {
-        return !this.$IVIEW || this.$IVIEW.transfer === ''
+        return !window.$IVIEW || window.$IVIEW.transfer === ''
           ? false
-          : this.$IVIEW.transfer
+          : window.$IVIEW.transfer
       },
     },
     name: {
@@ -232,7 +232,7 @@ export default {
     capture: {
       type: Boolean,
       default() {
-        return !this.$IVIEW ? true : this.$IVIEW.capture
+        return !window.$IVIEW ? true : window.$IVIEW.capture
       },
     },
     transferClassName: {
@@ -385,11 +385,11 @@ export default {
     arrowType() {
       let type = 'ios-arrow-down'
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.colorPicker.customArrow) {
+      if (window.$IVIEW) {
+        if (window.$IVIEW.colorPicker.customArrow) {
           type = ''
-        } else if (this.$IVIEW.colorPicker.arrow) {
-          type = this.$IVIEW.colorPicker.arrow
+        } else if (window.$IVIEW.colorPicker.arrow) {
+          type = window.$IVIEW.colorPicker.arrow
         }
       }
       return type
@@ -398,9 +398,9 @@ export default {
     customArrowType() {
       let type = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.colorPicker.customArrow) {
-          type = this.$IVIEW.colorPicker.customArrow
+      if (window.$IVIEW) {
+        if (window.$IVIEW.colorPicker.customArrow) {
+          type = window.$IVIEW.colorPicker.customArrow
         }
       }
       return type
@@ -409,9 +409,9 @@ export default {
     arrowSize() {
       let size = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.colorPicker.arrowSize) {
-          size = this.$IVIEW.colorPicker.arrowSize
+      if (window.$IVIEW) {
+        if (window.$IVIEW.colorPicker.arrowSize) {
+          size = window.$IVIEW.colorPicker.arrowSize
         }
       }
       return size

@@ -170,7 +170,7 @@ const install = function (app, opts = {}) {
     app.component(key, iview[key])
   })
 
-  app.config.globalProperties.$IVIEW = {
+  const $IVIEW = {
     size: opts.size || '',
     transfer: 'transfer' in opts ? opts.transfer : '',
     capture: 'capture' in opts ? opts.capture : true,
@@ -334,7 +334,8 @@ const install = function (app, opts = {}) {
         : '',
     },
   }
-
+  window.$IVIEW = $IVIEW
+  app.config.globalProperties.$IVIEW = $IVIEW
   app.config.globalProperties.$Loading = LoadingBar
   app.config.globalProperties.$Message = Message
   app.config.globalProperties.$Modal = Modal
@@ -343,9 +344,9 @@ const install = function (app, opts = {}) {
 }
 
 // auto install
-if (typeof window !== 'undefined' && window.Vue) {
-  install(window.Vue)
-}
+// if (typeof window !== 'undefined' && window.Vue) {
+//   install(window.Vue)
+// }
 
 const API = {
   version: process.env.VERSION, // eslint-disable-line no-undef

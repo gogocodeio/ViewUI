@@ -102,11 +102,11 @@ export default {
     arrowType() {
       let type = 'ios-arrow-down'
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.menu.customArrow) {
+      if (window.$IVIEW) {
+        if (window.$IVIEW.menu.customArrow) {
           type = ''
-        } else if (this.$IVIEW.menu.arrow) {
-          type = this.$IVIEW.menu.arrow
+        } else if (window.$IVIEW.menu.arrow) {
+          type = window.$IVIEW.menu.arrow
         }
       }
       return type
@@ -115,9 +115,9 @@ export default {
     customArrowType() {
       let type = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.menu.customArrow) {
-          type = this.$IVIEW.menu.customArrow
+      if (window.$IVIEW) {
+        if (window.$IVIEW.menu.customArrow) {
+          type = window.$IVIEW.menu.customArrow
         }
       }
       return type
@@ -126,9 +126,9 @@ export default {
     arrowSize() {
       let size = ''
 
-      if (this.$IVIEW) {
-        if (this.$IVIEW.menu.arrowSize) {
-          size = this.$IVIEW.menu.arrowSize
+      if (window.$IVIEW) {
+        if (window.$IVIEW.menu.arrowSize) {
+          size = window.$IVIEW.menu.arrowSize
         }
       }
       return size

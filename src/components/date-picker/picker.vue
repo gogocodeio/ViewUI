@@ -185,9 +185,9 @@ export default {
         return oneOf(value, ['small', 'large', 'default'])
       },
       default() {
-        return !this.$IVIEW || this.$IVIEW.size === ''
+        return !window.$IVIEW || window.$IVIEW.size === ''
           ? 'default'
-          : this.$IVIEW.size
+          : window.$IVIEW.size
       },
     },
     placeholder: {
@@ -216,9 +216,9 @@ export default {
     transfer: {
       type: Boolean,
       default() {
-        return !this.$IVIEW || this.$IVIEW.transfer === ''
+        return !window.$IVIEW || window.$IVIEW.transfer === ''
           ? false
-          : this.$IVIEW.transfer
+          : window.$IVIEW.transfer
       },
     },
     name: {
@@ -246,7 +246,7 @@ export default {
     capture: {
       type: Boolean,
       default() {
-        return !this.$IVIEW ? true : this.$IVIEW.capture
+        return !window.$IVIEW ? true : window.$IVIEW.capture
       },
     },
     transferClassName: {
@@ -343,21 +343,21 @@ export default {
       if (this.type === 'time' || this.type === 'timerange') {
         type = 'ios-time-outline'
 
-        if (this.$IVIEW) {
-          if (this.$IVIEW.timePicker.customIcon) {
+        if (window.$IVIEW) {
+          if (window.$IVIEW.timePicker.customIcon) {
             type = ''
-          } else if (this.$IVIEW.timePicker.icon) {
-            type = this.$IVIEW.timePicker.icon
+          } else if (window.$IVIEW.timePicker.icon) {
+            type = window.$IVIEW.timePicker.icon
           }
         }
       } else {
         type = 'ios-calendar-outline'
 
-        if (this.$IVIEW) {
-          if (this.$IVIEW.datePicker.customIcon) {
+        if (window.$IVIEW) {
+          if (window.$IVIEW.datePicker.customIcon) {
             type = ''
-          } else if (this.$IVIEW.datePicker.icon) {
-            type = this.$IVIEW.datePicker.icon
+          } else if (window.$IVIEW.datePicker.icon) {
+            type = window.$IVIEW.datePicker.icon
           }
         }
       }
@@ -372,15 +372,15 @@ export default {
 
       if (!this.showClose) {
         if (this.type === 'time' || this.type === 'timerange') {
-          if (this.$IVIEW) {
-            if (this.$IVIEW.timePicker.customIcon) {
-              type = this.$IVIEW.timePicker.customIcon
+          if (window.$IVIEW) {
+            if (window.$IVIEW.timePicker.customIcon) {
+              type = window.$IVIEW.timePicker.customIcon
             }
           }
         } else {
-          if (this.$IVIEW) {
-            if (this.$IVIEW.datePicker.customIcon) {
-              type = this.$IVIEW.datePicker.customIcon
+          if (window.$IVIEW) {
+            if (window.$IVIEW.datePicker.customIcon) {
+              type = window.$IVIEW.datePicker.customIcon
             }
           }
         }
@@ -394,15 +394,15 @@ export default {
 
       if (!this.showClose) {
         if (this.type === 'time' || this.type === 'timerange') {
-          if (this.$IVIEW) {
-            if (this.$IVIEW.timePicker.iconSize) {
-              size = this.$IVIEW.timePicker.iconSize
+          if (window.$IVIEW) {
+            if (window.$IVIEW.timePicker.iconSize) {
+              size = window.$IVIEW.timePicker.iconSize
             }
           }
         } else {
-          if (this.$IVIEW) {
-            if (this.$IVIEW.datePicker.iconSize) {
-              size = this.$IVIEW.datePicker.iconSize
+          if (window.$IVIEW) {
+            if (window.$IVIEW.datePicker.iconSize) {
+              size = window.$IVIEW.datePicker.iconSize
             }
           }
         }
