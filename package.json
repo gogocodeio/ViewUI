@@ -58,7 +58,7 @@
     "popper.js": "^1.14.6",
     "tinycolor2": "^1.4.1",
     "v-click-outside-x": "^3.7.1",
-    "tiny-emitter/instance": "^2.1.0"
+    "tiny-emitter": "^2.1.0"
   },
   "peerDependencies": {
     "vue": "^2.6.10"
