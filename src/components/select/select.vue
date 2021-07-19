@@ -384,7 +384,7 @@ export default {
       query: '',
       initialLabel: this.label,
       hasMouseHoverHead: false,
-      slotOptions: this.$slots.default(),
+      slotOptions: this.$slots.default && this.$slots.default(),
       caretPosition: -1,
       lastRemoteQuery: '',
       unchangedQuery: true,
@@ -879,7 +879,7 @@ export default {
       this.isFocused = type === 'focus'
     },
     updateSlotOptions() {
-      this.slotOptions = this.$slots.default()
+      this.slotOptions = this.$slots.default && this.$slots.default()
     },
     checkUpdateStatus() {
       if (

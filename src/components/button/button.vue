@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     showSlot() {
-      return !!this.$slots.default()
+      return !!this.$slots.default
     },
     classes() {
       return [
