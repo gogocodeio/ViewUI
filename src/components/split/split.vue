@@ -118,7 +118,7 @@ export default {
       return 100 - this.offset
     },
     valueIsPx() {
-      return typeof this.value === 'string'
+      return typeof this.modelValue === 'string'
     },
     offsetSize() {
       return this.isHorizontal ? 'offsetWidth' : 'offsetHeight'
@@ -170,12 +170,12 @@ export default {
         value = this.getAnotherOffset(
           this.getMax(anotherValue, this.computedMax)
         )
-      e.atMin = this.value === this.computedMin
+      e.atMin = this.modelValue === this.computedMin
       e.atMax = this.valueIsPx
-        ? this.getAnotherOffset(this.value) === this.computedMax
-        : this.getAnotherOffset(this.value).toFixed(5) ===
+        ? this.getAnotherOffset(this.modelValue) === this.computedMax
+        : this.getAnotherOffset(this.modelValue).toFixed(5) ===
           this.computedMax.toFixed(5)
-      this.$emit('modelValue', value)
+      this.$emit('update:modelValue', value)
       this.$emit('on-moving', e)
     },
     handleUp() {
@@ -186,7 +186,7 @@ export default {
     },
     handleMousedown(e) {
       this.initOffset = this.isHorizontal ? e.pageX : e.pageY
-      this.oldOffset = this.value
+      this.oldOffset = this.modelValue
       this.isMoving = true
       on(document, 'mousemove', this.handleMove)
       on(document, 'mouseup', this.handleUp)
@@ -201,17 +201,17 @@ export default {
         this.offset =
           ((this.valueIsPx
             ? this.px2percent(
-                this.value,
+                this.modelValue,
                 this.$refs.outerWrapper[this.offsetSize]
               )
-            : this.value) *
+            : this.modelValue) *
             10000) /
           100
       })
     },
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       if (val !== this.currentValue) {
         this.currentValue = val
         this.computeOffset()
