@@ -175,7 +175,7 @@ export default {
     },
     currentValue(val) {
       this.$refs.select.setQuery(val)
-      this.$emit('modelValue', val)
+      this.$emit('update:modelValue', val)
       if (this.disableEmitChange) {
         this.disableEmitChange = false
         return

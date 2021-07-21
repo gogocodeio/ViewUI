@@ -298,7 +298,7 @@ export default {
 
       this.$nextTick(() => {
         this.currentValue = val
-        this.$emit('modelValue', val)
+        this.$emit('update:modelValue', val)
         this.$emit('on-change', val)
         this.dispatch('FormItem', 'on-form-change', val)
       })

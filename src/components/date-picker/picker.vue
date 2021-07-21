@@ -879,7 +879,7 @@ export default {
       const oldValue = JSON.stringify(before)
       const shouldEmitInput =
         newValue !== oldValue || typeof now !== typeof before
-      if (shouldEmitInput) this.$emit('modelValue', now) // to update v-model
+      if (shouldEmitInput) this.$emit('update:modelValue', now) // to update v-model
     },
   },
   mounted() {
@@ -889,7 +889,7 @@ export default {
       typeof initialValue !== typeof parsedValue ||
       JSON.stringify(initialValue) !== JSON.stringify(parsedValue)
     ) {
-      this.$emit('modelValue', this.publicVModelValue) // to update v-model
+      this.$emit('update:modelValue', this.publicVModelValue) // to update v-model
     }
     if (this.open !== null) this.visible = this.open
 

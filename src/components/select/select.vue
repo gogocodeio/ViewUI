@@ -598,7 +598,7 @@ export default {
     clearSingleSelect() {
       // PUBLIC API
       // fix #446
-      if (!this.multiple) this.$emit('modelValue', '')
+      if (!this.multiple) this.$emit('update:modelValue', '')
       this.$emit('on-clear')
       this.hideMenu()
       if (this.clearable) this.reset()
@@ -946,7 +946,7 @@ export default {
             emitValue = this.values[0]
           }
         }
-        this.$emit('modelValue', vModelValue) // to update v-model
+        this.$emit('update:modelValue', vModelValue) // to update v-model
         this.$emit('on-change', emitValue)
         this.dispatch('FormItem', 'on-form-change', emitValue)
       }

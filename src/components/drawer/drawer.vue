@@ -244,7 +244,7 @@ export default {
     },
     handleClose() {
       this.visible = false
-      this.$emit('modelValue', false)
+      this.$emit('update:modelValue', false)
       this.$emit('on-close')
     },
     handleMask() {

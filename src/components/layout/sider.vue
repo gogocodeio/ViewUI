@@ -135,7 +135,7 @@ export default {
   methods: {
     toggleCollapse() {
       let value = this.collapsible ? !this.value : false
-      this.$emit('modelValue', value)
+      this.$emit('update:modelValue', value)
     },
     matchMedia() {
       let matchMedia
@@ -148,7 +148,7 @@ export default {
       ).matches
 
       if (this.mediaMatched !== mediaMatched) {
-        this.$emit('modelValue', this.mediaMatched)
+        this.$emit('update:modelValue', this.mediaMatched)
       }
     },
     onWindowResize() {
@@ -162,7 +162,7 @@ export default {
   },
   mounted() {
     if (this.defaultCollapsed) {
-      this.$emit('modelValue', this.defaultCollapsed)
+      this.$emit('update:modelValue', this.defaultCollapsed)
     }
     if (this.breakpoint !== undefined) {
       on(window, 'resize', this.onWindowResize)

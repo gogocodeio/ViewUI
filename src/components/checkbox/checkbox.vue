@@ -153,7 +153,7 @@ export default {
       this.currentValue = checked
 
       const value = checked ? this.trueValue : this.falseValue
-      this.$emit('modelValue', value)
+      this.$emit('update:modelValue', value)
 
       if (this.group) {
         this.parent.change(this.model)

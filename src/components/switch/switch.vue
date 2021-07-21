@@ -106,7 +106,7 @@ export default {
         this.currentValue === this.trueValue ? this.falseValue : this.trueValue
 
       this.currentValue = checked
-      this.$emit('modelValue', checked)
+      this.$emit('update:modelValue', checked)
       this.$emit('on-change', checked)
       this.dispatch('FormItem', 'on-form-change', checked)
     },

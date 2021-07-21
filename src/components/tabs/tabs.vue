@@ -379,7 +379,7 @@ export default {
       const nav = this.navList[index]
       if (!nav || nav.disabled) return
       this.activeKey = nav.name
-      this.$emit('modelValue', nav.name)
+      this.$emit('update:modelValue', nav.name)
       this.$emit('on-click', nav.name)
     },
     handleDblclick(index) {
@@ -469,7 +469,7 @@ export default {
           }
         }
         this.activeKey = activeKey
-        this.$emit('modelValue', activeKey)
+        this.$emit('update:modelValue', activeKey)
       }
       this.$emit('on-tab-remove', tab.currentName)
       this.updateNav()

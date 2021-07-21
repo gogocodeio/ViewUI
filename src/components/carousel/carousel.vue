@@ -286,7 +286,7 @@ export default {
       }
       this.currentIndex = index === this.slides.length ? 0 : index
       this.$emit('on-change', oldIndex, this.currentIndex)
-      this.$emit('modelValue', this.currentIndex)
+      this.$emit('update:modelValue', this.currentIndex)
     },
     arrowEvent(offset) {
       this.setAutoplay()
@@ -298,7 +298,7 @@ export default {
       if (event === this.trigger && curIndex !== n) {
         this.updateTrackIndex(n)
         this.$emit('on-change', oldCurrentIndex, this.currentIndex)
-        this.$emit('modelValue', n)
+        this.$emit('update:modelValue', n)
         // Reset autoplay timer when trigger be activated
         this.setAutoplay()
       }

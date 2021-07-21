@@ -221,7 +221,7 @@ export default {
         }
       })
       const value = this.range ? values : values[0]
-      this.$emit('modelValue', value)
+      this.$emit('update:modelValue', value)
       this.$emit('on-input', value)
     },
   },

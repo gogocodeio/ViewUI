@@ -305,7 +305,7 @@ export default {
   methods: {
     close() {
       this.visible = false
-      this.$emit('modelValue', false)
+      this.$emit('update:modelValue', false)
       this.$emit('on-cancel')
     },
     handleMask() {
@@ -334,7 +334,7 @@ export default {
         this.buttonLoading = true
       } else {
         this.visible = false
-        this.$emit('modelValue', false)
+        this.$emit('update:modelValue', false)
       }
       this.$emit('on-ok')
     },

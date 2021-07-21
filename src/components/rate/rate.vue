@@ -188,7 +188,7 @@ export default {
       }
 
       this.currentValue = value
-      this.$emit('modelValue', value)
+      this.$emit('update:modelValue', value)
       this.$emit('on-change', value)
       this.dispatch('FormItem', 'on-form-change', value)
     },

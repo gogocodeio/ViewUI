@@ -423,7 +423,7 @@ export default {
       let value = event.target.value
       if (this.number && value !== '')
         value = Number.isNaN(Number(value)) ? value : Number(value)
-      this.$emit('modelValue', value)
+      this.$emit('update:modelValue', value)
       this.setCurrentValue(value)
       this.$emit('on-change', event)
     },
@@ -492,7 +492,7 @@ export default {
     },
     handleClear() {
       const e = { target: { value: '' } }
-      this.$emit('modelValue', '')
+      this.$emit('update:modelValue', '')
       this.setCurrentValue('')
       this.$emit('on-change', e)
       this.$emit('on-clear')

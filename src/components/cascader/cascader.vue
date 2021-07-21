@@ -498,7 +498,7 @@ export default {
       if (!val.length) this.selected = []
     },
     currentValue() {
-      this.$emit('modelValue', this.currentValue)
+      this.$emit('update:modelValue', this.currentValue)
       if (this.updatingValue) {
         this.updatingValue = false
         return

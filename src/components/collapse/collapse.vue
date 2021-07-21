@@ -95,7 +95,7 @@ export default {
       }
 
       this.currentValue = newActiveKey
-      this.$emit('modelValue', newActiveKey)
+      this.$emit('update:modelValue', newActiveKey)
       this.$emit('on-change', newActiveKey)
     },
   },
