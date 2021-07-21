@@ -67,7 +67,7 @@ export default {
   },
   data() {
     return {
-      currentValue: this.value,
+      currentValue: this.modelValue,
       group: false,
       groupName: this.name,
       parent: findComponentUpward(this, 'RadioGroup'),
@@ -146,7 +146,7 @@ export default {
         if (this.label !== undefined) {
           this.parent.change({
             value: this.label,
-            checked: this.value,
+            checked: this.modelValue,
           })
         }
       } else {
@@ -155,7 +155,7 @@ export default {
       }
     },
     updateValue() {
-      this.currentValue = this.value === this.trueValue
+      this.currentValue = this.modelValue === this.trueValue
     },
     onBlur() {
       this.focusWrapper = false
@@ -170,7 +170,7 @@ export default {
     },
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       if (val === this.trueValue || val === this.falseValue) {
         this.updateValue()
       } else {

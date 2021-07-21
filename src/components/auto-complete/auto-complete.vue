@@ -142,7 +142,7 @@ export default {
   },
   data() {
     return {
-      currentValue: this.value,
+      currentValue: this.modelValue,
       disableEmitChange: false, // for Form reset
     }
   },
@@ -167,7 +167,7 @@ export default {
     },
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       if (this.currentValue !== val) {
         this.disableEmitChange = true
       }

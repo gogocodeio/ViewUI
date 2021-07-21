@@ -185,7 +185,7 @@ export default {
   },
   data() {
     const val = this.checkLimits(
-      Array.isArray(this.value) ? this.value : [this.value]
+      Array.isArray(this.modelValue) ? this.modelValue : [this.modelValue]
     )
     return {
       prefixCls: prefixCls,
@@ -204,7 +204,7 @@ export default {
     }
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       val = this.checkLimits(Array.isArray(val) ? val : [val])
       if (
         !this.dragging &&

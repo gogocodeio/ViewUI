@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      currentValue: this.value,
+      currentValue: this.modelValue,
     }
   },
   computed: {
@@ -100,7 +100,7 @@ export default {
     },
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       this.currentValue = val
     },
     currentValue() {

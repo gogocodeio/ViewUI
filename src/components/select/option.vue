@@ -58,7 +58,7 @@ export default {
       ]
     },
     showLabel() {
-      return this.label ? this.label : this.value
+      return this.label ? this.label : this.modelValue
     },
     optionLabel() {
       return this.label || (this.$el && this.$el.textContent)
@@ -69,12 +69,12 @@ export default {
       if (this.itemDisabled) return false
 
       this.dispatch('iSelect', 'on-select-selected', {
-        value: this.value,
+        value: this.modelValue,
         label: this.optionLabel,
         tag: this.tag,
       })
       this.$emit('on-select-selected', {
-        value: this.value,
+        value: this.modelValue,
         label: this.optionLabel,
         tag: this.tag,
       })

@@ -84,7 +84,7 @@ export default {
     },
   },
   data() {
-    const [dateStart, dateEnd] = this.value.slice()
+    const [dateStart, dateEnd] = this.modelValue.slice()
     return {
       prefixCls: prefixCls,
       timePrefixCls: timePrefixCls,
@@ -115,7 +115,7 @@ export default {
     },
   },
   watch: {
-    value(dates) {
+    modelValue(dates) {
       const [dateStart, dateEnd] = dates.slice()
       this.dateStart = dateStart || initTimeDate()
       this.dateEnd = dateEnd || initTimeDate()

@@ -95,8 +95,8 @@ export default {
       prefixCls: prefixCls,
       hoverIndex: -1,
       isHover: false,
-      isHalf: this.allowHalf && this.value.toString().indexOf('.') >= 0,
-      currentValue: this.value,
+      isHalf: this.allowHalf && this.modelValue.toString().indexOf('.') >= 0,
+      currentValue: this.modelValue,
     }
   },
   computed: {
@@ -122,7 +122,7 @@ export default {
     },
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       this.currentValue = val
     },
     currentValue(val) {

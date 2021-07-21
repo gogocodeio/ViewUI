@@ -195,7 +195,7 @@ export default {
       wrapShow: false,
       showHead: true,
       buttonLoading: false,
-      visible: this.value,
+      visible: this.modelValue,
       dragData: deepCopy(dragData),
       modalIndex: this.handleGetModalIndex(), // for Esc close the top modal
       isMouseTriggerIn: false, // #5800
@@ -475,7 +475,7 @@ export default {
     this.removeScrollEffect()
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       this.visible = val
     },
     visible(val) {

@@ -78,7 +78,7 @@ export default {
       return [
         `${prefixCls}`,
         this.siderWidth ? '' : `${prefixCls}-zero-width`,
-        this.value ? `${prefixCls}-collapsed` : '',
+        this.modelValue ? `${prefixCls}-collapsed` : '',
       ]
     },
     wrapStyles() {
@@ -92,7 +92,7 @@ export default {
     triggerClasses() {
       return [
         `${prefixCls}-trigger`,
-        this.value ? `${prefixCls}-trigger-collapsed` : '',
+        this.modelValue ? `${prefixCls}-trigger-collapsed` : '',
       ]
     },
     childClasses() {
@@ -113,7 +113,7 @@ export default {
     },
     siderWidth() {
       return this.collapsible
-        ? this.value
+        ? this.modelValue
           ? this.mediaMatched
             ? 0
             : parseInt(this.collapsedWidth)
@@ -124,7 +124,7 @@ export default {
       return this.collapsible
         ? (this.mediaMatched && !this.hideTrigger) ||
             (parseInt(this.collapsedWidth) === 0 &&
-              this.value &&
+              this.modelValue &&
               !this.hideTrigger)
         : false
     },
@@ -134,7 +134,7 @@ export default {
   },
   methods: {
     toggleCollapse() {
-      let value = this.collapsible ? !this.value : false
+      let value = this.collapsible ? !this.modelValue : false
       this.$emit('update:modelValue', value)
     },
     matchMedia() {
@@ -156,7 +156,7 @@ export default {
     },
   },
   watch: {
-    value(stat) {
+    modelValue(stat) {
       this.$emit('on-collapse', stat)
     },
   },

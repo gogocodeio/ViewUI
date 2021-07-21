@@ -262,10 +262,10 @@ export default {
     const isRange = this.type.includes('range')
     const emptyArray = isRange ? [null, null] : [null]
     const initialValue = isEmptyArray(
-      (isRange ? this.value : [this.value]) || []
+      (isRange ? this.modelValue : [this.modelValue]) || []
     )
       ? emptyArray
-      : this.parseDate(this.value)
+      : this.parseDate(this.modelValue)
     const focusedTime = initialValue.map(extractTime)
 
     return {
@@ -865,7 +865,7 @@ export default {
       if (state) this.$refs.drop.update() // 解决：修改完 #589 #590 #592，Drop 收起时闪动
       this.$emit('on-open-change', state)
     },
-    value(val) {
+    modelValue(val) {
       this.internalValue = this.parseDate(val)
     },
     open(val) {
@@ -883,7 +883,7 @@ export default {
     },
   },
   mounted() {
-    const initialValue = this.value
+    const initialValue = this.modelValue
     const parsedValue = this.publicVModelValue
     if (
       typeof initialValue !== typeof parsedValue ||

@@ -33,7 +33,7 @@ export default {
   },
   data() {
     return {
-      currentValue: this.value,
+      currentValue: this.modelValue,
       childrens: [],
     }
   },
@@ -73,7 +73,7 @@ export default {
     },
   },
   watch: {
-    value() {
+    modelValue() {
       this.updateModel(true)
     },
   },

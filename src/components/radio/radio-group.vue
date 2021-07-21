@@ -55,7 +55,7 @@ export default {
   },
   data() {
     return {
-      currentValue: this.value,
+      currentValue: this.modelValue,
       childrens: [],
     }
   },
@@ -96,9 +96,9 @@ export default {
     },
   },
   watch: {
-    value() {
-      if (this.currentValue !== this.value) {
-        this.currentValue = this.value
+    modelValue() {
+      if (this.currentValue !== this.modelValue) {
+        this.currentValue = this.modelValue
         this.$nextTick(() => {
           this.updateValue()
         })

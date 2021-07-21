@@ -52,7 +52,7 @@ export default {
   },
   computed: {
     gradientStyle() {
-      const { r, g, b } = this.value.rgba
+      const { r, g, b } = this.modelValue.rgba
       const start = toRGBAString({ r, g, b, a: 0 })
       const finish = toRGBAString({ r, g, b, a: 1 })
 
@@ -63,8 +63,8 @@ export default {
   },
   methods: {
     change(newAlpha) {
-      const { h, s, l } = this.value.hsl
-      const { a } = this.value
+      const { h, s, l } = this.modelValue.hsl
+      const { a } = this.modelValue
 
       if (a !== newAlpha) {
         this.$emit('change', { h, s, l, a: newAlpha, source: 'rgba' })
@@ -78,7 +78,7 @@ export default {
         clamp(
           e[this.powerKey]
             ? direction
-            : Math.round(this.value.hsl.a * 100 + direction) / 100,
+            : Math.round(this.modelValue.hsl.a * 100 + direction) / 100,
           0,
           1
         )

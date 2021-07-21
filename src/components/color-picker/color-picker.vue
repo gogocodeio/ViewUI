@@ -246,8 +246,8 @@ export default {
   },
   data() {
     return {
-      val: changeColor(this.value),
-      currentValue: this.value,
+      val: changeColor(this.modelValue),
+      currentValue: this.modelValue,
       dragging: false,
       visible: false,
       recommendedColor: [
@@ -344,7 +344,7 @@ export default {
         backgroundColor: toRGBAString(
           this.visible
             ? this.saturationColors.rgba
-            : tinycolor(this.value).toRgb()
+            : tinycolor(this.modelValue).toRgb()
         ),
       }
     },
@@ -418,11 +418,11 @@ export default {
     },
   },
   watch: {
-    value(newVal) {
+    modelValue(newVal) {
       this.val = changeColor(newVal)
     },
     visible(val) {
-      this.val = changeColor(this.value)
+      this.val = changeColor(this.modelValue)
       this.$refs.drop[val ? 'update' : 'destroy']()
       this.$emit('on-open-change', Boolean(val))
     },

@@ -165,7 +165,7 @@ export default {
       focused: false,
       upDisabled: false,
       downDisabled: false,
-      currentValue: this.value,
+      currentValue: this.modelValue,
     }
   },
   computed: {
@@ -372,7 +372,7 @@ export default {
     this.changeVal(this.currentValue)
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       this.currentValue = val
     },
     currentValue(val) {

@@ -283,7 +283,7 @@ export default {
   },
   data() {
     return {
-      currentValue: this.value,
+      currentValue: this.modelValue,
       prefixCls: prefixCls,
       slotReady: false,
       textareaStyles: {},
@@ -368,11 +368,11 @@ export default {
       return this.maxlength
     },
     textLength() {
-      if (typeof this.value === 'number') {
-        return String(this.value).length
+      if (typeof this.modelValue === 'number') {
+        return String(this.modelValue).length
       }
 
-      return (this.value || '').length
+      return (this.modelValue || '').length
     },
   },
   methods: {
@@ -513,7 +513,7 @@ export default {
     },
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       this.setCurrentValue(val)
     },
   },

@@ -205,7 +205,7 @@ export default {
       selected: [],
       tmpSelected: [],
       updatingValue: false, // to fix set value in changeOnSelect type
-      currentValue: this.value,
+      currentValue: this.modelValue,
       query: '',
       validDataStr: '',
       isLoadedChildren: false, // #950
@@ -493,7 +493,7 @@ export default {
       }
       this.$emit('on-visible-change', val)
     },
-    value(val) {
+    modelValue(val) {
       this.currentValue = val
       if (!val.length) this.selected = []
     },

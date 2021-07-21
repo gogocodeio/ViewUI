@@ -68,7 +68,7 @@ export default {
   },
   data() {
     return {
-      currentValue: this.value,
+      currentValue: this.modelValue,
     }
   },
   computed: {
@@ -132,7 +132,7 @@ export default {
     },
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       if (val !== this.trueValue && val !== this.falseValue) {
         throw 'Value should be trueValue or falseValue.'
       }

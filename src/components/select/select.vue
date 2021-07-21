@@ -349,15 +349,15 @@ export default {
     this.checkUpdateStatus()
 
     // remote search, set default-label
-    if (this.remote && this.value && this.defaultLabel) {
+    if (this.remote && this.modelValue && this.defaultLabel) {
       if (!this.multiple) {
         this.query = this.defaultLabel
       } else if (
         this.multiple &&
         this.defaultLabel instanceof Array &&
-        this.value.length === this.defaultLabel.length
+        this.modelValue.length === this.defaultLabel.length
       ) {
-        const values = this.value.map((item, index) => {
+        const values = this.modelValue.map((item, index) => {
           return {
             value: item,
             label: this.defaultLabel[index],
@@ -510,7 +510,7 @@ export default {
           if (
             node === selectedSlotOption ||
             getNestedProperty(node, 'componentOptions.propsData.value') ===
-              this.value
+              this.modelValue
           )
             return applyProp(node, 'isFocused', true)
           return copyChildren(node, (child) => {
@@ -911,7 +911,7 @@ export default {
     },
   },
   watch: {
-    value(value) {
+    modelValue(value) {
       const { getInitialValue, getOptionData, publicValue, values } = this
 
       this.checkUpdateStatus()
@@ -936,7 +936,7 @@ export default {
       // 改变 labelInValue 的实现：直接在 emit 时改数据
       const vModelValue = this.publicValue
       const shouldEmitInput =
-        newValue !== oldValue && vModelValue !== this.value
+        newValue !== oldValue && vModelValue !== this.modelValue
       if (shouldEmitInput) {
         let emitValue = this.publicValue
         if (this.labelInValue) {

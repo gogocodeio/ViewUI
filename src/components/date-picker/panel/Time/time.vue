@@ -79,7 +79,7 @@ export default {
     return {
       prefixCls: prefixCls,
       timePrefixCls: timePrefixCls,
-      date: this.value[0] || initTimeDate(),
+      date: this.modelValue[0] || initTimeDate(),
       showDate: false,
     }
   },
@@ -97,7 +97,7 @@ export default {
       return `${date.getFullYear()}${tYear} ${tMonth}`
     },
     timeSlots() {
-      if (!this.value[0]) return []
+      if (!this.modelValue[0]) return []
       return ['getHours', 'getMinutes', 'getSeconds'].map((slot) =>
         this.date[slot]()
       )
@@ -108,7 +108,7 @@ export default {
         'disabledMinutes',
         'disabledSeconds',
       ]
-      if (this.disabledDate === returnFalse || !this.value[0]) {
+      if (this.disabledDate === returnFalse || !this.modelValue[0]) {
         const disabled = disabledTypes.reduce(
           (obj, type) => ((obj[type] = this[type]), obj),
           {}
@@ -137,7 +137,7 @@ export default {
     },
   },
   watch: {
-    value(dates) {
+    modelValue(dates) {
       let newVal = dates[0] || initTimeDate()
       newVal = new Date(newVal)
       this.date = newVal

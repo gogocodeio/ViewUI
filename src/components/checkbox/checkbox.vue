@@ -88,7 +88,7 @@ export default {
   data() {
     return {
       model: [],
-      currentValue: this.value,
+      currentValue: this.modelValue,
       group: false,
       showSlot: true,
       parent: findComponentUpward(this, 'CheckboxGroup'),
@@ -163,7 +163,7 @@ export default {
       }
     },
     updateModel() {
-      this.currentValue = this.value === this.trueValue
+      this.currentValue = this.modelValue === this.trueValue
     },
     onBlur() {
       this.focusInner = false
@@ -173,7 +173,7 @@ export default {
     },
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       if (val === this.trueValue || val === this.falseValue) {
         this.updateModel()
       } else {

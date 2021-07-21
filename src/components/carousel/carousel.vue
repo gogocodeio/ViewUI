@@ -126,9 +126,9 @@ export default {
       slideInstances: [],
       timer: null,
       ready: false,
-      currentIndex: this.value,
-      trackIndex: this.value,
-      copyTrackIndex: this.value,
+      currentIndex: this.modelValue,
+      trackIndex: this.modelValue,
+      copyTrackIndex: this.modelValue,
       hideTrackPos: -1, // 默认左滑
     }
   },
@@ -339,7 +339,7 @@ export default {
     height() {
       this.updatePos()
     },
-    value(val) {
+    modelValue(val) {
       //                this.currentIndex = val;
       //                this.trackIndex = val;
       this.updateTrackIndex(val)

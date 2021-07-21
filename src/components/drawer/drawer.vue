@@ -144,7 +144,7 @@ export default {
   data() {
     return {
       prefixCls: prefixCls,
-      visible: this.value,
+      visible: this.modelValue,
       wrapShow: false,
       showHead: true,
       canMove: false,
@@ -311,7 +311,7 @@ export default {
     this.removeScrollEffect()
   },
   watch: {
-    value(val) {
+    modelValue(val) {
       this.visible = val
     },
     visible(val) {

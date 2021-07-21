@@ -169,7 +169,7 @@ export default {
     },
   },
   watch: {
-    value(newVal) {
+    modelValue(newVal) {
       this.dates = newVal
       const panelDate = this.multiple
         ? this.dates[this.dates.length - 1]

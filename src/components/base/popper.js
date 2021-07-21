@@ -50,11 +50,11 @@ export default {
   },
   data() {
     return {
-      visible: this.value,
+      visible: this.modelValue,
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         this.visible = val
