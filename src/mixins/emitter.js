@@ -15,6 +15,7 @@ function broadcast(componentName, eventName, params) {
 }
 export default {
   methods: {
+
     dispatch(componentName, eventName, params) {
       let parent = this.$parent || this.$root
       let name = parent.$options.name
@@ -27,7 +28,7 @@ export default {
         }
       }
       if (parent) {
-        parent.$emit.apply(parent, [eventName].concat(params))
+        parent.vueEmit.apply(parent, [eventName].concat(params))
       }
     },
     broadcast(componentName, eventName, params) {
