@@ -13,7 +13,13 @@ const Popper = isServer
   : require('popper.js/dist/umd/popper.js') // eslint-disable-line
 
 import { transferIndex, transferIncrease } from '../../utils/transfer-queue'
-
+import tiny_emitter from 'tiny-emitter/instance'
+const tiny_emitter_override = {
+  $on: (...args) => tiny_emitter.on(...args),
+  $once: (...args) => tiny_emitter.once(...args),
+  $off: (...args) => tiny_emitter.off(...args),
+  $emit: (...args) => tiny_emitter.emit(...args),
+}
 export default {
   name: 'Drop',
   props: {
@@ -121,12 +127,13 @@ export default {
     },
   },
   created() {
-    this.$on('on-update-popper', this.update)
-    this.$on('on-destroy-popper', this.destroy)
+
+    tiny_emitter_override.$on('on-update-popper', this.update)
+    tiny_emitter_override.$on('on-destroy-popper', this.destroy)
   },
   beforeDestroy() {
-    this.$off('on-update-popper', this.update)
-    this.$off('on-destroy-popper', this.destroy)
+    tiny_emitter_override.$off('on-update-popper', this.update)
+    tiny_emitter_override.$off('on-destroy-popper', this.destroy)
     if (this.popper) {
       this.popper.destroy()
       this.popper = null

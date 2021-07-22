@@ -205,7 +205,7 @@ Modal.newInstance = (properties) => {
     methods: {
       cancel() {
         if (this.closing) return
-        this.$children[0].visible = false
+        this.vueChildren[0].visible = false
         this.buttonLoading = false
         this.onCancel()
         this.remove()
@@ -215,7 +215,7 @@ Modal.newInstance = (properties) => {
         if (this.loading) {
           this.buttonLoading = true
         } else {
-          this.$children[0].visible = false
+          this.vueChildren[0].visible = false
           this.remove()
         }
         this.onOk()

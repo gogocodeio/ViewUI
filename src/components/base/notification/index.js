@@ -18,7 +18,7 @@ Notification.newInstance = (properties) => {
 
   const component = Instance.$mount()
   document.body.appendChild(component.$el)
-  const notification = Instance.$children[0]
+  const notification = Instance.vueChildren[0]
 
   return {
     notice(noticeProps) {

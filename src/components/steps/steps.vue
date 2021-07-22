@@ -62,8 +62,8 @@ export default {
   },
   methods: {
     updateChildProps(isInit) {
-      const total = this.$children.length
-      this.$children.forEach((child, index) => {
+      const total = this.vueChildren.length
+      this.vueChildren.forEach((child, index) => {
         child.stepNumber = index + 1
 
         if (this.direction === 'horizontal') {
@@ -85,29 +85,29 @@ export default {
         }
 
         if (child.currentStatus !== 'error' && index !== 0) {
-          this.$children[index - 1].nextError = false
+          this.vueChildren[index - 1].nextError = false
         }
       })
     },
     setNextError() {
-      this.$children.forEach((child, index) => {
+      this.vueChildren.forEach((child, index) => {
         if (child.currentStatus === 'error' && index !== 0) {
-          this.$children[index - 1].nextError = true
+          this.vueChildren[index - 1].nextError = true
         }
       })
     },
     updateCurrent(isInit) {
       // 防止溢出边界
-      if (this.current < 0 || this.current >= this.$children.length) {
+      if (this.current < 0 || this.current >= this.vueChildren.length) {
         return
       }
       if (isInit) {
-        const current_status = this.$children[this.current].currentStatus
+        const current_status = this.vueChildren[this.current].currentStatus
         if (!current_status) {
-          this.$children[this.current].currentStatus = this.status
+          this.vueChildren[this.current].currentStatus = this.status
         }
       } else {
-        this.$children[this.current].currentStatus = this.status
+        this.vueChildren[this.current].currentStatus = this.status
       }
     },
     debouncedAppendRemove() {

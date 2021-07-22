@@ -56,7 +56,7 @@ Spin.newInstance = (properties) => {
 
   const component = Instance.$mount()
   document.body.appendChild(component.$el)
-  const spin = Instance.$children[0]
+  const spin = Instance.vueChildren[0]
 
   return {
     show() {

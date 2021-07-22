@@ -24,7 +24,7 @@ export default {
   },
   methods: {
     findSider() {
-      return this.$children.some((child) => {
+      return this.vueChildren.some((child) => {
         return child.$options.name === 'Sider'
       })
     },

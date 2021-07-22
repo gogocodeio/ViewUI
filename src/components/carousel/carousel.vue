@@ -170,19 +170,19 @@ export default {
 
         if (name) {
           cb(child)
-        } else if (child.$children.length) {
-          child.$children.forEach((innerChild) => {
+        } else if (child.vueChildren.length) {
+          child.vueChildren.forEach((innerChild) => {
             find(innerChild, cb)
           })
         }
       }
 
-      if (this.slideInstances.length || !this.$children) {
+      if (this.slideInstances.length || !this.vueChildren) {
         this.slideInstances.forEach((child) => {
           find(child)
         })
       } else {
-        this.$children.forEach((child) => {
+        this.vueChildren.forEach((child) => {
           find(child)
         })
       }

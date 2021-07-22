@@ -10,7 +10,7 @@ describe('DatePicker.vue', () => {
     vm = createVue(`
       <Date-Picker></Date-Picker>
     `);
-    const picker = vm.$children[0];
+    const picker = vm.vueChildren[0];
     picker.$el.querySelector('input.ivu-input').focus();
     vm.$nextTick(() => {
       const calendarBody = vm.$el.querySelector('.ivu-picker-panel-body .ivu-date-picker-cells:first-of-type');
@@ -60,7 +60,7 @@ describe('DatePicker.vue', () => {
     }, true);
 
     vm.$nextTick(() => {
-      const [datePicker, dateRangePicker, timePicker, timeRangePicker] = vm.$children;
+      const [datePicker, dateRangePicker, timePicker, timeRangePicker] = vm.vueChildren;
 
       datePicker.handleInputChange({target: {value: nowDate}});
       dateRangePicker.handleInputChange({target: {value: [
@@ -104,8 +104,8 @@ describe('DatePicker.vue', () => {
     vm = createVue(`
       <Date-Picker type="datetimerange"></Date-Picker>
     `);
-    const picker = vm.$children[0];
-    expect(picker.$children.length).to.equal(2);
+    const picker = vm.vueChildren[0];
+    expect(picker.vueChildren.length).to.equal(2);
     expect(Array.isArray(picker.internalValue)).to.equal(true);
     done();
   });
@@ -115,7 +115,7 @@ describe('DatePicker.vue', () => {
       <Date-picker type="datetimerange"></Date-picker>
     `);
 
-    const picker = vm.$children[0];
+    const picker = vm.vueChildren[0];
     picker.handleFocus({type: 'focus'});
     vm.$nextTick(() => {
       const displayField = vm.$el.querySelector('.ivu-input');
@@ -168,7 +168,7 @@ describe('DatePicker.vue', () => {
       }
     });
 
-    const picker = vm.$children[0];
+    const picker = vm.vueChildren[0];
     picker.handleFocus({type: 'focus'});
     vm.$nextTick(() => {
       const panel = vm.$el.querySelector('.ivu-picker-panel-content');
@@ -223,7 +223,7 @@ describe('DatePicker.vue', () => {
     });
 
     vm.$nextTick(() => {
-      const picker = vm.$children[0];
+      const picker = vm.vueChildren[0];
       const displayField = vm.$el.querySelector('.ivu-input');
       expect(displayField.value).to.equal(nowDate);
 
@@ -242,7 +242,7 @@ describe('DatePicker.vue', () => {
       <Date-picker type="datetimerange"></Date-picker>
     `);
 
-    const picker = vm.$children[0];
+    const picker = vm.vueChildren[0];
     picker.handleFocus({type: 'focus'});
     vm.$nextTick(() => {
       const displayField = vm.$el.querySelector('.ivu-input');
@@ -356,7 +356,7 @@ describe('DatePicker.vue', () => {
       <Date-picker type="date"></Date-picker>
     `);
 
-    const picker = vm.$children[0];
+    const picker = vm.vueChildren[0];
     picker.handleFocus({type: 'focus'});
     vm.$nextTick(() => {
       const now = new Date();

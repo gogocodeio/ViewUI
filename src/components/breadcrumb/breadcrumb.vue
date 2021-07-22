@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     updateChildren() {
-      this.$children.forEach((child) => {
+      this.VueChildren.forEach((child) => {
         child.separator = this.separator
       })
     },

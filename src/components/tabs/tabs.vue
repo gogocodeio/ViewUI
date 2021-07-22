@@ -289,7 +289,7 @@ export default {
   },
   methods: {
     getTabs() {
-      // return this.$children.filter(item => item.$options.name === 'TabPane');
+      // return this.vueChildren.filter(item => item.$options.name === 'TabPane');
       const AllTabPanes = findComponentsDownward(this, 'TabPane')
       const TabPanes = []
 

@@ -1,5 +1,8 @@
 function broadcast(componentName, eventName, params) {
-  this.$children.forEach((child) => {
+    if(!this.vueChildren){
+        console.log(this)
+    }
+  this.vueChildren.forEach((child) => {
     const name = child.$options.name
 
     if (name === componentName) {

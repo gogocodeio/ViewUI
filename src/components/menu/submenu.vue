@@ -160,7 +160,7 @@ export default {
       if (this.mode === 'horizontal') return
       const opened = this.opened
       if (this.accordion) {
-        this.$parent.$children.forEach((item) => {
+        this.$parent.vueChildren.forEach((item) => {
           if (item.$options.name === 'Submenu') item.opened = false
         })
       }

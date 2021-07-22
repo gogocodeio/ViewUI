@@ -201,7 +201,7 @@ export { findComponentUpward }
 
 // Find component downward
 export function findComponentDownward(context, componentName) {
-  const childrens = context.$children
+  const childrens = context.vueChildren
   let children = null
 
   if (childrens.length) {
@@ -221,7 +221,7 @@ export function findComponentDownward(context, componentName) {
 
 // Find components downward
 export function findComponentsDownward(context, componentName) {
-  return context.$children.reduce((components, child) => {
+  return context.vueChildren.reduce((components, child) => {
     if (child.$options.name === componentName) components.push(child)
     const foundChilds = findComponentsDownward(child, componentName)
     return components.concat(foundChilds)
@@ -246,7 +246,7 @@ export function findBrothersComponents(
   componentName,
   exceptMe = true
 ) {
-  let res = context.$parent.$children.filter((item) => {
+  let res = context.$parent.vueChildren.filter((item) => {
     return item.$options.name === componentName
   })
   let index = res.findIndex((item) => item._uid === context._uid)

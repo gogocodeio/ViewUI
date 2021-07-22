@@ -111,6 +111,7 @@ import { directive as clickOutside } from '../../directives/v-click-outside-x'
 import TransferDom from '../../directives/transfer-dom'
 import { oneOf, findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
+import mixinsChildren from '../../mixins/children'
 import mixinsForm from '../../mixins/form'
 import Locale from '../../mixins/locale'
 import SelectHead from './select-head.vue'
@@ -123,8 +124,8 @@ const optionGroupRegexp = /option-?group/i
 const findChild = (instance, checkFn) => {
   let match = checkFn(instance)
   if (match) return instance
-  for (let i = 0, l = instance.$children.length; i < l; i++) {
-    const child = instance.$children[i]
+  for (let i = 0, l = instance.vueChildren.length; i < l; i++) {
+    const child = instance.vueChildren[i]
     match = findChild(child, checkFn)
     if (match) return match
   }
@@ -195,7 +196,7 @@ const ANIMATION_TIMEOUT = 300
 
 export default {
   name: 'iSelect',
-  mixins: [Emitter, Locale, mixinsForm],
+  mixins: [mixinsChildren, Emitter, Locale, mixinsForm],
   components: { FunctionalOptions, Drop, SelectHead, Icon },
   directives: { clickOutside, TransferDom },
   props: {
