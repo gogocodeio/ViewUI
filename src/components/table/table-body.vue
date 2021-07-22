@@ -1,22 +1,23 @@
 <script>
 import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
 import * as Vue from 'vue'
-import tiny_emitter from 'tiny-emitter/instance'
+// import tiny_emitter from 'tiny-emitter/instance'
 // todo :key="row"
 import TableTr from './table-tr.vue'
 import TableCell from './cell.vue'
 import Expand from './expand.js'
 import Mixin from './mixin'
+import Bus from '../../mixins/bus'
 
-const tiny_emitter_override = {
-  $on: (...args) => tiny_emitter.on(...args),
-  $once: (...args) => tiny_emitter.once(...args),
-  $off: (...args) => tiny_emitter.off(...args),
-  $emit: (...args) => tiny_emitter.emit(...args),
-}
+// const tiny_emitter_override = {
+//   vueOn: (...args) => tiny_emitter.on(...args),
+//   vueOnce: (...args) => tiny_emitter.once(...args),
+//   vueOff: (...args) => tiny_emitter.off(...args),
+//   $emit: (...args) => tiny_emitter.emit(...args),
+// }
 export default {
   name: 'TableBody',
-  mixins: [Mixin],
+  mixins: [Mixin, Bus],
   components: { TableCell, Expand, TableTr },
   props: {
     prefixCls: String,

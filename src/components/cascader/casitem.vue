@@ -21,10 +21,12 @@
 
 <script>
 import Icon from '../icon/icon.vue'
+import Children from '../../mixins/children'
 
 export default {
   name: 'Casitem',
   components: { Icon },
+  mixins: [Children],
   props: {
     data: Object,
     prefixCls: String,

@@ -4,9 +4,10 @@ import RangeTimePickerPanel from '../panel/Time/time-range.vue'
 import Options from '../time-mixins'
 
 import { findComponentsDownward, oneOf } from '../../../utils/assist'
+import Children from '../../../mixins/children'
 
 export default {
-  mixins: [Picker, Options],
+  mixins: [Picker, Options, Children],
   components: { TimePickerPanel, RangeTimePickerPanel },
   props: {
     type: {

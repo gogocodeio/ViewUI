@@ -28,11 +28,12 @@
 import iButton from '../../button/button.vue'
 import Locale from '../../../mixins/locale'
 import Emitter from '../../../mixins/emitter'
+import Children from '../../../mixins/children'
 
 const prefixCls = 'ivu-picker'
 
 export default {
-  mixins: [Locale, Emitter],
+  mixins: [Locale, Emitter, Children],
   components: { iButton },
   props: {
     showTime: false,

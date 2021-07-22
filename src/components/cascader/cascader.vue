@@ -98,13 +98,15 @@ import { oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import Locale from '../../mixins/locale'
 import mixinsForm from '../../mixins/form'
+import Bus from '../../mixins/bus'
+import Children from '../../mixins/children'
 
 const prefixCls = 'ivu-cascader'
 const selectPrefixCls = 'ivu-select'
 
 export default {
   name: 'Cascader',
-  mixins: [Emitter, Locale, mixinsForm],
+  mixins: [Emitter, Locale, mixinsForm, Bus, Children],
   components: { iInput, Drop, Icon, Caspanel },
   directives: { clickOutside, TransferDom },
   props: {
@@ -441,7 +443,7 @@ export default {
   },
   created() {
     this.validDataStr = JSON.stringify(this.getValidData(this.data))
-    this.$on('on-result-change', (params) => {
+    this.vueOn('on-result-change', (params) => {
       // lastValue: is click the final val
       // fromInit: is this emit from update value
       const lastValue = params.lastValue

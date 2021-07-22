@@ -165,7 +165,7 @@
 </template>
 
 <script>
-import tiny_emitter from 'tiny-emitter/instance'
+// import tiny_emitter from 'tiny-emitter/instance'
 import CheckboxGroup from '../checkbox/checkbox-group.vue'
 import Checkbox from '../checkbox/checkbox.vue'
 import Poptip from '../poptip/poptip.vue'
@@ -173,16 +173,17 @@ import iButton from '../button/button.vue'
 import renderHeader from './header'
 import Mixin from './mixin'
 import Locale from '../../mixins/locale'
+import Bus from '../../mixins/bus'
 
-const tiny_emitter_override = {
-  $on: (...args) => tiny_emitter.on(...args),
-  $once: (...args) => tiny_emitter.once(...args),
-  $off: (...args) => tiny_emitter.off(...args),
-  $emit: (...args) => tiny_emitter.emit(...args),
-}
+// const tiny_emitter_override = {
+//   vueOn: (...args) => tiny_emitter.on(...args),
+//   vueOnce: (...args) => tiny_emitter.once(...args),
+//   vueOff: (...args) => tiny_emitter.off(...args),
+//   $emit: (...args) => tiny_emitter.emit(...args),
+// }
 export default {
   name: 'TableHead',
-  mixins: [Mixin, Locale],
+  mixins: [Mixin, Locale, Bus],
   components: { CheckboxGroup, Checkbox, Poptip, iButton, renderHeader },
   props: {
     prefixCls: String,
@@ -373,7 +374,7 @@ export default {
         this.dragging = true
 
         const table = this.$parent
-        Object.assign(table, tiny_emitter_override)
+        // Object.assign(table, tiny_emitter_override)
         const tableEl = table.$el
         const tableLeft = tableEl.getBoundingClientRect().left
         const columnEl = this.$el.querySelector(

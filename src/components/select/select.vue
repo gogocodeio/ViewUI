@@ -114,6 +114,8 @@ import Emitter from '../../mixins/emitter'
 import mixinsChildren from '../../mixins/children'
 import mixinsForm from '../../mixins/form'
 import Locale from '../../mixins/locale'
+import Bus from '../../mixins/bus'
+import Children from '../../mixins/children'
 import SelectHead from './select-head.vue'
 import FunctionalOptions from './functional-options.vue'
 
@@ -196,7 +198,7 @@ const ANIMATION_TIMEOUT = 300
 
 export default {
   name: 'iSelect',
-  mixins: [mixinsChildren, Emitter, Locale, mixinsForm],
+  mixins: [mixinsChildren, Emitter, Locale, mixinsForm, Bus, Children],
   components: { FunctionalOptions, Drop, SelectHead, Icon },
   directives: { clickOutside, TransferDom },
   props: {
@@ -335,7 +337,7 @@ export default {
     },
   },
   mounted() {
-    this.$on('on-select-selected', this.onOptionClick)
+    this.vueOn('on-select-selected', this.onOptionClick)
 
     // set the initial values if there are any
     if (!this.remote && this.selectOptions.length > 0) {
@@ -372,7 +374,7 @@ export default {
     }
   },
   beforeDestroy() {
-    this.$off('on-select-selected')
+    this.vueOff('on-select-selected')
   },
   data() {
     return {

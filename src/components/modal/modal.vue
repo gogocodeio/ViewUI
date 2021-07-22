@@ -64,6 +64,7 @@ import TransferDom from '../../directives/transfer-dom'
 import Locale from '../../mixins/locale'
 import Emitter from '../../mixins/emitter'
 import ScrollbarMixins from './mixins-scrollbar'
+import Children from '../../mixins/children'
 
 import { on, off } from '../../utils/dom'
 import { findComponentsDownward, deepCopy } from '../../utils/assist'
@@ -88,7 +89,7 @@ const dragData = {
 
 export default {
   name: 'Modal',
-  mixins: [Locale, Emitter, ScrollbarMixins],
+  mixins: [Locale, Emitter, ScrollbarMixins, Children],
   components: { Icon, iButton },
   directives: { TransferDom },
   props: {

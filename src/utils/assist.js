@@ -201,7 +201,7 @@ export { findComponentUpward }
 
 // Find component downward
 export function findComponentDownward(context, componentName) {
-  const childrens = context.vueChildren
+  const childrens = context.vueChildren || []
   let children = null
 
   if (childrens.length) {
@@ -246,6 +246,7 @@ export function findBrothersComponents(
   componentName,
   exceptMe = true
 ) {
+  console.log('$parent', context)
   let res = context.$parent.vueChildren.filter((item) => {
     return item.$options.name === componentName
   })

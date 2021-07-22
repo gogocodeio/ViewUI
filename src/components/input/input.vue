@@ -157,12 +157,13 @@ import { oneOf, findComponentUpward } from '../../utils/assist'
 import calcTextareaHeight from '../../utils/calcTextareaHeight'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
+import Children from '../../mixins/children'
 
 const prefixCls = 'ivu-input'
 
 export default {
   name: 'Input',
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, Children],
   props: {
     type: {
       validator(value) {

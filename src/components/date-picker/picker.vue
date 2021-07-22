@@ -94,6 +94,8 @@ import {
 import { findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
+import Bus from '../../mixins/bus'
+import Children from '../../mixins/children'
 
 const prefixCls = 'ivu-date-picker'
 const pickerPrefixCls = 'ivu-picker'
@@ -130,7 +132,7 @@ const extractTime = (date) => {
 }
 
 export default {
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, Bus, Children],
   components: { iInput, Drop, Icon },
   directives: { clickOutside, TransferDom },
   props: {
@@ -894,12 +896,12 @@ export default {
     if (this.open !== null) this.visible = this.open
 
     // to handle focus from confirm buttons
-    this.$on('focus-input', () => this.focus())
-    this.$on('update-popper', () => this.updatePopper())
+    this.vueOn('focus-input', () => this.focus())
+    this.vueOn('update-popper', () => this.updatePopper())
   },
   beforeDestroy() {
-    this.$off('focus-input')
-    this.$off('update-popper')
+    this.vueOff('focus-input')
+    this.vueOff('update-popper')
   },
   emits: [
     'on-clickoutside',

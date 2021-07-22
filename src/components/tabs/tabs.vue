@@ -103,6 +103,7 @@ import {
   findComponentsDownward,
 } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
+import Children from '../../mixins/children'
 import elementResizeDetectorMaker from 'element-resize-detector'
 
 const prefixCls = 'ivu-tabs'
@@ -133,7 +134,7 @@ const focusFirst = (element, root) => {
 
 export default {
   name: 'Tabs',
-  mixins: [Emitter],
+  mixins: [Emitter, Children],
   components: { Icon, Render, Dropdown, DropdownMenu },
   provide() {
     return { TabsInstance: this }
@@ -594,10 +595,10 @@ export default {
       return false
     },
     updateVisibility(index) {
-      ;[...this.$refs.panes.querySelectorAll(`.${prefixCls}-tabpane`)].forEach(
+      [...this.$refs.panes.querySelectorAll(`.${prefixCls}-tabpane`)].forEach(
         (el, i) => {
           if (index === i) {
-            ;[...el.children]
+            [...el.children]
               .filter((child) =>
                 child.classList.contains(`${prefixCls}-tabpane`)
               )
@@ -606,7 +607,7 @@ export default {
               setTimeout(() => focusFirst(el, el), transitionTime)
           } else {
             setTimeout(() => {
-              ;[...el.children]
+              [...el.children]
                 .filter((child) =>
                   child.classList.contains(`${prefixCls}-tabpane`)
                 )

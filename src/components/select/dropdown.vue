@@ -13,13 +13,15 @@ const Popper = isServer
   : require('popper.js/dist/umd/popper.js') // eslint-disable-line
 
 import { transferIndex, transferIncrease } from '../../utils/transfer-queue'
-import tiny_emitter from 'tiny-emitter/instance'
-const tiny_emitter_override = {
-  $on: (...args) => tiny_emitter.on(...args),
-  $once: (...args) => tiny_emitter.once(...args),
-  $off: (...args) => tiny_emitter.off(...args),
-  $emit: (...args) => tiny_emitter.emit(...args),
-}
+// import tiny_emitter from 'tiny-emitter/instance'
+import Bus from '../../mixins/bus'
+import Children from '../../mixins/children'
+// const tiny_emitter_override = {
+//   vueOn: (...args) => tiny_emitter.on(...args),
+//   vueOnce: (...args) => tiny_emitter.once(...args),
+//   vueOff: (...args) => tiny_emitter.off(...args),
+//   $emit: (...args) => tiny_emitter.emit(...args),
+// }
 export default {
   name: 'Drop',
   props: {
@@ -39,6 +41,7 @@ export default {
       default: false,
     },
   },
+  mixins: [Bus, Children],
   data() {
     return {
       popper: null,
@@ -127,13 +130,12 @@ export default {
     },
   },
   created() {
-
-    tiny_emitter_override.$on('on-update-popper', this.update)
-    tiny_emitter_override.$on('on-destroy-popper', this.destroy)
+    this.vueOn('on-update-popper', this.update)
+    this.vueOn('on-destroy-popper', this.destroy)
   },
   beforeDestroy() {
-    tiny_emitter_override.$off('on-update-popper', this.update)
-    tiny_emitter_override.$off('on-destroy-popper', this.destroy)
+    this.vueOff('on-update-popper', this.update)
+    this.vueOff('on-destroy-popper', this.destroy)
     if (this.popper) {
       this.popper.destroy()
       this.popper = null

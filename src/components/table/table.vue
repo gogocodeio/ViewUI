@@ -231,6 +231,7 @@ import { on, off } from '../../utils/dom'
 import Csv from '../../utils/csv'
 import ExportCsv from './export-csv'
 import Locale from '../../mixins/locale'
+import Bus from '../../mixins/bus'
 import elementResizeDetectorMaker from 'element-resize-detector'
 import {
   getAllColumns,
@@ -246,7 +247,7 @@ let columnKey = 1
 
 export default {
   name: 'Table',
-  mixins: [Locale],
+  mixins: [Locale, Bus],
   components: {
     tableHead,
     tableBody,
@@ -1615,7 +1616,7 @@ export default {
     this.observer = elementResizeDetectorMaker()
     this.observer.listenTo(this.$el, this.handleResize)
 
-    this.$on('on-visible-change', (val) => {
+    this.vueOn('on-visible-change', (val) => {
       if (val) {
         this.$nextTick(() => {
           this.handleResize()
@@ -1624,7 +1625,7 @@ export default {
     })
   },
   beforeDestroy() {
-    this.$off('on-visible-change')
+    this.vueOff('on-visible-change')
     off(window, 'resize', this.handleResize)
     this.observer.removeAllListeners(this.$el)
     this.observer.uninstall(this.$el)

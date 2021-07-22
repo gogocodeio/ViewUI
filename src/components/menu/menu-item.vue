@@ -20,12 +20,14 @@ import Emitter from '../../mixins/emitter'
 import { findComponentUpward } from '../../utils/assist'
 import mixin from './mixin'
 import mixinsLink from '../../mixins/link'
+import Bus from '../../mixins/bus'
+import Children from '../../mixins/children'
 
 const prefixCls = 'ivu-menu'
 
 export default {
   name: 'MenuItem',
-  mixins: [Emitter, mixin, mixinsLink],
+  mixins: [Emitter, mixin, mixinsLink, Bus, Children],
   props: {
     name: {
       type: [String, Number],
@@ -83,7 +85,7 @@ export default {
     },
   },
   mounted() {
-    this.$on('on-update-active-name', (name) => {
+    this.vueOn('on-update-active-name', (name) => {
       if (this.name === name) {
         this.active = true
         this.dispatch('Submenu', 'on-update-active-name', name)

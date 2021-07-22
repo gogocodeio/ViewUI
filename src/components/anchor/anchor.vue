@@ -27,6 +27,7 @@ import {
   sharpMatcherRegx,
 } from '../../utils/assist'
 import { on, off } from '../../utils/dom'
+import Children from '../../mixins/children'
 export default {
   name: 'Anchor',
   provide() {
@@ -74,6 +75,7 @@ export default {
       default: 0,
     },
   },
+  mixins: [Children],
   computed: {
     wrapperComponent() {
       return this.affix ? 'Affix' : 'div'

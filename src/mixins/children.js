@@ -7,7 +7,7 @@ export default {
     beforeDestroy() {
         //从父组件里面移除
         if (this.$parent && this.$parent.vueChildren) {
-            const index = this.$parent.vueChildren.findIndex(item => item.id === this);
+            const index = this.$parent.vueChildren.findIndex(item => item === this);
             this.$parent.vueChildren.splice(index, 1);
         }
     },

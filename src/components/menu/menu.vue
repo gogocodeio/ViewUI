@@ -11,12 +11,14 @@ import {
   findComponentsUpward,
 } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
+import Bus from '../../mixins/bus'
+import Children from '../../mixins/children'
 
 const prefixCls = 'ivu-menu'
 
 export default {
   name: 'Menu',
-  mixins: [Emitter],
+  mixins: [Emitter, Bus, Children],
   props: {
     mode: {
       validator(value) {
@@ -150,7 +152,7 @@ export default {
     this.openedNames = [...this.openNames]
     this.updateOpened()
     this.$nextTick(() => this.updateActiveName())
-    this.$on('on-menu-item-select', (name) => {
+    this.vueOn('on-menu-item-select', (name) => {
       this.currentActiveName = name
       this.$emit('on-select', name)
     })

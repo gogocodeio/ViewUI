@@ -17,13 +17,14 @@
 <script>
 import { oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
+import Children from '../../mixins/children'
 import mixinsForm from '../../mixins/form'
 
 const prefixCls = 'ivu-switch'
 
 export default {
   name: 'iSwitch',
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, Children],
   props: {
     modelValue: {
       type: [String, Number, Boolean],

@@ -34,12 +34,13 @@ import Dropdown from '../dropdown/dropdown.vue'
 import DropdownMenu from '../dropdown/dropdown-menu.vue'
 import Emitter from '../../mixins/emitter'
 import Locale from '../../mixins/locale'
+import Bus from '../../mixins/bus'
 
 const prefixCls = 'ivu-tree'
 
 export default {
   name: 'Tree',
-  mixins: [Emitter, Locale],
+  mixins: [Emitter, Locale, Bus],
   components: { TreeNode, Dropdown, DropdownMenu },
   provide() {
     return { TreeInstance: this }
@@ -272,10 +273,10 @@ export default {
     this.rebuildTree()
   },
   mounted() {
-    this.$on('on-check', this.handleCheck)
-    this.$on('on-selected', this.handleSelect)
-    this.$on('toggle-expand', (node) => this.$emit('on-toggle-expand', node))
-    this.$on('contextmenu', this.handleContextmenu)
+    this.vueOn('on-check', this.handleCheck)
+    this.vueOn('on-selected', this.handleSelect)
+    this.vueOn('toggle-expand', (node) => this.$emit('on-toggle-expand', node))
+    this.vueOn('contextmenu', this.handleContextmenu)
   },
   emits: [
     'on-select-change',

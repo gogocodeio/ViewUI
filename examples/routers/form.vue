@@ -39,7 +39,7 @@
                 </FormItem>
               </Col>
               <Col span="2" style="text-align: center">-</Col>
-              <Col span="11">
+              <!-- <Col span="11">
                 <FormItem prop="time">
                   <TimePicker
                     type="time"
@@ -47,7 +47,7 @@
                     v-model="formValidate.time"
                   ></TimePicker>
                 </FormItem>
-              </Col>
+              </Col> -->
             </Row>
           </FormItem>
           <FormItem label="Gender" prop="gender">
@@ -159,7 +159,7 @@
                 </FormItem>
               </Col>
               <Col span="2" style="text-align: center">-</Col>
-              <Col span="11">
+              <!-- <Col span="11">
                 <FormItem prop="time">
                   <TimePicker
                     type="time"
@@ -167,7 +167,7 @@
                     v-model="formValidate.time"
                   ></TimePicker>
                 </FormItem>
-              </Col>
+              </Col> -->
             </Row>
           </FormItem>
           <FormItem label="Gender" prop="gender">
@@ -364,7 +364,7 @@
         disabled
       ></DatePicker>
       <br />
-      <TimePicker
+      <!-- <TimePicker
         type="time"
         placeholder="Select time"
         style="width: 168px"
@@ -374,7 +374,7 @@
         placeholder="Select time"
         style="width: 168px"
         disabled
-      ></TimePicker>
+      ></TimePicker> -->
       <br />
       <Cascader :data="data2"></Cascader>
       <Cascader :data="data2" disabled></Cascader>

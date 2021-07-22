@@ -14,13 +14,14 @@
 </template>
 
 <script>
+import Bus from '../../mixins/bus'
 import tiny_emitter from 'tiny-emitter/instance'
-const tiny_emitter_override = {
-  vueOn: (...args) => tiny_emitter.on(...args),
-  vueOnce: (...args) => tiny_emitter.once(...args),
-  vueOff: (...args) => tiny_emitter.off(...args),
-  vueEmit: (...args) => tiny_emitter.emit(...args),
-}
+// const tiny_emitter_override = {
+//   vueOn: (...args) => tiny_emitter.on(...args),
+//   vueOnce: (...args) => tiny_emitter.once(...args),
+//   vueOff: (...args) => tiny_emitter.off(...args),
+//   vueEmit: (...args) => tiny_emitter.emit(...args),
+// }
 export default {
   name: 'AnchorLink',
   inject: ['anchorCom'],
@@ -34,6 +35,7 @@ export default {
       },
     },
   },
+  mixins: [Bus],
   data() {
     return {
       prefix: 'ivu-anchor-link',
@@ -55,8 +57,8 @@ export default {
       this.currentLink = this.href
       this.anchorCom.handleHashChange()
       this.anchorCom.handleScrollTo()
-      Object.assign(this.anchorCom, tiny_emitter_override)
-      this.anchorCom.$emit('on-select', this.href)
+    //   Object.assign(this.anchorCom, tiny_emitter_override)
+      this.anchorCom.vueEmit('on-select', this.href)
       const isRoute = this.$router
       if (isRoute) {
         this.$router.push(this.href, () => {})

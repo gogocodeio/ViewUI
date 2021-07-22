@@ -34,13 +34,15 @@ import UploadList from './upload-list.vue'
 import ajax from './ajax'
 import { oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
+import Bus from '../../mixins/bus'
+import Children from '../../mixins/children'
 import mixinsForm from '../../mixins/form'
 
 const prefixCls = 'ivu-upload'
 
 export default {
   name: 'Upload',
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, Bus, Children],
   components: { UploadList },
   props: {
     action: {

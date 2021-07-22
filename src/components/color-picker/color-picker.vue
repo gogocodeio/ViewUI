@@ -129,6 +129,8 @@ import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
 import Prefixes from './prefixMixin'
 import { changeColor, toRGBAString } from './utils'
+import Bus from '../../mixins/bus'
+import Children from '../../mixins/children'
 
 export default {
   name: 'ColorPicker',
@@ -143,11 +145,11 @@ export default {
     Icon,
   },
   directives: { clickOutside, TransferDom },
-  mixins: [Emitter, Locale, Prefixes, mixinsForm],
+  mixins: [Emitter, Locale, Prefixes, mixinsForm, Bus, Children],
   props: {
     modelValue: {
       type: String,
-      default: undefined,
+      default: '',
     },
     hue: {
       type: Boolean,
@@ -428,8 +430,8 @@ export default {
     },
   },
   mounted() {
-    this.$on('on-escape-keydown', this.closer)
-    this.$on('on-dragging', this.setDragging)
+    this.vueOn('on-escape-keydown', this.closer)
+    this.vueOn('on-dragging', this.setDragging)
   },
   methods: {
     setDragging(value) {

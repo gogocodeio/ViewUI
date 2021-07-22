@@ -8,7 +8,10 @@
 </template>
 
 <script>
+import Bus from '../../mixins/bus'
+import Children from '../../mixins/children'
 const prefixCls = 'ivu-select-group'
+
 
 export default {
   name: 'OptionGroup',
@@ -18,6 +21,7 @@ export default {
       default: '',
     },
   },
+  mixins: [Bus, Children],
   data() {
     return {
       prefixCls: prefixCls,
@@ -40,13 +44,13 @@ export default {
     },
   },
   mounted() {
-    this.$on('on-query-change', () => {
+    this.vueOn('on-query-change', () => {
       this.queryChange()
       return true
     })
   },
   beforeDestroy() {
-    this.$off('on-query-change')
+    this.vueOff('on-query-change')
   },
 }
 </script>

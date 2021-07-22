@@ -73,14 +73,14 @@
 <script>
 import Icon from '../icon'
 import Emitter from '../../mixins/emitter'
-import mixinsChildren from '../../mixins/children'
+import Children from '../../mixins/children'
 import Locale from '../../mixins/locale'
 
 const prefixCls = 'ivu-select'
 
 export default {
   name: 'iSelectHead',
-  mixins: [mixinsChildren, Emitter, Locale],
+  mixins: [Children, Emitter, Locale],
   components: { Icon },
   props: {
     disabled: {

@@ -6,6 +6,7 @@
 
 <script>
 import { oneOf } from '../../utils/assist'
+import Bus from '../../mixins/bus'
 
 const prefixCls = 'ivu-steps'
 
@@ -26,6 +27,7 @@ function debounce(fn) {
 
 export default {
   name: 'Steps',
+  mixins: [Bus],
   props: {
     current: {
       type: Number,
@@ -123,8 +125,8 @@ export default {
   },
   mounted() {
     this.updateSteps()
-    this.$on('append', this.debouncedAppendRemove())
-    this.$on('remove', this.debouncedAppendRemove())
+    this.vueOn('append', this.debouncedAppendRemove())
+    this.vueOn('remove', this.debouncedAppendRemove())
   },
   watch: {
     current() {

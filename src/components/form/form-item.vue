@@ -27,6 +27,7 @@
 import AsyncValidator from 'async-validator'
 import Emitter from '../../mixins/emitter'
 import Bus from '../../mixins/bus'
+import Children from '../../mixins/children'
 
 const prefixCls = 'ivu-form-item'
 
@@ -57,7 +58,7 @@ function getPropByPath(obj, path) {
 
 export default {
   name: 'FormItem',
-  mixins: [Emitter, Bus],
+  mixins: [Emitter, Bus, Children],
   props: {
     label: {
       type: String,
