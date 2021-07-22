@@ -20,12 +20,13 @@
 import { findComponentUpward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
+import Children from '../../mixins/children'
 
 const prefixCls = 'ivu-radio'
 
 export default {
   name: 'Radio',
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, Children],
   props: {
     modelValue: {
       type: [String, Number, Boolean],

@@ -7,12 +7,13 @@
 <script>
 import { findComponentsDownward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
+import Children from '../../mixins/children'
 
 const prefixCls = 'ivu-checkbox-group'
 
 export default {
   name: 'CheckboxGroup',
-  mixins: [Emitter],
+  mixins: [Emitter, Children],
   props: {
     modelValue: {
       type: Array,
@@ -54,12 +55,12 @@ export default {
     updateModel(update) {
       this.childrens = findComponentsDownward(this, 'Checkbox')
       if (this.childrens) {
-        const { value } = this
+        const { modelValue } = this
         this.childrens.forEach((child) => {
-          child.model = value
+          child.model = modelValue
 
           if (update) {
-            child.currentValue = value.indexOf(child.label) >= 0
+            child.currentValue = modelValue.indexOf(child.label) >= 0
             child.group = true
           }
         })

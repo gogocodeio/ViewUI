@@ -7,6 +7,7 @@
 <script>
 import { oneOf, findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
+import Children from '../../mixins/children'
 
 const prefixCls = 'ivu-radio-group'
 
@@ -16,7 +17,7 @@ const getUuid = () => `ivuRadioGroup_${now}_${seed++}`
 
 export default {
   name: 'RadioGroup',
-  mixins: [Emitter],
+  mixins: [Emitter, Children],
   props: {
     modelValue: {
       type: [String, Number],
