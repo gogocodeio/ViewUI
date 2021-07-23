@@ -1,4 +1,5 @@
 import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
+import { $children } from '../../utils/assist'
 import LoadingBar from './loading-bar.vue'
 import * as Vue from 'vue'
 
@@ -19,7 +20,7 @@ LoadingBar.newInstance = (properties) => {
 
   const component = Instance.$mount()
   document.body.appendChild(component.$el)
-  const loading_bar = Instance.vueChildren[0]
+  const loading_bar = ($children(Instance))[0]
 
   return {
     update(options) {

@@ -49,7 +49,7 @@
 
 <script>
 import Icon from '../icon/icon.vue'
-import { getStyle, oneOf } from '../../utils/assist'
+import { getStyle, oneOf, $children } from '../../utils/assist'
 import { on, off } from '../../utils/dom'
 
 const prefixCls = 'ivu-carousel'
@@ -167,22 +167,22 @@ export default {
     findChild(cb) {
       const find = function (child) {
         const name = child.$options.componentName
-
+        const children = $children(child)
         if (name) {
           cb(child)
-        } else if (child.vueChildren.length) {
-          child.vueChildren.forEach((innerChild) => {
+        } else if (children.length) {
+          children.forEach((innerChild) => {
             find(innerChild, cb)
           })
         }
       }
 
-      if (this.slideInstances.length || !this.vueChildren) {
+      if (this.slideInstances.length || !$children(this)) {
         this.slideInstances.forEach((child) => {
           find(child)
         })
       } else {
-        this.vueChildren.forEach((child) => {
+        !$children(this).forEach((child) => {
           find(child)
         })
       }

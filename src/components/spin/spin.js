@@ -1,4 +1,5 @@
 import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
+import { $children } from '../../utils/assist'
 import * as Vue from 'vue'
 import Spin from './spin.vue'
 
@@ -56,7 +57,7 @@ Spin.newInstance = (properties) => {
 
   const component = Instance.$mount()
   document.body.appendChild(component.$el)
-  const spin = Instance.vueChildren[0]
+  const spin = $children(Instance)[0]
 
   return {
     show() {

@@ -3,6 +3,8 @@
 </template>
 
 <script>
+import { $children } from '../../utils/assist'
+
 const prefixCls = 'ivu-layout'
 
 export default {
@@ -24,7 +26,7 @@ export default {
   },
   methods: {
     findSider() {
-      return this.vueChildren.some((child) => {
+      return $children(this).some((child) => {
         return child.$options.name === 'Sider'
       })
     },

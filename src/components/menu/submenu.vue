@@ -41,6 +41,7 @@ import {
   getStyle,
   findComponentUpward,
   findComponentsDownward,
+  $children
 } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import Bus from '../../mixins/bus'
@@ -162,7 +163,7 @@ export default {
       if (this.mode === 'horizontal') return
       const opened = this.opened
       if (this.accordion) {
-        this.$parent.vueChildren.forEach((item) => {
+        $children(this.$parent).forEach((item) => {
           if (item.$options.name === 'Submenu') item.opened = false
         })
       }

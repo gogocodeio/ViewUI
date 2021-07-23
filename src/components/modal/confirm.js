@@ -1,4 +1,6 @@
 import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
+import { $children } from '../../utils/assist'
+
 import * as Vue from 'vue'
 import Modal from './modal.vue'
 import Button from '../button/button.vue'
@@ -205,7 +207,7 @@ Modal.newInstance = (properties) => {
     methods: {
       cancel() {
         if (this.closing) return
-        this.vueChildren[0].visible = false
+        $children(this)[0].visible = false
         this.buttonLoading = false
         this.onCancel()
         this.remove()
@@ -215,7 +217,7 @@ Modal.newInstance = (properties) => {
         if (this.loading) {
           this.buttonLoading = true
         } else {
-          this.vueChildren[0].visible = false
+          $children(this)[0].visible = false
           this.remove()
         }
         this.onOk()
@@ -240,7 +242,7 @@ Modal.newInstance = (properties) => {
 
   const component = Instance.$mount()
   document.body.appendChild(component.$el)
-  const modal = Instance.$children[0]
+  const modal = $children(Instance)[0]
 
   return {
     show(props) {

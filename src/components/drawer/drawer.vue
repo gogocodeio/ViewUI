@@ -59,7 +59,6 @@ import {
 import TransferDom from '../../directives/transfer-dom'
 import Emitter from '../../mixins/emitter'
 import Bus from '../../mixins/bus'
-import Children from '../../mixins/children'
 import ScrollbarMixins from '../modal/mixins-scrollbar'
 
 import { on, off } from '../../utils/dom'
@@ -68,7 +67,7 @@ const prefixCls = 'ivu-drawer'
 
 export default {
   name: 'Drawer',
-  mixins: [Emitter, ScrollbarMixins, Bus ,Children],
+  mixins: [Emitter, ScrollbarMixins, Bus],
   components: { Icon },
   directives: { TransferDom },
   props: {

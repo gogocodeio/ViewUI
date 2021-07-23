@@ -6,6 +6,8 @@
 
 <script>
 const prefixCls = 'ivu-collapse'
+import { $children } from '../../utils/assist'
+
 
 export default {
   name: 'Collapse',
@@ -44,7 +46,7 @@ export default {
     setActive() {
       const activeKey = this.getActiveKey()
 
-      this.vueChildren.forEach((child, index) => {
+      $children(this).forEach((child, index) => {
         const name = child.name || index.toString()
 
         child.isActive = activeKey.indexOf(name) > -1

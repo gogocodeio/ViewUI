@@ -1,6 +1,4 @@
-import * as Vue from 'vue'
-
-function $children(
+export function $children(
   instance
 ) {
 
@@ -13,7 +11,7 @@ function $children(
 }
 
 function $walk(vnode, children) {
-  if (vnode.component) {
+  if (vnode.component && vnode.component.proxy) {
     children.push(vnode.component.proxy)
   } else if (vnode.shapeFlag & 1 << 4) {
     const vnodes = vnode.children
@@ -225,7 +223,7 @@ export { findComponentUpward }
 
 // Find component downward
 export function findComponentDownward(context, componentName) {
-  const childrens = context.vueChildren || []
+  const childrens = $children(context) || []
   let children = null
 
   if (childrens.length) {
@@ -271,7 +269,7 @@ export function findBrothersComponents(
   exceptMe = true
 ) {
   console.log('$parent', context)
-  let res = context.$parent.vueChildren.filter((item) => {
+  let res = $children(context.$parent).filter((item) => {
     return item.$options.name === componentName
   })
   let index = res.findIndex((item) => item._uid === context._uid)

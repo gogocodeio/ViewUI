@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import { oneOf } from '../../utils/assist'
+import { oneOf, $children } from '../../utils/assist'
 import Bus from '../../mixins/bus'
 
 const prefixCls = 'ivu-steps'
@@ -64,8 +64,8 @@ export default {
   },
   methods: {
     updateChildProps(isInit) {
-      const total = this.vueChildren.length
-      this.vueChildren.forEach((child, index) => {
+      const total = $children(this).length
+      $children(this).forEach((child, index) => {
         child.stepNumber = index + 1
 
         if (this.direction === 'horizontal') {
@@ -87,29 +87,29 @@ export default {
         }
 
         if (child.currentStatus !== 'error' && index !== 0) {
-          this.vueChildren[index - 1].nextError = false
+          $children(this)[index - 1].nextError = false
         }
       })
     },
     setNextError() {
-      this.vueChildren.forEach((child, index) => {
+      $children(this).forEach((child, index) => {
         if (child.currentStatus === 'error' && index !== 0) {
-          this.vueChildren[index - 1].nextError = true
+          $children(this)[index - 1].nextError = true
         }
       })
     },
     updateCurrent(isInit) {
       // 防止溢出边界
-      if (this.current < 0 || this.current >= this.vueChildren.length) {
+      if (this.current < 0 || this.current >= $children(this).length) {
         return
       }
       if (isInit) {
-        const current_status = this.vueChildren[this.current].currentStatus
+        const current_status = $children(this)[this.current].currentStatus
         if (!current_status) {
-          this.vueChildren[this.current].currentStatus = this.status
+          $children(this)[this.current].currentStatus = this.status
         }
       } else {
-        this.vueChildren[this.current].currentStatus = this.status
+        $children(this)[this.current].currentStatus = this.status
       }
     },
     debouncedAppendRemove() {

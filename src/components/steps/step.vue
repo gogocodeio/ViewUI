@@ -72,7 +72,7 @@ export default {
         `${prefixCls}-item`,
         `${prefixCls}-status-${this.currentStatus}`,
         {
-          [`${prefixCls}-custom`]: !!this.icon || !!this.$slots.icon(),
+          [`${prefixCls}-custom`]: !!this.icon || !!(this.$slots.icon && this.$slots.icon()),
           [`${prefixCls}-next-error`]: this.nextError,
         },
       ]

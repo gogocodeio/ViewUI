@@ -33,7 +33,6 @@
 
 <script>
 // import tiny_emitter from 'tiny-emitter/instance'
-import mixinsChildren from '../../mixins/children'
 import Drop from '../select/dropdown.vue'
 import clickOutside from '../../directives/clickoutside'
 import TransferDom from '../../directives/transfer-dom'
@@ -51,7 +50,7 @@ const prefixCls = 'ivu-dropdown'
 
 export default {
   name: 'Dropdown',
-  mixins: [mixinsChildren, Bus],
+  mixins: [Bus],
   directives: { clickOutside, TransferDom },
   components: { Drop },
   props: {

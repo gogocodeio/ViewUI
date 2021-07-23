@@ -6,6 +6,7 @@
 
 <script>
 const prefixCls = 'ivu-breadcrumb'
+import {  $children } from '../../utils/assist'
 
 export default {
   name: 'Breadcrumb',
@@ -30,7 +31,7 @@ export default {
   },
   methods: {
     updateChildren() {
-      this.VueChildren.forEach((child) => {
+      $children(this).forEach((child) => {
         child.separator = this.separator
       })
     },

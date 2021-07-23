@@ -5,13 +5,12 @@
 </template>
 
 <script>
-import Children from '../../mixins/children'
 import Bus from '../../mixins/bus'
 const prefixCls = 'ivu-tabs-tabpane'
 
 export default {
   name: 'TabPane',
-  mixins: [Bus, Children],
+  mixins: [Bus],
   inject: ['TabsInstance'],
   props: {
     name: {

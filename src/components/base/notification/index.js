@@ -1,4 +1,6 @@
 import { plantRenderPara } from '../../../utils/gogocodeTransfer.js'
+import { $children } from '../../../utils/assist'
+
 import Notification from './notification.vue'
 import * as Vue from 'vue'
 
@@ -18,7 +20,7 @@ Notification.newInstance = (properties) => {
 
   const component = Instance.$mount()
   document.body.appendChild(component.$el)
-  const notification = Instance.vueChildren[0]
+  const notification = $children(Instance)[0]
 
   return {
     notice(noticeProps) {
