@@ -1,4 +1,5 @@
 <template>
+<div v-if="row">
   <tr
     :class="rowClasses(row._index)"
     :draggable="draggable"
@@ -12,6 +13,7 @@
   <tr :class="rowClasses(row._index)" :draggable="false" v-else>
     <slot></slot>
   </tr>
+</div>
 </template>
 
 <script>

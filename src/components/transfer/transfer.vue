@@ -15,7 +15,7 @@ export default {
   render() {
     function cloneVNode(vnode) {
       const clonedChildren =
-        vnode.children && vnode.children.map((vnode) => cloneVNode(vnode))
+        vnode.children && Array.isArray(vnode.children) && vnode.children.map((vnode) => cloneVNode(vnode))
       const cloned = Vue.h(vnode.tag, vnode.data, clonedChildren)
       cloned.text = vnode.text
       cloned.isComment = vnode.isComment
@@ -29,7 +29,8 @@ export default {
       return cloned
     }
 
-    const vNodes = this.$slots.default === undefined ? [] : this.$slots.default
+    const vNodes = this.$slots.default === undefined ? [] : typeof this.$slots.default == 'function' ? 
+      this.$slots.default() : []
     const clonedVNodes =
       this.$slots.default === undefined
         ? []

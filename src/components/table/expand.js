@@ -11,5 +11,5 @@ export default function render(_props, _context) {
     index: ctx.props.index,
   }
   if (ctx.props.column) params.column = ctx.props.column
-  return ctx.props.render(h, params)
+  return ctx.props.render(Vue.h, params)
 }
