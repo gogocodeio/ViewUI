@@ -9,7 +9,7 @@ const prefixCls = 'ivu-modal-confirm'
 Modal.newInstance = (properties) => {
   const _props = properties || {}
 
-  const Instance = new Vue({
+  const Instance = Vue.createApp({
     mixins: [Locale],
     data: Object.assign({}, _props, {
       visible: false,

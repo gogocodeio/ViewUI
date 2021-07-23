@@ -44,7 +44,7 @@
           v-if="currentView !== 'time'"
           :table-date="panelDate"
           :show-week-numbers="showWeekNumbers"
-          :value="dates"
+          :modelValue="dates"
           :selection-mode="selectionMode"
           :disabled-date="disabledDate"
           :focused-date="focusedDate"

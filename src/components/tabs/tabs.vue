@@ -104,6 +104,7 @@ import {
 } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import Children from '../../mixins/children'
+import Bus from '../../mixins/bus'
 import elementResizeDetectorMaker from 'element-resize-detector'
 
 const prefixCls = 'ivu-tabs'
@@ -134,7 +135,7 @@ const focusFirst = (element, root) => {
 
 export default {
   name: 'Tabs',
-  mixins: [Emitter, Children],
+  mixins: [Emitter, Children, Bus],
   components: { Icon, Render, Dropdown, DropdownMenu },
   provide() {
     return { TabsInstance: this }

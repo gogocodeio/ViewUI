@@ -58,6 +58,8 @@ import {
 } from '../../utils/assist'
 import TransferDom from '../../directives/transfer-dom'
 import Emitter from '../../mixins/emitter'
+import Bus from '../../mixins/bus'
+import Children from '../../mixins/children'
 import ScrollbarMixins from '../modal/mixins-scrollbar'
 
 import { on, off } from '../../utils/dom'
@@ -66,7 +68,7 @@ const prefixCls = 'ivu-drawer'
 
 export default {
   name: 'Drawer',
-  mixins: [Emitter, ScrollbarMixins],
+  mixins: [Emitter, ScrollbarMixins, Bus ,Children],
   components: { Icon },
   directives: { TransferDom },
   props: {
@@ -319,7 +321,7 @@ export default {
         this.timer = setTimeout(() => {
           this.wrapShow = false
           // #4831 Check if there are any drawers left at the parent level
-          debugger
+
           const brotherDrawers = findBrothersComponents(this, 'Drawer') || []
           const parentDrawers = findComponentsUpward(this, 'Drawer') || []
 

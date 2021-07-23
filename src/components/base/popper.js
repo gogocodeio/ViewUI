@@ -23,7 +23,7 @@ export default {
     offset: {
       default: 0,
     },
-    value: {
+    modelValue: {
       type: Boolean,
       default: false,
     },
