@@ -1,11 +1,10 @@
 <script>
 import * as Vue from 'vue'
-import Children from '../../mixins/children'
 import Bus from '../../mixins/bus'
 const returnArrayFn = () => []
 
 export default {
-    mixins: [Children, Bus],
+    mixins: [Bus],
   props: {
     options: {
       type: Array,

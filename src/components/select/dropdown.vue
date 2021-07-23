@@ -15,7 +15,7 @@ const Popper = isServer
 import { transferIndex, transferIncrease } from '../../utils/transfer-queue'
 // import tiny_emitter from 'tiny-emitter/instance'
 import Bus from '../../mixins/bus'
-import Children from '../../mixins/children'
+
 // const tiny_emitter_override = {
 //   vueOn: (...args) => tiny_emitter.on(...args),
 //   vueOnce: (...args) => tiny_emitter.once(...args),
@@ -41,7 +41,7 @@ export default {
       default: false,
     },
   },
-  mixins: [Bus, Children],
+  mixins: [Bus],
   data() {
     return {
       popper: null,

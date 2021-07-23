@@ -40,7 +40,7 @@
 import Locale from '../../mixins/locale'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
-import Children from '../../mixins/children'
+
 
 import Icon from '../icon/icon.vue'
 
@@ -48,7 +48,7 @@ const prefixCls = 'ivu-rate'
 
 export default {
   name: 'Rate',
-  mixins: [Locale, Emitter, mixinsForm, Children],
+  mixins: [Locale, Emitter, mixinsForm],
   components: { Icon },
   props: {
     count: {

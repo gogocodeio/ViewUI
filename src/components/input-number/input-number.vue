@@ -59,7 +59,7 @@
 import { oneOf, findComponentUpward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
-import Children from '../../mixins/children'
+
 
 const prefixCls = 'ivu-input-number'
 const iconPrefixCls = 'ivu-icon'
@@ -88,7 +88,7 @@ function addNum(num1, num2) {
 
 export default {
   name: 'InputNumber',
-  mixins: [Emitter, mixinsForm, Children],
+  mixins: [Emitter, mixinsForm],
   props: {
     max: {
       type: Number,

@@ -28,7 +28,7 @@ import Casitem from './casitem.vue'
 import Emitter from '../../mixins/emitter'
 import { findComponentUpward, findComponentDownward } from '../../utils/assist'
 import Bus from '../../mixins/bus'
-import Children from '../../mixins/children'
+
 
 // const tiny_emitter_override = {
 //   vueOn: (...args) => tiny_emitter.on(...args),
@@ -41,7 +41,7 @@ let key = 1
 
 export default {
   name: 'Caspanel',
-  mixins: [Emitter, Bus, Children],
+  mixins: [Emitter, Bus],
   components: { Casitem },
   props: {
     data: {
@@ -188,9 +188,9 @@ export default {
       this.tmpItem = {}
       if (deep) {
         const Caspanel = findComponentDownward(this, 'Caspanel')
-        Object.assign(Caspanel, tiny_emitter_override)
+        // Object.assign(Caspanel, tiny_emitter_override)
         if (Caspanel) {
-          Caspanel.$emit('on-clear', true)
+          Caspanel.vueEmit('on-clear', true)
         }
       }
     })

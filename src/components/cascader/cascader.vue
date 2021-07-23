@@ -99,14 +99,14 @@ import Emitter from '../../mixins/emitter'
 import Locale from '../../mixins/locale'
 import mixinsForm from '../../mixins/form'
 import Bus from '../../mixins/bus'
-import Children from '../../mixins/children'
+
 
 const prefixCls = 'ivu-cascader'
 const selectPrefixCls = 'ivu-select'
 
 export default {
   name: 'Cascader',
-  mixins: [Emitter, Locale, mixinsForm, Bus, Children],
+  mixins: [Emitter, Locale, mixinsForm, Bus],
   components: { iInput, Drop, Icon, Caspanel },
   directives: { clickOutside, TransferDom },
   props: {

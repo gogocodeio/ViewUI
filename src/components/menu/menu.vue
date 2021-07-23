@@ -12,13 +12,13 @@ import {
 } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import Bus from '../../mixins/bus'
-import Children from '../../mixins/children'
+
 
 const prefixCls = 'ivu-menu'
 
 export default {
   name: 'Menu',
-  mixins: [Emitter, Bus, Children],
+  mixins: [Emitter, Bus],
   props: {
     mode: {
       validator(value) {

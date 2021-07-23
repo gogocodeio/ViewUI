@@ -321,7 +321,6 @@ export default {
         this.timer = setTimeout(() => {
           this.wrapShow = false
           // #4831 Check if there are any drawers left at the parent level
-
           const brotherDrawers = findBrothersComponents(this, 'Drawer') || []
           const parentDrawers = findComponentsUpward(this, 'Drawer') || []
 

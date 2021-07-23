@@ -58,14 +58,14 @@ import Render from './render'
 import CollapseTransition from '../base/collapse-transition'
 import Bus from '../../mixins/bus'
 import Emitter from '../../mixins/emitter'
-import Children from '../../mixins/children'
+
 import { findComponentUpward } from '../../utils/assist'
 
 const prefixCls = 'ivu-tree'
 
 export default {
   name: 'TreeNode',
-  mixins: [Emitter, Children, Bus],
+  mixins: [Emitter, Bus],
   inject: ['TreeInstance'],
   components: { Checkbox, Icon, CollapseTransition, Render },
   props: {

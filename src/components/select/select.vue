@@ -115,7 +115,7 @@ import mixinsChildren from '../../mixins/children'
 import mixinsForm from '../../mixins/form'
 import Locale from '../../mixins/locale'
 import Bus from '../../mixins/bus'
-import Children from '../../mixins/children'
+
 import SelectHead from './select-head.vue'
 import FunctionalOptions from './functional-options.vue'
 
@@ -198,7 +198,7 @@ const ANIMATION_TIMEOUT = 300
 
 export default {
   name: 'iSelect',
-  mixins: [mixinsChildren, Emitter, Locale, mixinsForm, Bus, Children],
+  mixins: [mixinsChildren, Emitter, Locale, mixinsForm, Bus],
   components: { FunctionalOptions, Drop, SelectHead, Icon },
   directives: { clickOutside, TransferDom },
   props: {
