@@ -6,7 +6,7 @@
 
 <script>
 import Emitter from '../../mixins/emitter'
-import Children from '../../mixins/children'
+
 import mixinsForm from '../../mixins/form'
 import { findComponentUpward } from '../../utils/assist'
 
@@ -15,7 +15,7 @@ const prefixCls = 'ivu-select-item'
 export default {
   name: 'iOption',
   componentName: 'select-item',
-  mixins: [Children,Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm],
   props: {
     modelValue: {
       type: [String, Number],

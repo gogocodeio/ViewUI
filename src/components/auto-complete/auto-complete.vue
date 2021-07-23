@@ -51,11 +51,11 @@ import iInput from '../input/input.vue'
 import { oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
-import Children from '../../mixins/children'
+
 
 export default {
   name: 'AutoComplete',
-  mixins: [Emitter, mixinsForm, Children],
+  mixins: [Emitter, mixinsForm],
   components: { iSelect, iOption, iInput },
   props: {
     modelValue: {

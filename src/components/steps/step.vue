@@ -31,7 +31,7 @@
 
 <script>
 import Emitter from '../../mixins/emitter'
-import Children from '../../mixins/children'
+
 import { oneOf } from '../../utils/assist'
 
 const prefixCls = 'ivu-steps'
@@ -39,7 +39,7 @@ const iconPrefixCls = 'ivu-icon'
 
 export default {
   name: 'Step',
-  mixins: [Emitter, Children],
+  mixins: [Emitter],
   props: {
     status: {
       validator(value) {

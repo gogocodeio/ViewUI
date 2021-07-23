@@ -110,14 +110,14 @@ import { on, off } from '../../utils/dom'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
 import Bus from '../../mixins/bus'
-import Children from '../../mixins/children'
+
 import elementResizeDetectorMaker from 'element-resize-detector'
 
 const prefixCls = 'ivu-slider'
 
 export default {
   name: 'Slider',
-  mixins: [Emitter, mixinsForm, Bus, Children],
+  mixins: [Emitter, mixinsForm, Bus],
   components: { InputNumber, Tooltip, SliderMarker },
   props: {
     min: {

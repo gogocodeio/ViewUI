@@ -95,7 +95,7 @@ import { findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
 import Bus from '../../mixins/bus'
-import Children from '../../mixins/children'
+
 
 const prefixCls = 'ivu-date-picker'
 const pickerPrefixCls = 'ivu-picker'
@@ -132,7 +132,7 @@ const extractTime = (date) => {
 }
 
 export default {
-  mixins: [Emitter, mixinsForm, Bus, Children],
+  mixins: [Emitter, mixinsForm, Bus],
   components: { iInput, Drop, Icon },
   directives: { clickOutside, TransferDom },
   props: {

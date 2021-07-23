@@ -5,13 +5,13 @@ import List from './list.vue'
 import Operation from './operation.vue'
 import Locale from '../../mixins/locale'
 import Emitter from '../../mixins/emitter'
-import Children from '../../mixins/children'
+
 
 const prefixCls = 'ivu-transfer'
 
 export default {
   name: 'Transfer',
-  mixins: [Emitter, Locale, Children],
+  mixins: [Emitter, Locale],
   render() {
     function cloneVNode(vnode) {
       const clonedChildren =

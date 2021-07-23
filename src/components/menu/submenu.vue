@@ -45,13 +45,13 @@ import {
 import Emitter from '../../mixins/emitter'
 import Bus from '../../mixins/bus'
 import mixin from './mixin'
-import Children from '../../mixins/children'
+
 
 const prefixCls = 'ivu-menu'
 
 export default {
   name: 'Submenu',
-  mixins: [Emitter, mixin, Bus, Children],
+  mixins: [Emitter, mixin, Bus],
   components: { Icon, Drop, CollapseTransition },
   props: {
     name: {

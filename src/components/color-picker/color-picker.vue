@@ -130,7 +130,7 @@ import mixinsForm from '../../mixins/form'
 import Prefixes from './prefixMixin'
 import { changeColor, toRGBAString } from './utils'
 import Bus from '../../mixins/bus'
-import Children from '../../mixins/children'
+
 
 export default {
   name: 'ColorPicker',
@@ -145,7 +145,7 @@ export default {
     Icon,
   },
   directives: { clickOutside, TransferDom },
-  mixins: [Emitter, Locale, Prefixes, mixinsForm, Bus, Children],
+  mixins: [Emitter, Locale, Prefixes, mixinsForm, Bus],
   props: {
     modelValue: {
       type: String,

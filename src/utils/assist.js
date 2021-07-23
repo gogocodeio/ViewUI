@@ -1,4 +1,28 @@
 import * as Vue from 'vue'
+
+function $children(
+  instance
+) {
+
+  const root = instance.$.subTree
+  const children = []
+  if (root) {
+    $walk(root, children)
+  }
+  return children
+}
+
+function $walk(vnode, children) {
+  if (vnode.component) {
+    children.push(vnode.component.proxy)
+  } else if (vnode.shapeFlag & 1 << 4) {
+    const vnodes = vnode.children
+    for (let i = 0; i < vnodes.length; i++) {
+      $walk(vnodes[i], children)
+    }
+  }
+}
+
 const isServer = false
 // 判断参数是否是其中之一
 export function oneOf(value, validList) {
@@ -221,7 +245,7 @@ export function findComponentDownward(context, componentName) {
 
 // Find components downward
 export function findComponentsDownward(context, componentName) {
-  return context.vueChildren.reduce((components, child) => {
+  return $children(context).reduce((components, child) => {
     if (child.$options.name === componentName) components.push(child)
     const foundChilds = findComponentsDownward(child, componentName)
     return components.concat(foundChilds)

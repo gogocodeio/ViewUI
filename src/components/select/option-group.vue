@@ -9,7 +9,7 @@
 
 <script>
 import Bus from '../../mixins/bus'
-import Children from '../../mixins/children'
+
 const prefixCls = 'ivu-select-group'
 
 
@@ -21,7 +21,7 @@ export default {
       default: '',
     },
   },
-  mixins: [Bus, Children],
+  mixins: [Bus],
   data() {
     return {
       prefixCls: prefixCls,

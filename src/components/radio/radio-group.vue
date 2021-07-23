@@ -7,7 +7,7 @@
 <script>
 import { oneOf, findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
-import Children from '../../mixins/children'
+
 
 const prefixCls = 'ivu-radio-group'
 
@@ -17,7 +17,7 @@ const getUuid = () => `ivuRadioGroup_${now}_${seed++}`
 
 export default {
   name: 'RadioGroup',
-  mixins: [Emitter, Children],
+  mixins: [Emitter],
   props: {
     modelValue: {
       type: [String, Number],
@@ -81,6 +81,7 @@ export default {
   methods: {
     updateValue() {
       this.childrens = findComponentsDownward(this, 'Radio')
+
       if (this.childrens) {
         this.childrens.forEach((child) => {
           child.currentValue = this.currentValue === child.label

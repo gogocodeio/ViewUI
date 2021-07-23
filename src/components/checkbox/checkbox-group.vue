@@ -7,13 +7,13 @@
 <script>
 import { findComponentsDownward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
-import Children from '../../mixins/children'
+
 
 const prefixCls = 'ivu-checkbox-group'
 
 export default {
   name: 'CheckboxGroup',
-  mixins: [Emitter, Children],
+  mixins: [Emitter],
   props: {
     modelValue: {
       type: Array,
