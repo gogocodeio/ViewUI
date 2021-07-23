@@ -77,4 +77,8 @@ module.exports = {
 
 <style lang="less">
 @import '../src/styles/index.less';
+.container span {
+    margin-right: 10px;
+    display: inline-block;
+}
 </style>

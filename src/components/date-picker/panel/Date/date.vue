@@ -119,9 +119,9 @@ export default {
     },
   },
   data() {
-    const { selectionMode, value } = this
+    const { selectionMode, modelValue } = this
 
-    const dates = value.slice().sort()
+    const dates = modelValue.slice().sort()
     return {
       prefixCls: prefixCls,
       datePrefixCls: datePrefixCls,
