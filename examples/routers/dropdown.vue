@@ -39,7 +39,7 @@
       style="width: 200px"
     ></Cascader>
     <Select v-model="model1" multiple transfer style="width: 200px">
-      <Option v-for="item in cityList" :value="item.value" :key="item.value">{{
+      <Option v-for="item in cityList" :modelValue="item.value" :key="item.value">{{
         item.label
       }}</Option>
     </Select>

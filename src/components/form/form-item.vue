@@ -297,7 +297,7 @@ export default {
       this.dispatch('iForm', 'on-form-item-add', this)
 
       Object.defineProperty(this, 'initialValue', {
-        value: this.fieldValue,
+        modelValue: this.fieldValue,
       })
 
       this.setRules()
