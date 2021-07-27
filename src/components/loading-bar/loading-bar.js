@@ -6,7 +6,8 @@ import * as Vue from 'vue'
 LoadingBar.newInstance = (properties) => {
   const _props = properties || {}
 
-  const Instance = new Vue({
+  // TODO:
+  const Instance = Vue.createApp(document.body, {
     data: _props,
     render() {
       return Vue.h(
@@ -18,8 +19,7 @@ LoadingBar.newInstance = (properties) => {
     },
   })
 
-  const component = Instance.$mount()
-  document.body.appendChild(component.$el)
+  Instance.mount()
   const loading_bar = ($children(Instance))[0]
 
   return {
