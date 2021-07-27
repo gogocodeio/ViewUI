@@ -19,12 +19,12 @@
       >
         <div :class="[prefixCls + '-color']">
           <div
-            v-show="value === '' && !visible"
+            v-show="modelValue === '' && !visible"
             :class="[prefixCls + '-color-empty']"
           >
             <i :class="[iconPrefixCls, iconPrefixCls + '-ios-close']"></i>
           </div>
-          <div v-show="value || visible" :style="displayedColorStyle"></div>
+          <div v-show="modelValue || visible" :style="displayedColorStyle"></div>
         </div>
       </div>
     </div>
@@ -495,6 +495,7 @@ export default {
       this.closer(event)
     },
     handleSuccess(event) {
+        console.log('this.formatColor', this.formatColor)
       this.handleButtons(event, this.formatColor)
       this.$emit('on-pick-success')
     },
