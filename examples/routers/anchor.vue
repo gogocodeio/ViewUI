@@ -16,10 +16,12 @@
       >
         <template
           v-for="link in 300"
+          ><AnchorLink
+          v-if="(link - 1) % 30 === 0"
           :key="`link${link}`"
           :href="`#title-${link}`"
           :title="`title-${link}`"
-          ><AnchorLink v-if="(link - 1) % 30 === 0">
+        >
             <AnchorLink
               :scroll-offset="20"
               v-if="link === 61"
