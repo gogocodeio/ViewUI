@@ -57,28 +57,6 @@ export default {
             },
           ],
         },
-        {
-          title: '问题',
-          children: [
-            {
-              title: 'iView UI 有多好',
-              count: 60100,
-            },
-            {
-              title: 'iView 是啥',
-              count: 30010,
-            },
-          ],
-        },
-        {
-          title: '文章',
-          children: [
-            {
-              title: 'iView 是一个设计语言',
-              count: 100000,
-            },
-          ],
-        },
       ],
       cityList: [
         {
