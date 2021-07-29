@@ -106,7 +106,7 @@ export default {
       this.setTime()
     }, 1000 * this.interval)
   },
-  beforeUnmout() {
+  beforeUnmount() {
     if (this.timer) clearInterval(this.timer)
   },
 }

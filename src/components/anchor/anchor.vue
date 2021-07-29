@@ -239,7 +239,7 @@ export default {
   mounted() {
     this.init()
   },
-  beforeUnmout() {
+  beforeUnmount() {
     this.removeListener()
   },
   emits: ['on-change'],

@@ -169,7 +169,7 @@ export default {
       this.matchMedia()
     }
   },
-  beforeUnmout() {
+  beforeUnmount() {
     if (this.breakpoint !== undefined) {
       off(window, 'resize', this.onWindowResize)
     }

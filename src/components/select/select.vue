@@ -372,7 +372,7 @@ export default {
       }
     }
   },
-  beforeUnmout() {
+  beforeUnmount() {
     this.vueOff('on-select-selected')
   },
   data() {

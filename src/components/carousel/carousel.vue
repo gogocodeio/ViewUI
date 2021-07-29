@@ -353,7 +353,7 @@ export default {
     //            window.addEventListener('resize', this.handleResize, false);
     on(window, 'resize', this.handleResize)
   },
-  beforeUnmout() {
+  beforeUnmount() {
     //            window.removeEventListener('resize', this.handleResize, false);
     off(window, 'resize', this.handleResize)
   },

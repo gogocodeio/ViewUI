@@ -17,7 +17,7 @@ export default {
     },
   },
 
-  beforeUnmout() {
+  beforeUnmount() {
     this.unbindEventListeners()
   },
 

@@ -105,7 +105,7 @@ export default {
   mounted() {
     this.updateGutter()
   },
-  beforeUnmout() {
+  beforeUnmount() {
     this.updateGutter()
   },
 }

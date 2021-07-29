@@ -303,7 +303,7 @@ export default {
       this.setRules()
     }
   },
-  beforeUnmout() {
+  beforeUnmount() {
     this.dispatch('iForm', 'on-form-item-remove', this)
   },
   emits: ['on-validate'],

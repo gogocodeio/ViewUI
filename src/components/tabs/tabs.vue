@@ -682,7 +682,7 @@ export default {
     this.handleTabKeyboardSelect(true)
     this.updateVisibility(this.getTabIndex(this.activeKey))
   },
-  beforeUnmout() {
+  beforeUnmount() {
     this.observer.removeListener(this.$refs.navWrap, this.handleResize)
     if (this.mutationObserver) this.mutationObserver.disconnect()
   },

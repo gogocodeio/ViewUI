@@ -49,7 +49,7 @@ export default {
       return true
     })
   },
-  beforeUnmout() {
+  beforeUnmount() {
     this.vueOff('on-query-change')
   },
 }

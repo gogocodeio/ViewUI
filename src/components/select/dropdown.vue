@@ -133,7 +133,7 @@ export default {
     this.vueOn('on-update-popper', this.update)
     this.vueOn('on-destroy-popper', this.destroy)
   },
-  beforeUnmout() {
+  beforeUnmount() {
     this.vueOff('on-update-popper', this.update)
     this.vueOff('on-destroy-popper', this.destroy)
     if (this.popper) {

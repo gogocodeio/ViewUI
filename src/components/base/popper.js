@@ -118,7 +118,7 @@ export default {
   updated() {
     this.$nextTick(() => this.updatePopper())
   },
-  beforeUnmout() {
+  beforeUnmount() {
     if (isServer) return
     if (this.popperJS) {
       this.popperJS.destroy()

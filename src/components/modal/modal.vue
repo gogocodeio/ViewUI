@@ -471,7 +471,7 @@ export default {
     // ESC close
     document.addEventListener('keydown', this.EscClose)
   },
-  beforeUnmout() {
+  beforeUnmount() {
     document.removeEventListener('keydown', this.EscClose)
     this.removeScrollEffect()
   },
