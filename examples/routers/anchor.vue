@@ -16,10 +16,12 @@
       >
         <template
           v-for="link in 300"
+          ><AnchorLink
+          v-if="(link - 1) % 30 === 0"
           :key="`link${link}`"
           :href="`#title-${link}`"
           :title="`title-${link}`"
-          ><AnchorLink v-if="(link - 1) % 30 === 0">
+        >
             <AnchorLink
               :scroll-offset="20"
               v-if="link === 61"
@@ -56,23 +58,29 @@
         <Collapse v-if="i === 3" v-model="value1">
           <Panel name="1">
             史蒂夫·乔布斯
-            <p v-for="index in 50" :key="`ppp-${index}`" slot="content">
-              {{ index }}
-            </p>
+            <template v-slot:content>
+              <p v-for="index in 50" :key="`ppp-${index}`" >
+                {{ index }}
+              </p>
+            </template>
           </Panel>
           <Panel name="2">
             斯蒂夫·盖瑞·沃兹尼亚克
-            <p slot="content">
+            <template v-slot:content>
+            <p>
               斯蒂夫·盖瑞·沃兹尼亚克（Stephen Gary
               Wozniak），美国电脑工程师，曾与史蒂夫·乔布斯合伙创立苹果电脑（今之苹果公司）。斯蒂夫·盖瑞·沃兹尼亚克曾就读于美国科罗拉多大学，后转学入美国著名高等学府加州大学伯克利分校（UC
               Berkeley）并获得电机工程及计算机（EECS）本科学位（1987年）。
             </p>
+            </template>
           </Panel>
           <Panel name="3">
             乔纳森·伊夫
-            <p slot="content">
+             <template v-slot:content>
+            <p >
               乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。
             </p>
+             </template>
           </Panel>
         </Collapse>
       </template>
@@ -98,23 +106,29 @@
         <Collapse v-if="i === 3" v-model="value1">
           <Panel name="1">
             史蒂夫·乔布斯
-            <p v-for="index in 50" :key="`ppp-${index}`" slot="content">
+            <template v-slot:content>
+            <p v-for="index in 50" :key="`ppp-${index}`">
               {{ index }}
             </p>
+            </template>
           </Panel>
           <Panel name="2">
             斯蒂夫·盖瑞·沃兹尼亚克
-            <p slot="content">
+            <template v-slot:content>
+            <p >
               斯蒂夫·盖瑞·沃兹尼亚克（Stephen Gary
               Wozniak），美国电脑工程师，曾与史蒂夫·乔布斯合伙创立苹果电脑（今之苹果公司）。斯蒂夫·盖瑞·沃兹尼亚克曾就读于美国科罗拉多大学，后转学入美国著名高等学府加州大学伯克利分校（UC
               Berkeley）并获得电机工程及计算机（EECS）本科学位（1987年）。
             </p>
+            </template>
           </Panel>
           <Panel name="3">
             乔纳森·伊夫
-            <p slot="content">
+            <template v-slot:content>
+            <p>
               乔纳森·伊夫是一位工业设计师，现任Apple公司设计师兼资深副总裁，英国爵士。他曾参与设计了iPod，iMac，iPhone，iPad等众多苹果产品。除了乔布斯，他是对苹果那些著名的产品最有影响力的人。
             </p>
+            </template>
           </Panel>
         </Collapse>
       </template>

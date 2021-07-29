@@ -6,5 +6,5 @@ export default function render(_props, _context) {
     data: _context.attr,
     children: _context.slots,
   }
-  return ctx.props.render(h)
+  return ctx.props.render(Vue.h)
 }

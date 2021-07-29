@@ -42,6 +42,10 @@ export default {
       return result
     },
     isFlexMode() {
+        console.log('this.$slots', this.$slots)
+      if (!this.$slots.extra) {
+        return false
+      }
       const extra = this.$slots.extra()
 
       if (this.itemLayout === 'vertical') {

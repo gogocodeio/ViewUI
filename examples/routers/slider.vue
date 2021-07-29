@@ -7,6 +7,8 @@
 </template>
 
 <script>
+import * as Vue from 'vue'
+
 export default {
   data() {
     return {
@@ -20,7 +22,7 @@ export default {
           style: {
             color: '#1989FA',
           },
-          label: this.$createElement('strong', '50%'),
+          label: Vue.h('strong', '50%'),
         },
       },
     }

@@ -6,8 +6,6 @@ function broadcast(componentName, eventName, params) {
         console.log("boardcast", this);
     }
 
-    debugger
-
     children.forEach((child) => {
         const name = child.$options.name;
 

@@ -8,7 +8,7 @@
           ref="input"
           :readonly="!filterable"
           :disabled="itemDisabled"
-          :value="displayInputRender"
+          :modelValue="displayInputRender"
           @on-change="handleInput"
           :size="size"
           :placeholder="inputPlaceholder"
@@ -239,6 +239,7 @@ export default {
     },
     displayRender() {
       let label = []
+      console.log('this.selected', this.selected)
       for (let i = 0; i < this.selected.length; i++) {
         label.push(this.selected[i].label)
       }

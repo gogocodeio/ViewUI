@@ -500,9 +500,11 @@ export default {
         const copyChildren = (node, fn) => {
           return {
             ...node,
-            children: (node.children || [])
-              .map(fn)
-              .map((child) => copyChildren(child, fn)),
+            children: Array.isArray(node.children)
+                ? (node.children || [])
+                    .map(fn)
+                    .map((child) => copyChildren(child, fn))
+                : node.children,
           }
         }
         const autoCompleteOptions = extractOptions(slotOptions)
@@ -513,8 +515,8 @@ export default {
             node === selectedSlotOption ||
             getNestedProperty(node, 'componentOptions.propsData.value') ===
               this.modelValue
-          )
-            return applyProp(node, 'isFocused', true)
+          ) return applyProp(node, 'isFocused', true)
+
           return copyChildren(node, (child) => {
             if (child !== selectedSlotOption) return child
             return applyProp(child, 'isFocused', true)
@@ -881,6 +883,7 @@ export default {
       this.isFocused = type === 'focus'
     },
     updateSlotOptions() {
+        console.log('$slot', this.$slots)
       this.slotOptions = this.$slots.default && this.$slots.default()
     },
     checkUpdateStatus() {

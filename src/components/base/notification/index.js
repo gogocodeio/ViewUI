@@ -1,27 +1,20 @@
 import { plantRenderPara } from '../../../utils/gogocodeTransfer.js'
-import { $children } from '../../../utils/assist'
 
 import Notification from './notification.vue'
-import * as Vue from 'vue'
+import { createVNode, render } from 'vue'
 
 Notification.newInstance = (properties) => {
   const _props = properties || {}
 
-  const Instance = new Vue({
-    render() {
-      return Vue.h(
-        Notification,
-        plantRenderPara({
-          props: _props,
-        })
-      )
-    },
-  })
+  const container = document.createElement('div')
+  const vm = createVNode(Notification, plantRenderPara({ props: _props }))
 
-  const component = Instance.$mount()
-  document.body.appendChild(component.$el)
-  const notification = $children(Instance)[0]
+  vm.props.onDestroy = () => render(null, container)
 
+  render(vm, container)
+  document.body.appendChild(container.firstElementChild)
+
+  const notification = vm.component.proxy
   return {
     notice(noticeProps) {
       notification.add(noticeProps)

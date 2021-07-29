@@ -28,11 +28,7 @@ export function plantRenderPara(params) {
         if (transProps[key] === '') {
             if (typeof params[key] == 'object') {
                 for (let k in params[key]) {
-                    result[
-                        key == 'on'
-                            ? 'on' + k.replace(k[0], k[0].toUpperCase())
-                            : k
-                    ] = params[key][k]
+                    result[k] = params[key][k]
                 }
             } else {
                 result[key] = params[key]
