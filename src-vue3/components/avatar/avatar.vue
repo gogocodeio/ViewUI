@@ -37,9 +37,9 @@ export default {
     size: {
       type: [String, Number],
       default() {
-        return !this.$IVIEW || this.$IVIEW.size === ''
+        return !window.$IVIEW || window.$IVIEW.size === ''
           ? 'default'
-          : this.$IVIEW.size
+          : window.$IVIEW.size
       },
     },
     src: {

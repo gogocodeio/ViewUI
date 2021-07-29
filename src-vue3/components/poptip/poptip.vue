@@ -138,9 +138,9 @@ export default {
     transfer: {
       type: Boolean,
       default() {
-        return !this.$IVIEW || this.$IVIEW.transfer === ''
+        return !window.$IVIEW || window.$IVIEW.transfer === ''
           ? false
-          : this.$IVIEW.transfer
+          : window.$IVIEW.transfer
       },
     },
     popperClass: {
@@ -163,7 +163,7 @@ export default {
     capture: {
       type: Boolean,
       default() {
-        return !this.$IVIEW ? false : this.$IVIEW.capture
+        return !window.$IVIEW ? false : window.$IVIEW.capture
       },
     },
     transferClassName: {

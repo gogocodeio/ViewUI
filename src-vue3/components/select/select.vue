@@ -251,9 +251,9 @@ export default {
         return oneOf(value, ['small', 'large', 'default'])
       },
       default() {
-        return !this.$IVIEW || this.$IVIEW.size === ''
+        return !window.$IVIEW || window.$IVIEW.size === ''
           ? 'default'
-          : this.$IVIEW.size
+          : window.$IVIEW.size
       },
     },
     labelInValue: {
@@ -279,9 +279,9 @@ export default {
     transfer: {
       type: Boolean,
       default() {
-        return !this.$IVIEW || this.$IVIEW.transfer === ''
+        return !window.$IVIEW || window.$IVIEW.transfer === ''
           ? false
-          : this.$IVIEW.transfer
+          : window.$IVIEW.transfer
       },
     },
     // Use for AutoComplete
@@ -319,7 +319,7 @@ export default {
     capture: {
       type: Boolean,
       default() {
-        return !this.$IVIEW ? true : this.$IVIEW.capture
+        return !window.$IVIEW ? true : window.$IVIEW.capture
       },
     },
     // 4.2.0

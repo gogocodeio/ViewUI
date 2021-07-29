@@ -103,9 +103,9 @@ export default {
     maskClosable: {
       type: Boolean,
       default() {
-        return !this.$IVIEW || this.$IVIEW.modal.maskClosable === ''
+        return !window.$IVIEW || window.$IVIEW.modal.maskClosable === ''
           ? true
-          : this.$IVIEW.modal.maskClosable
+          : window.$IVIEW.modal.maskClosable
       },
     },
     title: {
@@ -152,9 +152,9 @@ export default {
     transfer: {
       type: Boolean,
       default() {
-        return !this.$IVIEW || this.$IVIEW.transfer === ''
+        return !window.$IVIEW || window.$IVIEW.transfer === ''
           ? true
-          : this.$IVIEW.transfer
+          : window.$IVIEW.transfer
       },
     },
     fullscreen: {
