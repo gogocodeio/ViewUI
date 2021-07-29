@@ -3,7 +3,6 @@ import { plantRenderPara } from '../../../utils/gogocodeTransfer.js'
 import Notification from './notification.vue'
 import { createVNode, render } from 'vue'
 
-const notificationInstance = []
 Notification.newInstance = (properties) => {
   const _props = properties || {}
 
@@ -13,7 +12,6 @@ Notification.newInstance = (properties) => {
   vm.props.onDestroy = () => render(null, container)
 
   render(vm, container)
-  notificationInstance.push({ vm })
   document.body.appendChild(container.firstElementChild)
 
   const notification = vm.component.proxy

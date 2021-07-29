@@ -2,7 +2,6 @@ import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
 import LoadingBar from './loading-bar.vue'
 import { createVNode, render } from 'vue'
 
-const loadingBarInstances = []
 LoadingBar.newInstance = (properties) => {
   const _props = properties || {}
 
@@ -14,7 +13,6 @@ LoadingBar.newInstance = (properties) => {
   }
 
   render(vm, container)
-  loadingBarInstances.push({vm})
   document.body.appendChild(container.firstElementChild)
 
   const loadingBar = vm.component.proxy
