@@ -113,7 +113,7 @@ export default {
   mounted() {
     this.dispatch('Steps', 'append')
   },
-  beforeDestroy() {
+  beforeUnmout() {
     this.dispatch('Steps', 'remove')
   },
 }

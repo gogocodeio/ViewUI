@@ -225,7 +225,7 @@ export default {
 
     on(window, 'resize', this.computeOffset)
   },
-  beforeDestroy() {
+  beforeUnmout() {
     off(window, 'resize', this.computeOffset)
   },
   emits: ['update:modelValue', 'on-moving', 'on-move-end', 'on-move-start'],

@@ -504,7 +504,7 @@ export default {
     this.observer = elementResizeDetectorMaker()
     this.observer.listenTo(this.$refs.slider, this.handleSetSliderWidth)
   },
-  beforeDestroy() {
+  beforeUnmout() {
     this.observer.removeListener(this.$refs.slider, this.handleSetSliderWidth)
   },
   emits: ['update:modelValue', 'on-input', 'on-change'],

@@ -43,7 +43,7 @@ export default {
     on(window, 'scroll', this.handleScroll)
     on(window, 'resize', this.handleScroll)
   },
-  beforeDestroy() {
+  beforeUnmout() {
     //            window.removeEventListener('scroll', this.handleScroll, false);
     //            window.removeEventListener('resize', this.handleScroll, false);
     off(window, 'scroll', this.handleScroll)

@@ -306,7 +306,7 @@ export default {
     on(document, 'mouseup', this.handleMouseup)
     this.handleSetWrapperWidth()
   },
-  beforeDestroy() {
+  beforeUnmout() {
     off(document, 'mousemove', this.handleMousemove)
     off(document, 'mouseup', this.handleMouseup)
     this.removeScrollEffect()

@@ -17,7 +17,7 @@ export default {
     },
   },
 
-  beforeDestroy() {
+  beforeUnmout() {
     this.unbindEventListeners()
   },
 

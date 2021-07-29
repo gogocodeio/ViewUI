@@ -89,7 +89,7 @@ export default {
       this.handleScroll()
     })
   },
-  beforeDestroy() {
+  beforeUnmout() {
     //            window.removeEventListener('scroll', this.handleScroll, false);
     //            window.removeEventListener('resize', this.handleScroll, false);
     off(window, 'scroll', this.handleScroll, this.useCapture)

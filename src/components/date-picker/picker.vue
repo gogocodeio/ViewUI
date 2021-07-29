@@ -899,7 +899,7 @@ export default {
     this.vueOn('focus-input', () => this.focus())
     this.vueOn('update-popper', () => this.updatePopper())
   },
-  beforeDestroy() {
+  beforeUnmout() {
     this.vueOff('focus-input')
     this.vueOff('update-popper')
   },

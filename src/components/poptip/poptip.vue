@@ -358,7 +358,7 @@ export default {
       })
     }
   },
-  beforeDestroy() {
+  beforeUnmout() {
     const $children = this.getInputChildren()
     if ($children) {
       $children.removeEventListener('focus', this.handleFocus, false)

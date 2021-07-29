@@ -194,7 +194,7 @@ export default {
       this.withDesc = this.render ? true : desc ? desc.innerHTML !== '' : false
     }
   },
-  beforeDestroy() {
+  beforeUnmout() {
     this.clearCloseTimer()
   },
 }

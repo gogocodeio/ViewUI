@@ -44,7 +44,7 @@ export default {
       }
     },
   },
-  beforeDestroy() {
+  beforeUnmout() {
     this.$parent.slotChange()
   },
 }
