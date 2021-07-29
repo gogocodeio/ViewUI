@@ -1,19 +1,17 @@
 <template>
-<div v-if="row">
   <tr
     :class="rowClasses(row._index)"
     :draggable="draggable"
     @dragstart="onDrag($event, row._index)"
     @drop="onDrop($event, row._index)"
     @dragover="allowDrop($event)"
-    v-if="draggable"
+    v-if="draggable && row"
   >
     <slot></slot>
   </tr>
-  <tr :class="rowClasses(row._index)" :draggable="false" v-else>
+  <tr :class="rowClasses(row._index)" :draggable="false" v-if="!draggable && row">
     <slot></slot>
   </tr>
-</div>
 </template>
 
 <script>
