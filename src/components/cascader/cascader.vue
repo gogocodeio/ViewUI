@@ -8,7 +8,7 @@
           ref="input"
           :readonly="!filterable"
           :disabled="itemDisabled"
-          :value="displayInputRender"
+          :modelValue="displayInputRender"
           @on-change="handleInput"
           :size="size"
           :placeholder="inputPlaceholder"
