@@ -1,7 +1,8 @@
 <template>
-  <a
-    v-if="tagName === 'a'"
+  <component
+    v-if="tagName !== 'button'"
     v-bind="tagProps"
+    :is="tagName"
     :class="classes"
     :disabled="itemDisabled"
     @click="handleClickLink"
@@ -13,7 +14,7 @@
       v-if="(icon || customIcon) && !loading"
     ></Icon>
     <span v-if="showSlot" ref="slot"><slot></slot></span>
-  </a>
+  </component>
   <button
     v-else
     v-bind="tagProps"
