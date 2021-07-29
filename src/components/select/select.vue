@@ -45,7 +45,9 @@
           @on-clear="clearSingleSelect"
           @on-enter="handleCreateItem"
         >
-          <slot name="prefix" slot="prefix"></slot>
+          <template v-slot:prefix>
+            <slot name="prefix"></slot>
+          </template>
         </select-head>
       </slot>
     </div>
@@ -501,10 +503,10 @@ export default {
           return {
             ...node,
             children: Array.isArray(node.children)
-                ? (node.children || [])
-                    .map(fn)
-                    .map((child) => copyChildren(child, fn))
-                : node.children,
+              ? (node.children || [])
+                  .map(fn)
+                  .map((child) => copyChildren(child, fn))
+              : node.children,
           }
         }
         const autoCompleteOptions = extractOptions(slotOptions)
@@ -515,7 +517,8 @@ export default {
             node === selectedSlotOption ||
             getNestedProperty(node, 'componentOptions.propsData.value') ===
               this.modelValue
-          ) return applyProp(node, 'isFocused', true)
+          )
+            return applyProp(node, 'isFocused', true)
 
           return copyChildren(node, (child) => {
             if (child !== selectedSlotOption) return child
@@ -795,8 +798,8 @@ export default {
       if (direction > 0) {
         let nearestActiveOption = -1
         for (let i = 0; i < this.flatOptions.length; i++) {
-          const optionIsActive =
-            !this.flatOptions[i].componentOptions.propsData.disabled
+          const optionIsActive = !this.flatOptions[i].componentOptions.propsData
+            .disabled
           if (optionIsActive) nearestActiveOption = i
           if (nearestActiveOption >= index) break
         }
@@ -804,8 +807,8 @@ export default {
       } else {
         let nearestActiveOption = this.flatOptions.length
         for (let i = optionsLength; i >= 0; i--) {
-          const optionIsActive =
-            !this.flatOptions[i].componentOptions.propsData.disabled
+          const optionIsActive = !this.flatOptions[i].componentOptions.propsData
+            .disabled
           if (optionIsActive) nearestActiveOption = i
           if (nearestActiveOption <= index) break
         }
@@ -883,7 +886,7 @@ export default {
       this.isFocused = type === 'focus'
     },
     updateSlotOptions() {
-        console.log('$slot', this.$slots)
+      console.log('$slot', this.$slots)
       this.slotOptions = this.$slots.default && this.$slots.default()
     },
     checkUpdateStatus() {
@@ -1003,8 +1006,8 @@ export default {
     focusIndex(index) {
       if (index < 0 || this.autoComplete) return
       // update scroll
-      const optionValue =
-        this.flatOptions[index].componentOptions.propsData.value
+      const optionValue = this.flatOptions[index].componentOptions.propsData
+        .value
       const optionInstance = findChild(this, ({ $options }) => {
         return (
           $options.componentName === 'select-item' &&

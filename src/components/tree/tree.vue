@@ -20,9 +20,11 @@
         transfer
         @on-clickoutside="handleClickContextMenuOutside"
       >
-        <DropdownMenu slot="list">
-          <slot name="contextMenu"></slot>
-        </DropdownMenu>
+        <template v-slot:list>
+          <DropdownMenu>
+            <slot name="contextMenu"></slot>
+          </DropdownMenu>
+        </template>
       </Dropdown>
     </div>
   </div>
@@ -159,7 +161,9 @@ export default {
         return // no need to update upwards
 
       if (node.checked == true) {
-        parent['checked'] = parent[this.childrenKey].every((node) => node.checked)
+        parent['checked'] = parent[this.childrenKey].every(
+          (node) => node.checked
+        )
         parent['indeterminate'] = !parent.checked
       } else {
         parent['checked'] = false

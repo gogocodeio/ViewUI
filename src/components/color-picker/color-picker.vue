@@ -24,7 +24,10 @@
           >
             <i :class="[iconPrefixCls, iconPrefixCls + '-ios-close']"></i>
           </div>
-          <div v-show="modelValue || visible" :style="displayedColorStyle"></div>
+          <div
+            v-show="modelValue || visible"
+            :style="displayedColorStyle"
+          ></div>
         </div>
       </div>
     </div>
@@ -130,7 +133,6 @@ import mixinsForm from '../../mixins/form'
 import Prefixes from './prefixMixin'
 import { changeColor, toRGBAString } from './utils'
 import Bus from '../../mixins/bus'
-
 
 export default {
   name: 'ColorPicker',
@@ -495,7 +497,7 @@ export default {
       this.closer(event)
     },
     handleSuccess(event) {
-        console.log('this.formatColor', this.formatColor)
+      console.log('this.formatColor', this.formatColor)
       this.handleButtons(event, this.formatColor)
       this.$emit('on-pick-success')
     },

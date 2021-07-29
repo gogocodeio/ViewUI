@@ -29,7 +29,10 @@
           :class="itemClasses(item)"
           @click.prevent="select(item)"
         >
-          <Checkbox :modelValue="isCheck(item)" :disabled="item.disabled"></Checkbox>
+          <Checkbox
+            :modelValue="isCheck(item)"
+            :disabled="item.disabled"
+          ></Checkbox>
           <span v-html="showLabel(item)"></span>
         </li>
         <li :class="prefixCls + '-content-not-found'">{{ notFoundText }}</li>

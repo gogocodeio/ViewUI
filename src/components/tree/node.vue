@@ -210,11 +210,11 @@ export default {
       if (item[this.childrenKey].length === 0) {
         const tree = findComponentUpward(this, 'Tree')
         if (tree && tree.loadData) {
-          this.$set(this.data, 'loading', true)
+          this.data['loading'] = true
           tree.loadData(item, (children) => {
-            this.$set(this.data, 'loading', false)
+            this.data['loading'] = false
             if (children.length) {
-              this.$set(this.data, this.childrenKey, children)
+              this.data[this.childrenKey] = children
               this.$nextTick(() => this.handleExpand())
             }
           })
@@ -223,7 +223,7 @@ export default {
       }
 
       if (item[this.childrenKey] && item[this.childrenKey].length) {
-        this.$set(this.data, 'expand', !this.data.expand)
+        this.data['expand'] = !this.data.expand
         this.dispatch('Tree', 'toggle-expand', this.data)
       }
     },

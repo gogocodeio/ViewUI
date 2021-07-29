@@ -210,8 +210,12 @@ export default function calcTextareaHeight(
 
   // Copy all CSS properties that have an impact on the height of the content in
   // the textbox
-  let { paddingSize, borderSize, boxSizing, sizingStyle } =
-    calculateNodeStyling(uiTextNode, useCache)
+  let {
+    paddingSize,
+    borderSize,
+    boxSizing,
+    sizingStyle,
+  } = calculateNodeStyling(uiTextNode, useCache)
 
   // Need to have the overflow attribute to hide the scrollbar otherwise
   // text-lines will not calculated properly as the shadow will technically be

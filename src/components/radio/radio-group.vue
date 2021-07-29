@@ -8,7 +8,6 @@
 import { oneOf, findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 
-
 const prefixCls = 'ivu-radio-group'
 
 let seed = 0

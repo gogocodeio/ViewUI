@@ -84,9 +84,11 @@
         transfer
         @on-clickoutside="handleClickContextMenuOutside"
       >
-        <DropdownMenu slot="list">
-          <slot name="contextMenu"></slot>
-        </DropdownMenu>
+        <template v-slot:list>
+          <DropdownMenu>
+            <slot name="contextMenu"></slot>
+          </DropdownMenu>
+        </template>
       </Dropdown>
     </div>
   </div>
@@ -595,10 +597,10 @@ export default {
       return false
     },
     updateVisibility(index) {
-      [...this.$refs.panes.querySelectorAll(`.${prefixCls}-tabpane`)].forEach(
+      ;[...this.$refs.panes.querySelectorAll(`.${prefixCls}-tabpane`)].forEach(
         (el, i) => {
           if (index === i) {
-            [...el.children]
+            ;[...el.children]
               .filter((child) =>
                 child.classList.contains(`${prefixCls}-tabpane`)
               )
@@ -607,7 +609,7 @@ export default {
               setTimeout(() => focusFirst(el, el), transitionTime)
           } else {
             setTimeout(() => {
-              [...el.children]
+              ;[...el.children]
                 .filter((child) =>
                   child.classList.contains(`${prefixCls}-tabpane`)
                 )

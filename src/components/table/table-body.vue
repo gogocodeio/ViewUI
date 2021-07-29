@@ -83,7 +83,7 @@ export default {
       this.$parent.dblclickCurrentRow(_index, rowKey)
     },
     clickCell(row, column, key, event) {
-    //   Object.assign(this.$parent, tiny_emitter_override)
+      //   Object.assign(this.$parent, tiny_emitter_override)
       this.$parent.vueEmit('on-cell-click', row, column, row[key], event)
     },
     contextmenuCurrentRow(_index, event, rowKey) {

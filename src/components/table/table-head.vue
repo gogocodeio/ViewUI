@@ -81,14 +81,13 @@
                   ></i>
                 </span>
 
-                <template v-slot:content v-if="getColumn(rowIndex, index)._filterMultiple">
-                  <div
-                    :class="[prefixCls + '-filter-list']"
-                  >
+                <template
+                  v-slot:content
+                  v-if="getColumn(rowIndex, index)._filterMultiple"
+                >
+                  <div :class="[prefixCls + '-filter-list']">
                     <div :class="[prefixCls + '-filter-list-item']">
-                      <checkbox-group
-
-                      >
+                      <checkbox-group>
                         <checkbox
                           v-for="(item, index) in column.filters"
                           :key="index"
@@ -117,9 +116,7 @@
                   </div>
                 </template>
                 <template v-slot:content v-else>
-                  <div
-                    :class="[prefixCls + '-filter-list']"
-                  >
+                  <div :class="[prefixCls + '-filter-list']">
                     <ul :class="[prefixCls + '-filter-list-single']">
                       <li
                         :class="itemAllClasses(getColumn(rowIndex, index))"
@@ -311,8 +308,8 @@ export default {
       return [
         `${this.prefixCls}-filter-select-item`,
         {
-          [`${this.prefixCls}-filter-select-item-selected`]:
-            !column._filterChecked.length,
+          [`${this.prefixCls}-filter-select-item-selected`]: !column
+            ._filterChecked.length,
         },
       ]
     },

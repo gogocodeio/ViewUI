@@ -9,7 +9,11 @@
   >
     <slot></slot>
   </tr>
-  <tr :class="rowClasses(row._index)" :draggable="false" v-if="!draggable && row">
+  <tr
+    :class="rowClasses(row._index)"
+    :draggable="false"
+    v-if="!draggable && row"
+  >
     <slot></slot>
   </tr>
 </template>

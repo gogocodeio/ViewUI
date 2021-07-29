@@ -90,7 +90,12 @@ export default {
       const saturation = left / clientWidth
       const bright = clamp(1 - top / clientHeight, 0, 1)
 
-      this.change(this.modelValue.hsv.h, saturation, bright, this.modelValue.hsv.a)
+      this.change(
+        this.modelValue.hsv.h,
+        saturation,
+        bright,
+        this.modelValue.hsv.a
+      )
     },
     handleMouseDown(e) {
       HSAMixin.methods.handleMouseDown.call(this, e)

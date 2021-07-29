@@ -41,12 +41,11 @@ import {
   getStyle,
   findComponentUpward,
   findComponentsDownward,
-  $children
+  $children,
 } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import Bus from '../../mixins/bus'
 import mixin from './mixin'
-
 
 const prefixCls = 'ivu-menu'
 

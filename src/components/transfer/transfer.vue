@@ -6,15 +6,18 @@ import Operation from './operation.vue'
 import Locale from '../../mixins/locale'
 import Emitter from '../../mixins/emitter'
 
-
 const prefixCls = 'ivu-transfer'
 
 export default {
   name: 'Transfer',
   mixins: [Emitter, Locale],
   render() {
-    const vNodes = this.$slots.default === undefined ? [] : typeof this.$slots.default == 'function' ? 
-      this.$slots.default() : []
+    const vNodes =
+      this.$slots.default === undefined
+        ? []
+        : typeof this.$slots.default == 'function'
+        ? this.$slots.default()
+        : []
     const clonedVNodes =
       this.$slots.default === undefined
         ? []

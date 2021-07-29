@@ -26,13 +26,14 @@
           @mouseenter="handleInputMouseenter"
           @mouseleave="handleInputMouseleave"
         >
-          <Icon
-            @click="handleIconClick"
-            :type="arrowType"
-            :custom="customArrowType"
-            :size="arrowSize"
-            slot="suffix"
-          />
+          <template v-slot:suffix>
+            <Icon
+              @click="handleIconClick"
+              :type="arrowType"
+              :custom="customArrowType"
+              :size="arrowSize"
+            />
+          </template>
         </i-input>
       </slot>
     </div>
@@ -95,7 +96,6 @@ import { findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
 import Bus from '../../mixins/bus'
-
 
 const prefixCls = 'ivu-date-picker'
 const pickerPrefixCls = 'ivu-picker'

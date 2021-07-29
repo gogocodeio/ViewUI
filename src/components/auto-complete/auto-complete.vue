@@ -21,20 +21,21 @@
     :eventsEnabled="eventsEnabled"
   >
     <slot name="input">
-      <i-input
-        :element-id="elementId"
-        ref="input"
-        slot="input"
-        v-model="currentValue"
-        :name="name"
-        :placeholder="placeholder"
-        :disabled="itemDisabled"
-        :size="size"
-        :icon="inputIcon"
-        @on-click="handleClear"
-        @on-focus="handleFocus"
-        @on-blur="handleBlur"
-      ></i-input>
+      <template v-slot:handleBlur>
+        <i-input
+          :element-id="elementId"
+          ref="input"
+          v-model="currentValue"
+          :name="name"
+          :placeholder="placeholder"
+          :disabled="itemDisabled"
+          :size="size"
+          :icon="inputIcon"
+          @on-click="handleClear"
+          @on-focus="handleFocus"
+          @on-blur="handleBlur"
+        ></i-input>
+      </template>
     </slot>
     <slot>
       <i-option v-for="item in filteredData" :value="item" :key="item">{{
@@ -51,7 +52,6 @@ import iInput from '../input/input.vue'
 import { oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
-
 
 export default {
   name: 'AutoComplete',

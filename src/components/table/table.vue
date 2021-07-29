@@ -208,9 +208,11 @@
         transfer
         @on-clickoutside="handleClickContextMenuOutside"
       >
-        <DropdownMenu slot="list">
-          <slot name="contextMenu"></slot>
-        </DropdownMenu>
+        <template v-slot:list>
+          <DropdownMenu>
+            <slot name="contextMenu"></slot>
+          </DropdownMenu>
+        </template>
       </Dropdown>
     </div>
     <Spin fix size="large" v-if="loading">
@@ -1012,11 +1014,11 @@ export default {
       if ('_loading' in data && data._loading) return
       if ('_loading' in data && !data._loading && data.children.length === 0) {
         const sourceData = this.getBaseDataByRowKey(rowKey, this.data)
-        this.$set(sourceData, '_loading', true)
+        sourceData['_loading'] = true
         this.loadData(sourceData, (children) => {
-          this.$set(sourceData, '_loading', false)
+          sourceData['_loading'] = false
           if (children.length) {
-            this.$set(sourceData, 'children', children)
+            sourceData['children'] = children
             this.$nextTick(() => {
               const newData = this.getDataByRowKey(rowKey)
               newData._isShowChildren = !newData._isShowChildren
@@ -1049,7 +1051,7 @@ export default {
     // todo 单选、多选等状态可能也需要更新原数据
     updateDataStatus(rowKey, key, value) {
       const data = this.getBaseDataByRowKey(rowKey, this.data)
-      this.$set(data, key, value)
+      data[key] = value
     },
     getDataByRowKey(rowKey, objData = this.objData) {
       let data = null

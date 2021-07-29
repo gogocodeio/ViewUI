@@ -1,7 +1,4 @@
-export function $children(
-  instance
-) {
-
+export function $children(instance) {
   const root = instance.$.subTree
   const children = []
   if (root) {
@@ -13,7 +10,7 @@ export function $children(
 function $walk(vnode, children) {
   if (vnode.component && vnode.component.proxy) {
     children.push(vnode.component.proxy)
-  } else if (vnode.shapeFlag & 1 << 4) {
+  } else if (vnode.shapeFlag & (1 << 4)) {
     const vnodes = vnode.children
     for (let i = 0; i < vnodes.length; i++) {
       $walk(vnodes[i], children)

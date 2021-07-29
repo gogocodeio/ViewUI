@@ -65,7 +65,6 @@ import Locale from '../../mixins/locale'
 import Emitter from '../../mixins/emitter'
 import ScrollbarMixins from './mixins-scrollbar'
 
-
 import { on, off } from '../../utils/dom'
 import { findComponentsDownward, deepCopy } from '../../utils/assist'
 

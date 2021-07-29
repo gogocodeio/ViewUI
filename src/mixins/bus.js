@@ -1,4 +1,3 @@
-
 import tiny_emitter from 'tiny-emitter/instance'
 
 export default {
