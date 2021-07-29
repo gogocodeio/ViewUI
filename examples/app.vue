@@ -1,5 +1,6 @@
 <template>
   <div class="container">
+    <h2>vue 3.x</h2>
     <div>
       <div>
         <span><router-link to="/split">Split</router-link></span>

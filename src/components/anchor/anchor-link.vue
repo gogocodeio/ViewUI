@@ -15,6 +15,7 @@
 
 <script>
 import Bus from '../../mixins/bus'
+import tiny_emitter from 'tiny-emitter/instance';
 
 export default {
   name: 'AnchorLink',
@@ -49,7 +50,7 @@ export default {
       this.currentLink = this.href
       this.anchorCom.handleHashChange()
       this.anchorCom.handleScrollTo()
-      this.anchorCom.vueEmit('on-select', this.href)
+      tiny_emitter.emit('on-select', this.href)
       const isRoute = this.$router
       if (isRoute) {
         this.$router.push(this.href, () => {})
