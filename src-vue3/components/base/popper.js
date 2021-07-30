@@ -23,7 +23,7 @@ export default {
     offset: {
       default: 0,
     },
-    value: {
+    modelValue: {
       type: Boolean,
       default: false,
     },
@@ -50,15 +50,15 @@ export default {
   },
   data() {
     return {
-      visible: this.value,
+      visible: this.modelValue,
     }
   },
   watch: {
-    value: {
+    modelValue: {
       immediate: true,
       handler(val) {
         this.visible = val
-        this.$emit('input', val)
+        this.$emit('update:modelValue', val)
       },
     },
     visible(val) {
@@ -69,7 +69,7 @@ export default {
       } else {
         this.$emit('on-popper-hide')
       }
-      this.$emit('input', val)
+      this.$emit('update:modelValue', val)
     },
   },
   methods: {

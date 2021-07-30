@@ -56,6 +56,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import { oneOf, findComponentUpward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
@@ -87,7 +88,7 @@ function addNum(num1, num2) {
 
 export default {
   name: 'InputNumber',
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
   props: {
     max: {
       type: Number,
@@ -233,14 +234,14 @@ export default {
       e.preventDefault()
     },
     up(e) {
-      const targetVal = Number(this.modelValue)
+      const targetVal = Number(e.target.value)
       if (this.upDisabled && isNaN(targetVal)) {
         return false
       }
       this.changeStep('up', e)
     },
     down(e) {
-      const targetVal = Number(this.modelValue)
+      const targetVal = Number(e.target.value)
       if (this.downDisabled && isNaN(targetVal)) {
         return false
       }
@@ -251,7 +252,7 @@ export default {
         return false
       }
 
-      const targetVal = Number(this.modelValue)
+      const targetVal = Number(e.target.value)
       let val = Number(this.currentValue)
       const step = Number(this.step)
       if (isNaN(val)) {
@@ -298,18 +299,18 @@ export default {
 
       this.$nextTick(() => {
         this.currentValue = val
-        this.$emit('update:modelValue', val)
-        this.$emit('on-change', val)
+        this.vueEmit('update:modelValue', val)
+        this.vueEmit('on-change', val)
         this.dispatch('FormItem', 'on-form-change', val)
       })
     },
     focus(event) {
       this.focused = true
-      this.$emit('on-focus', event)
+      this.vueEmit('on-focus', event)
     },
     blur() {
       this.focused = false
-      this.$emit('on-blur')
+      this.vueEmit('on-blur')
       if (
         !findComponentUpward(this, [
           'DatePicker',
@@ -334,7 +335,7 @@ export default {
       if (event.type == 'change' && this.activeChange) return
 
       if (event.type == 'input' && !this.activeChange) return
-      let val = this.modelValue.trim()
+      let val = event.target.value.trim()
       if (this.parser) {
         val = this.parser(val)
       }
@@ -352,7 +353,7 @@ export default {
         this.currentValue = val
         this.setValue(val)
       } else {
-        this.modelValue = this.currentValue
+        event.target.value = this.currentValue
       }
     },
     changeVal(val) {

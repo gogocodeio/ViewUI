@@ -153,6 +153,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import { oneOf, findComponentUpward } from '../../utils/assist'
 import calcTextareaHeight from '../../utils/calcTextareaHeight'
 import Emitter from '../../mixins/emitter'
@@ -162,7 +163,7 @@ const prefixCls = 'ivu-input'
 
 export default {
   name: 'Input',
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
   props: {
     type: {
       validator(value) {
@@ -300,24 +301,30 @@ export default {
     },
     prepend() {
       let state = false
-      if (this.type !== 'textarea') state = this.$slots.prepend !== undefined
+      if (this.type !== 'textarea')
+        state = (this.$slots.prepend && this.$slots.prepend()) !== undefined
       return state
     },
     append() {
       let state = false
-      if (this.type !== 'textarea') state = this.$slots.append !== undefined
+      if (this.type !== 'textarea')
+        state = (this.$slots.append && this.$slots.append()) !== undefined
       return state
     },
     showPrefix() {
       let state = false
       if (this.type !== 'textarea')
-        state = this.prefix !== '' || this.$slots.prefix !== undefined
+        state =
+          this.prefix !== '' ||
+          (this.$slots.prefix && this.$slots.prefix()) !== undefined
       return state
     },
     showSuffix() {
       let state = false
       if (this.type !== 'textarea')
-        state = this.suffix !== '' || this.$slots.suffix !== undefined
+        state =
+          this.suffix !== '' ||
+          (this.$slots.suffix && this.$slots.suffix()) !== undefined
       return state
     },
     wrapClasses() {
@@ -377,26 +384,26 @@ export default {
   },
   methods: {
     handleEnter(event) {
-      this.$emit('on-enter', event)
-      if (this.search) this.$emit('on-search', this.currentValue)
+      this.vueEmit('on-enter', event)
+      if (this.search) this.vueEmit('on-search', this.currentValue)
     },
     handleKeydown(event) {
-      this.$emit('on-keydown', event)
+      this.vueEmit('on-keydown', event)
     },
     handleKeypress(event) {
-      this.$emit('on-keypress', event)
+      this.vueEmit('on-keypress', event)
     },
     handleKeyup(event) {
-      this.$emit('on-keyup', event)
+      this.vueEmit('on-keyup', event)
     },
     handleIconClick(event) {
-      this.$emit('on-click', event)
+      this.vueEmit('on-click', event)
     },
     handleFocus(event) {
-      this.$emit('on-focus', event)
+      this.vueEmit('on-focus', event)
     },
     handleBlur(event) {
-      this.$emit('on-blur', event)
+      this.vueEmit('on-blur', event)
       if (
         !findComponentUpward(this, [
           'DatePicker',
@@ -420,15 +427,15 @@ export default {
     handleInput(event) {
       if (this.isOnComposition) return
 
-      let value = this.modelValue
+      let value = event.target.value
       if (this.number && value !== '')
         value = Number.isNaN(Number(value)) ? value : Number(value)
-      this.$emit('update:modelValue', value)
+      this.vueEmit('update:modelValue', value)
       this.setCurrentValue(value)
-      this.$emit('on-change', event)
+      this.vueEmit('on-change', event)
     },
     handleChange(event) {
-      this.$emit('on-input-change', event)
+      this.vueEmit('on-input-change', event)
     },
     setCurrentValue(value) {
       if (value === this.currentValue) return
@@ -469,7 +476,7 @@ export default {
       // Selection content
       const { cursor } = option || {}
       if (cursor) {
-        const len = this.modelValue.length
+        const len = $el.value.length
 
         switch (cursor) {
           case 'start':
@@ -492,15 +499,15 @@ export default {
     },
     handleClear() {
       const e = { target: { value: '' } }
-      this.$emit('update:modelValue', '')
+      this.vueEmit('update:modelValue', '')
       this.setCurrentValue('')
-      this.$emit('on-change', e)
-      this.$emit('on-clear')
+      this.vueEmit('on-change', e)
+      this.vueEmit('on-clear')
     },
     handleSearch() {
       if (this.itemDisabled) return false
       this.$refs.input.focus()
-      this.$emit('on-search', this.currentValue)
+      this.vueEmit('on-search', this.currentValue)
     },
     handleToggleShowPassword() {
       if (this.itemDisabled) return false

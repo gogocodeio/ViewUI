@@ -24,6 +24,7 @@
 
 <script>
 import tiny_emitter from 'tiny-emitter/instance'
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import Casitem from './casitem.vue'
 import Emitter from '../../mixins/emitter'
 import { findComponentUpward, findComponentDownward } from '../../utils/assist'
@@ -39,7 +40,7 @@ let key = 1
 
 export default {
   name: 'Caspanel',
-  mixins: [Emitter],
+  mixins: [Emitter, TinyEmmitterBus],
   components: { Casitem },
   props: {
     data: {
@@ -162,7 +163,7 @@ export default {
     },
   },
   mounted() {
-    this.$on('on-find-selected', (params) => {
+    this.vueOn('on-find-selected', (params) => {
       const val = params.value
       let value = [...val]
       for (let i = 0; i < value.length; i++) {
@@ -181,7 +182,7 @@ export default {
       }
     })
     // deep for #1553
-    this.$on('on-clear', (deep = false) => {
+    this.vueOn('on-clear', (deep = false) => {
       this.sublist = []
       this.tmpItem = {}
       if (deep) {

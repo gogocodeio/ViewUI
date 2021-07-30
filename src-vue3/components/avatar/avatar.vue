@@ -124,14 +124,14 @@ export default {
     },
   },
   beforeCreate() {
-    this.slotTemp = this.$slots.default()
+    this.slotTemp = this.$slots.default && this.$slots.default()
   },
   mounted() {
     this.setScale()
   },
   updated() {
-    if (this.$slots.default !== this.slotTemp) {
-      this.slotTemp = this.$slots.default()
+    if ((this.$slots.default && this.$slots.default()) !== this.slotTemp) {
+      this.slotTemp = this.$slots.default && this.$slots.default()
       this.setScale()
     }
   },

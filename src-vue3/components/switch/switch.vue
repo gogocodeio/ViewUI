@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import { oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
@@ -23,7 +24,7 @@ const prefixCls = 'ivu-switch'
 
 export default {
   name: 'iSwitch',
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
   props: {
     modelValue: {
       type: [String, Number, Boolean],
@@ -106,8 +107,8 @@ export default {
         this.currentValue === this.trueValue ? this.falseValue : this.trueValue
 
       this.currentValue = checked
-      this.$emit('update:modelValue', checked)
-      this.$emit('on-change', checked)
+      this.vueEmit('update:modelValue', checked)
+      this.vueEmit('on-change', checked)
       this.dispatch('FormItem', 'on-form-change', checked)
     },
     toggle(event) {

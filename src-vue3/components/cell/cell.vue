@@ -10,18 +10,34 @@
       @click.meta="handleClickItem($event, true)"
     >
       <CellItem :title="title" :label="label" :extra="extra">
-        <slot name="icon" slot="icon"></slot>
-        <slot slot="default"></slot>
-        <slot name="extra" slot="extra"></slot>
-        <slot name="label" slot="label"></slot>
+        <template v-slot:icon>
+          <slot name="icon"></slot>
+        </template>
+        <template v-slot:default>
+          <slot></slot>
+        </template>
+        <template v-slot:extra>
+          <slot name="extra"></slot>
+        </template>
+        <template v-slot:label>
+          <slot name="label"></slot>
+        </template>
       </CellItem>
     </a>
     <div class="ivu-cell-link" v-else @click="handleClickItem">
       <CellItem :title="title" :label="label" :extra="extra">
-        <slot name="icon" slot="icon"></slot>
-        <slot slot="default"></slot>
-        <slot name="extra" slot="extra"></slot>
-        <slot name="label" slot="label"></slot>
+        <template v-slot:icon>
+          <slot name="icon"></slot>
+        </template>
+        <template v-slot:default>
+          <slot></slot>
+        </template>
+        <template v-slot:extra>
+          <slot name="extra"></slot>
+        </template>
+        <template v-slot:label>
+          <slot name="label"></slot>
+        </template>
       </CellItem>
     </div>
     <div class="ivu-cell-arrow" v-if="to">

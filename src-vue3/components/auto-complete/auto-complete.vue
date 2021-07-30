@@ -21,20 +21,21 @@
     :eventsEnabled="eventsEnabled"
   >
     <slot name="input">
-      <i-input
-        :element-id="elementId"
-        ref="input"
-        slot="input"
-        v-model="currentValue"
-        :name="name"
-        :placeholder="placeholder"
-        :disabled="itemDisabled"
-        :size="size"
-        :icon="inputIcon"
-        @on-click="handleClear"
-        @on-focus="handleFocus"
-        @on-blur="handleBlur"
-      ></i-input>
+      <template v-slot:handleBlur>
+        <i-input
+          :element-id="elementId"
+          ref="input"
+          v-model="currentValue"
+          :name="name"
+          :placeholder="placeholder"
+          :disabled="itemDisabled"
+          :size="size"
+          :icon="inputIcon"
+          @on-click="handleClear"
+          @on-focus="handleFocus"
+          @on-blur="handleBlur"
+        ></i-input>
+      </template>
     </slot>
     <slot>
       <i-option v-for="item in filteredData" :modelValue="item" :key="item">{{
@@ -45,6 +46,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import iSelect from '../select/select.vue'
 import iOption from '../select/option.vue'
 import iInput from '../input/input.vue'
@@ -54,7 +56,7 @@ import mixinsForm from '../../mixins/form'
 
 export default {
   name: 'AutoComplete',
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
   components: { iSelect, iOption, iInput },
   props: {
     modelValue: {
@@ -175,37 +177,37 @@ export default {
     },
     currentValue(val) {
       this.$refs.select.setQuery(val)
-      this.$emit('update:modelValue', val)
+      this.vueEmit('update:modelValue', val)
       if (this.disableEmitChange) {
         this.disableEmitChange = false
         return
       }
-      this.$emit('on-change', val)
+      this.vueEmit('on-change', val)
       this.dispatch('FormItem', 'on-form-change', val)
     },
   },
   methods: {
     remoteMethod(query) {
-      this.$emit('on-search', query)
+      this.vueEmit('on-search', query)
     },
     handleSelect(option) {
-      const val = this.modelValue
+      const val = option.value
       if (val === undefined || val === null) return
       this.currentValue = val
       this.$refs.input.blur()
-      this.$emit('on-select', val)
+      this.vueEmit('on-select', val)
     },
     handleFocus(event) {
-      this.$emit('on-focus', event)
+      this.vueEmit('on-focus', event)
     },
     handleBlur(event) {
-      this.$emit('on-blur', event)
+      this.vueEmit('on-blur', event)
     },
     handleClear() {
       if (!this.clearable) return
       this.currentValue = ''
       this.$refs.select.reset()
-      this.$emit('on-clear')
+      this.vueEmit('on-clear')
     },
     handleClickOutside() {
       this.$nextTick(() => {

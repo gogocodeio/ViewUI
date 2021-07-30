@@ -26,13 +26,14 @@
           @mouseenter="handleInputMouseenter"
           @mouseleave="handleInputMouseleave"
         >
-          <Icon
-            @click="handleIconClick"
-            :type="arrowType"
-            :custom="customArrowType"
-            :size="arrowSize"
-            slot="suffix"
-          />
+          <template v-slot:suffix>
+            <Icon
+              @click="handleIconClick"
+              :type="arrowType"
+              :custom="customArrowType"
+              :size="arrowSize"
+            />
+          </template>
         </i-input>
       </slot>
     </div>
@@ -80,6 +81,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import iInput from '../../components/input/input.vue'
 import Drop from '../../components/select/dropdown.vue'
 import Icon from '../../components/icon/icon.vue'
@@ -130,7 +132,7 @@ const extractTime = (date) => {
 }
 
 export default {
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
   components: { iInput, Drop, Icon },
   directives: { clickOutside, TransferDom },
   props: {
@@ -447,7 +449,7 @@ export default {
         this.visible = false
         e && e.preventDefault()
         e && e.stopPropagation()
-        this.$emit('on-clickoutside', e)
+        this.vueEmit('on-clickoutside', e)
         return
       }
 
@@ -709,7 +711,7 @@ export default {
     handleInputChange(event) {
       const isArrayValue = this.type.includes('range') || this.multiple
       const oldValue = this.visualValue
-      const newValue = this.modelValue
+      const newValue = event.target.value
       const newDate = this.parseDate(newValue)
       const disabledDateFn =
         this.options &&
@@ -749,7 +751,7 @@ export default {
     handleClear() {
       this.visible = false
       this.internalValue = this.internalValue.map(() => null)
-      this.$emit('on-clear')
+      this.vueEmit('on-clear')
       this.dispatch('FormItem', 'on-form-change', '')
       this.emitChange(this.type)
       this.reset()
@@ -761,7 +763,7 @@ export default {
     },
     emitChange(type) {
       this.$nextTick(() => {
-        this.$emit('on-change', this.publicStringValue, type)
+        this.vueEmit('on-change', this.publicStringValue, type)
         this.dispatch('FormItem', 'on-form-change', this.publicStringValue)
       })
     },
@@ -846,7 +848,7 @@ export default {
     },
     onPickSuccess() {
       this.visible = false
-      this.$emit('on-ok')
+      this.vueEmit('on-ok')
       this.focus()
       this.reset()
     },
@@ -863,7 +865,7 @@ export default {
         this.$refs.drop.destroy()
       }
       if (state) this.$refs.drop.update() // 解决：修改完 #589 #590 #592，Drop 收起时闪动
-      this.$emit('on-open-change', state)
+      this.vueEmit('on-open-change', state)
     },
     modelValue(val) {
       this.internalValue = this.parseDate(val)
@@ -879,7 +881,7 @@ export default {
       const oldValue = JSON.stringify(before)
       const shouldEmitInput =
         newValue !== oldValue || typeof now !== typeof before
-      if (shouldEmitInput) this.$emit('update:modelValue', now) // to update v-model
+      if (shouldEmitInput) this.vueEmit('update:modelValue', now) // to update v-model
     },
   },
   mounted() {
@@ -889,17 +891,17 @@ export default {
       typeof initialValue !== typeof parsedValue ||
       JSON.stringify(initialValue) !== JSON.stringify(parsedValue)
     ) {
-      this.$emit('update:modelValue', this.publicVModelValue) // to update v-model
+      this.vueEmit('update:modelValue', this.publicVModelValue) // to update v-model
     }
     if (this.open !== null) this.visible = this.open
 
     // to handle focus from confirm buttons
-    this.$on('focus-input', () => this.focus())
-    this.$on('update-popper', () => this.updatePopper())
+    this.vueOn('focus-input', () => this.focus())
+    this.vueOn('update-popper', () => this.updatePopper())
   },
   beforeUnmount() {
-    this.$off('focus-input')
-    this.$off('update-popper')
+    this.vueOff('focus-input')
+    this.vueOff('update-popper')
   },
   emits: [
     'on-clickoutside',

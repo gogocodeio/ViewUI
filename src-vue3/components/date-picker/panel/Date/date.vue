@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../../../utils/tinyEmitterBus'
 import Icon from '../../../icon/icon.vue'
 import DateTable from '../../base/date-table.vue'
 import YearTable from '../../base/year-table.vue'
@@ -101,7 +102,7 @@ const datePrefixCls = 'ivu-date-picker'
 
 export default {
   name: 'DatePickerPanel',
-  mixins: [Mixin, Locale, DateMixin],
+  mixins: [Mixin, Locale, DateMixin, TinyEmmitterBus],
   components: {
     Icon,
     DateTable,
@@ -177,7 +178,7 @@ export default {
       this.panelDate = panelDate || new Date()
     },
     currentView(currentView) {
-      this.$emit('on-selection-mode-change', currentView)
+      this.vueEmit('on-selection-mode-change', currentView)
 
       if (this.currentView === 'time') {
         this.$nextTick(() => {
@@ -231,7 +232,7 @@ export default {
       else value = new Date(value)
 
       this.dates = [value]
-      this.$emit('on-pick', value, false, type || selectionMode)
+      this.vueEmit('on-pick', value, false, type || selectionMode)
     },
   },
   emits: ['on-selection-mode-change', 'on-pick'],

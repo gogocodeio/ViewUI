@@ -105,7 +105,7 @@ export default {
     },
   },
   mounted() {
-    this.desc = this.$slots.desc !== undefined
+    this.desc = (this.$slots.desc && this.$slots.desc()) !== undefined
   },
   emits: ['on-close'],
 }

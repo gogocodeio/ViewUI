@@ -1,19 +1,13 @@
 <script>
+import tiny_emitter from 'tiny-emitter/instance'
 import { plantRenderPara } from '../../utils/gogocodeTransfer'
 import * as Vue from 'vue'
-import tiny_emitter from 'tiny-emitter/instance'
 // todo :key="row"
 import TableTr from './table-tr.vue'
 import TableCell from './cell.vue'
 import Expand from './expand.js'
 import Mixin from './mixin'
 
-const tiny_emitter_override = {
-  $on: (...args) => tiny_emitter.on(...args),
-  $once: (...args) => tiny_emitter.once(...args),
-  $off: (...args) => tiny_emitter.off(...args),
-  $emit: (...args) => tiny_emitter.emit(...args),
-}
 export default {
   name: 'TableBody',
   mixins: [Mixin],
@@ -82,8 +76,7 @@ export default {
       this.$parent.dblclickCurrentRow(_index, rowKey)
     },
     clickCell(row, column, key, event) {
-      Object.assign(this.$parent, tiny_emitter_override)
-      this.$parent.$emit('on-cell-click', row, column, row[key], event)
+      tiny_emitter.emit('on-cell-click', row, column, row[key], event)
     },
     contextmenuCurrentRow(_index, event, rowKey) {
       event.stopPropagation()

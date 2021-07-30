@@ -20,15 +20,18 @@
         transfer
         @on-clickoutside="handleClickContextMenuOutside"
       >
-        <DropdownMenu slot="list">
-          <slot name="contextMenu"></slot>
-        </DropdownMenu>
+        <template v-slot:list>
+          <DropdownMenu>
+            <slot name="contextMenu"></slot>
+          </DropdownMenu>
+        </template>
       </Dropdown>
     </div>
   </div>
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import TreeNode from './node.vue'
 import Dropdown from '../dropdown/dropdown.vue'
 import DropdownMenu from '../dropdown/dropdown-menu.vue'
@@ -39,7 +42,7 @@ const prefixCls = 'ivu-tree'
 
 export default {
   name: 'Tree',
-  mixins: [Emitter, Locale],
+  mixins: [Emitter, Locale, TinyEmmitterBus],
   components: { TreeNode, Dropdown, DropdownMenu },
   provide() {
     return { TreeInstance: this }
@@ -230,7 +233,7 @@ export default {
       }
       node['selected'] = !node.selected
 
-      this.$emit('on-select-change', this.getSelectedNodes(), node)
+      this.vueEmit('on-select-change', this.getSelectedNodes(), node)
     },
     handleCheck({ checked, nodeKey }) {
       if (!this.flatState[nodeKey]) return
@@ -241,7 +244,7 @@ export default {
       this.updateTreeUp(nodeKey) // propagate up
       this.updateTreeDown(node, { checked, indeterminate: false }) // reset `indeterminate` when going down
 
-      this.$emit('on-check-change', this.getCheckedNodes(), node)
+      this.vueEmit('on-check-change', this.getCheckedNodes(), node)
     },
     handleContextmenu({ data, event }) {
       if (this.contextMenuVisible) this.handleClickContextMenuOutside()
@@ -254,7 +257,7 @@ export default {
         }
         this.contextMenuStyles = position
         this.contextMenuVisible = true
-        this.$emit('on-contextmenu', data, event, position)
+        this.vueEmit('on-contextmenu', data, event, position)
       })
     },
     handleClickContextMenuOutside() {
@@ -266,10 +269,12 @@ export default {
     this.rebuildTree()
   },
   mounted() {
-    this.$on('on-check', this.handleCheck)
-    this.$on('on-selected', this.handleSelect)
-    this.$on('toggle-expand', (node) => this.$emit('on-toggle-expand', node))
-    this.$on('contextmenu', this.handleContextmenu)
+    this.vueOn('on-check', this.handleCheck)
+    this.vueOn('on-selected', this.handleSelect)
+    this.vueOn('toggle-expand', (node) =>
+      this.vueEmit('on-toggle-expand', node)
+    )
+    this.vueOn('contextmenu', this.handleContextmenu)
   },
   emits: [
     'on-select-change',

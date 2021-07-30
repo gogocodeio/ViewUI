@@ -58,6 +58,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import Icon from '../icon'
 import iButton from '../button/button.vue'
 import TransferDom from '../../directives/transfer-dom'
@@ -88,7 +89,7 @@ const dragData = {
 
 export default {
   name: 'Modal',
-  mixins: [Locale, Emitter, ScrollbarMixins],
+  mixins: [Locale, Emitter, ScrollbarMixins, TinyEmmitterBus],
   components: { Icon, iButton },
   directives: { TransferDom },
   props: {
@@ -305,8 +306,8 @@ export default {
   methods: {
     close() {
       this.visible = false
-      this.$emit('update:modelValue', false)
-      this.$emit('on-cancel')
+      this.vueEmit('update:modelValue', false)
+      this.vueEmit('on-cancel')
     },
     handleMask() {
       if (this.maskClosable && this.showMask) {
@@ -334,9 +335,9 @@ export default {
         this.buttonLoading = true
       } else {
         this.visible = false
-        this.$emit('update:modelValue', false)
+        this.vueEmit('update:modelValue', false)
       }
-      this.$emit('on-ok')
+      this.vueEmit('on-ok')
     },
     EscClose(e) {
       if (this.visible && this.closable) {
@@ -356,7 +357,7 @@ export default {
       }
     },
     animationFinish() {
-      this.$emit('on-hidden')
+      this.vueEmit('on-hidden')
     },
     handleMoveStart(event) {
       if (!this.draggable) return false
@@ -461,7 +462,10 @@ export default {
 
     let showHead = true
 
-    if (this.$slots.header === undefined && !this.title) {
+    if (
+      (this.$slots.header && this.$slots.header()) === undefined &&
+      !this.title
+    ) {
       showHead = false
     }
 
@@ -499,7 +503,7 @@ export default {
       }
       this.broadcast('Table', 'on-visible-change', val)
       this.broadcast('Slider', 'on-visible-change', val) // #2852
-      this.$emit('on-visible-change', val)
+      this.vueEmit('on-visible-change', val)
       this.lastVisible = val
       this.lastVisibleIndex = lastVisibleIndex
       if (val && this.resetDragPosition) {
@@ -519,7 +523,7 @@ export default {
       }
     },
     title(val) {
-      if (this.$slots.header === undefined) {
+      if ((this.$slots.header && this.$slots.header()) === undefined) {
         this.showHead = !!val
       }
     },

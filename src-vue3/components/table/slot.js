@@ -1,8 +1,8 @@
 import * as Vue from 'vue'
-export default function render(_props, _context) {
+export default function render(_context) {
   const ctx = {
     ..._context,
-    props: _props,
+    props: Vue.h,
     data: _context.attr,
     children: _context.slots,
   }

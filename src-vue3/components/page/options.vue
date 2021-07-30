@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import iSelect from '../../components/select/select.vue'
 import iOption from '../../components/select/option.vue'
 import Locale from '../../mixins/locale'
@@ -47,7 +48,7 @@ function isValueNumber(value) {
 
 export default {
   name: 'PageOption',
-  mixins: [Locale],
+  mixins: [Locale, TinyEmmitterBus],
   components: { iSelect, iOption },
   props: {
     pageSizeOpts: Array,
@@ -89,7 +90,7 @@ export default {
   },
   methods: {
     changeSize() {
-      this.$emit('on-size', this.currentPageSize)
+      this.vueEmit('on-size', this.currentPageSize)
     },
     changePage(event) {
       let val = event.target.value.trim()
@@ -111,7 +112,7 @@ export default {
       }
 
       if (page) {
-        this.$emit('on-page', page)
+        this.vueEmit('on-page', page)
         event.target.value = page
       }
     },

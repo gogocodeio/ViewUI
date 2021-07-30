@@ -6,12 +6,6 @@
 import tiny_emitter from 'tiny-emitter/instance'
 const prefixCls = 'ivu-dropdown-item'
 import { findComponentUpward } from '../../utils/assist'
-const tiny_emitter_override = {
-  $on: (...args) => tiny_emitter.on(...args),
-  $once: (...args) => tiny_emitter.once(...args),
-  $off: (...args) => tiny_emitter.off(...args),
-  $emit: (...args) => tiny_emitter.emit(...args),
-}
 export default {
   name: 'DropdownItem',
   props: {
@@ -52,8 +46,7 @@ export default {
         this.$parent && this.$parent.$options.name === 'Dropdown'
 
       if (hasChildren) {
-        Object.assign(this.$parent, tiny_emitter_override)
-        this.$parent.$emit('on-haschild-click')
+        tiny_emitter.emit('on-haschild-click')
       } else {
         if ($parent && $parent.$options.name === 'Dropdown') {
           $parent.$emit('on-hover-click')

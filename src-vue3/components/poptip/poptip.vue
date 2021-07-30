@@ -74,6 +74,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import Popper from '../base/popper'
 import iButton from '../button/button.vue'
 import clickOutside from '../../directives/clickoutside'
@@ -86,7 +87,7 @@ const prefixCls = 'ivu-poptip'
 
 export default {
   name: 'Poptip',
-  mixins: [Popper, Locale],
+  mixins: [Popper, Locale, TinyEmmitterBus],
   directives: { clickOutside, TransferDom },
   components: { iButton },
   props: {
@@ -314,11 +315,11 @@ export default {
     },
     cancel() {
       this.visible = false
-      this.$emit('on-cancel')
+      this.vueEmit('on-cancel')
     },
     ok() {
       this.visible = false
-      this.$emit('on-ok')
+      this.vueEmit('on-ok')
     },
     getInputChildren() {
       const $input = this.$refs.reference.querySelectorAll('input')
@@ -344,7 +345,8 @@ export default {
   mounted() {
     if (!this.confirm) {
       //                this.showTitle = this.$refs.title.innerHTML != `<div class="${prefixCls}-title-inner"></div>`;
-      this.showTitle = this.$slots.title !== undefined || this.title
+      this.showTitle =
+        (this.$slots.title && this.$slots.title()) !== undefined || this.title
     }
     // if trigger and children is input or textarea,listen focus & blur event
     if (this.trigger === 'focus') {

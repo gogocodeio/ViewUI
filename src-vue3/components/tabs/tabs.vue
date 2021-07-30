@@ -84,15 +84,18 @@
         transfer
         @on-clickoutside="handleClickContextMenuOutside"
       >
-        <DropdownMenu slot="list">
-          <slot name="contextMenu"></slot>
-        </DropdownMenu>
+        <template v-slot:list>
+          <DropdownMenu>
+            <slot name="contextMenu"></slot>
+          </DropdownMenu>
+        </template>
       </Dropdown>
     </div>
   </div>
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import Icon from '../icon/icon.vue'
 import Render from '../base/render'
 import Dropdown from '../dropdown/dropdown.vue'
@@ -133,7 +136,7 @@ const focusFirst = (element, root) => {
 
 export default {
   name: 'Tabs',
-  mixins: [Emitter],
+  mixins: [Emitter, TinyEmmitterBus],
   components: { Icon, Render, Dropdown, DropdownMenu },
   provide() {
     return { TabsInstance: this }
@@ -379,13 +382,13 @@ export default {
       const nav = this.navList[index]
       if (!nav || nav.disabled) return
       this.activeKey = nav.name
-      this.$emit('update:modelValue', nav.name)
-      this.$emit('on-click', nav.name)
+      this.vueEmit('update:modelValue', nav.name)
+      this.vueEmit('on-click', nav.name)
     },
     handleDblclick(index) {
       const nav = this.navList[index]
       if (!nav || nav.disabled) return
-      this.$emit('on-dblclick', nav.name)
+      this.vueEmit('on-dblclick', nav.name)
     },
     handleContextmenu(index, event) {
       if (this.contextMenuVisible) this.handleClickContextMenuOutside()
@@ -402,7 +405,7 @@ export default {
         }
         this.contextMenuStyles = position
         this.contextMenuVisible = true
-        this.$emit('on-contextmenu', nav, event, position)
+        this.vueEmit('on-contextmenu', nav, event, position)
       })
     },
     handleClickContextMenuOutside() {
@@ -469,9 +472,9 @@ export default {
           }
         }
         this.activeKey = activeKey
-        this.$emit('update:modelValue', activeKey)
+        this.vueEmit('update:modelValue', activeKey)
       }
-      this.$emit('on-tab-remove', tab.currentName)
+      this.vueEmit('on-tab-remove', tab.currentName)
       this.updateNav()
     },
     showClose(item) {
@@ -633,7 +636,7 @@ export default {
         const a = parseInt(navNames.findIndex((item) => item === dragName))
         const b = parseInt(navNames.findIndex((item) => item === nav.name))
         navNames.splice(b, 1, ...navNames.splice(a, 1, navNames[b]))
-        this.$emit('on-drag-drop', dragName, nav.name, a, b, navNames)
+        this.vueEmit('on-drag-drop', dragName, nav.name, a, b, navNames)
       }
     },
   },
@@ -657,7 +660,7 @@ export default {
     },
   },
   mounted() {
-    this.showSlot = this.$slots.extra !== undefined
+    this.showSlot = (this.$slots.extra && this.$slots.extra()) !== undefined
     this.observer = elementResizeDetectorMaker()
     this.observer.listenTo(this.$refs.navWrap, this.handleResize)
 

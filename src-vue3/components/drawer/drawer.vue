@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import Icon from '../icon'
 import {
   oneOf,
@@ -66,7 +67,7 @@ const prefixCls = 'ivu-drawer'
 
 export default {
   name: 'Drawer',
-  mixins: [Emitter, ScrollbarMixins],
+  mixins: [Emitter, ScrollbarMixins, TinyEmmitterBus],
   components: { Icon },
   directives: { TransferDom },
   props: {
@@ -244,8 +245,8 @@ export default {
     },
     handleClose() {
       this.visible = false
-      this.$emit('update:modelValue', false)
-      this.$emit('on-close')
+      this.vueEmit('update:modelValue', false)
+      this.vueEmit('on-close')
     },
     handleMask() {
       if (this.maskClosable && this.mask) {
@@ -271,7 +272,7 @@ export default {
       // 如果当前width不大于100，视为百分比
       if (width <= 100) width = (width / this.wrapperWidth) * 100
       this.dragWidth = width
-      this.$emit('on-resize-width', parseInt(this.dragWidth))
+      this.vueEmit('on-resize-width', parseInt(this.dragWidth))
     },
     handleSetWrapperWidth() {
       const { width, left } = this.$el.getBoundingClientRect()
@@ -295,7 +296,10 @@ export default {
 
     let showHead = true
 
-    if (this.$slots.header === undefined && !this.title) {
+    if (
+      (this.$slots.header && this.$slots.header()) === undefined &&
+      !this.title
+    ) {
       showHead = false
     }
 
@@ -341,7 +345,7 @@ export default {
       }
       this.broadcast('Table', 'on-visible-change', val)
       this.broadcast('Slider', 'on-visible-change', val) // #2852
-      this.$emit('on-visible-change', val)
+      this.vueEmit('on-visible-change', val)
     },
     scrollable(val) {
       if (!val) {
@@ -351,7 +355,7 @@ export default {
       }
     },
     title(val) {
-      if (this.$slots.header === undefined) {
+      if ((this.$slots.header && this.$slots.header()) === undefined) {
         this.showHead = !!val
       }
     },

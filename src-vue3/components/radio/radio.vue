@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import { findComponentUpward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
@@ -25,7 +26,7 @@ const prefixCls = 'ivu-radio'
 
 export default {
   name: 'Radio',
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
   props: {
     modelValue: {
       type: [String, Number, Boolean],
@@ -140,7 +141,7 @@ export default {
       this.currentValue = checked
 
       const value = checked ? this.trueValue : this.falseValue
-      this.$emit('update:modelValue', value)
+      this.vueEmit('update:modelValue', value)
 
       if (this.group) {
         if (this.label !== undefined) {
@@ -150,7 +151,7 @@ export default {
           })
         }
       } else {
-        this.$emit('on-change', value)
+        this.vueEmit('on-change', value)
         this.dispatch('FormItem', 'on-form-change', value)
       }
     },

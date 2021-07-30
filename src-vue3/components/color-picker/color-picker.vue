@@ -112,6 +112,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import tinycolor from 'tinycolor2'
 import { directive as clickOutside } from '../../directives/v-click-outside-x'
 import TransferDom from '../../directives/transfer-dom'
@@ -143,7 +144,7 @@ export default {
     Icon,
   },
   directives: { clickOutside, TransferDom },
-  mixins: [Emitter, Locale, Prefixes, mixinsForm],
+  mixins: [Emitter, Locale, Prefixes, mixinsForm, TinyEmmitterBus],
   props: {
     modelValue: {
       type: String,
@@ -296,7 +297,7 @@ export default {
       },
       set(newVal) {
         this.val = newVal
-        this.$emit('on-active-change', this.formatColor)
+        this.vueEmit('on-active-change', this.formatColor)
       },
     },
     classes() {
@@ -424,12 +425,12 @@ export default {
     visible(val) {
       this.val = changeColor(this.modelValue)
       this.$refs.drop[val ? 'update' : 'destroy']()
-      this.$emit('on-open-change', Boolean(val))
+      this.vueEmit('on-open-change', Boolean(val))
     },
   },
   mounted() {
-    this.$on('on-escape-keydown', this.closer)
-    this.$on('on-dragging', this.setDragging)
+    this.vueOn('on-escape-keydown', this.closer)
+    this.vueOn('on-dragging', this.setDragging)
   },
   methods: {
     setDragging(value) {
@@ -487,25 +488,25 @@ export default {
     },
     handleButtons(event, value) {
       this.currentValue = value
-      this.$emit('update:modelValue', value)
-      this.$emit('on-change', value)
+      this.vueEmit('update:modelValue', value)
+      this.vueEmit('on-change', value)
       this.dispatch('FormItem', 'on-form-change', value)
       this.closer(event)
     },
     handleSuccess(event) {
       this.handleButtons(event, this.formatColor)
-      this.$emit('on-pick-success')
+      this.vueEmit('on-pick-success')
     },
     handleClear(event) {
       this.handleButtons(event, '')
-      this.$emit('on-pick-clear')
+      this.vueEmit('on-pick-clear')
     },
     handleSelectColor(color) {
       this.val = changeColor(color)
-      this.$emit('on-active-change', this.formatColor)
+      this.vueEmit('on-active-change', this.formatColor)
     },
     handleEditColor(event) {
-      const value = this.modelValue
+      const value = event.target.value
       this.handleSelectColor(value)
     },
     handleFirstTab(event) {

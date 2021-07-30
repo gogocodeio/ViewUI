@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import HSAMixin from './hsaMixin'
 import Prefixes from './prefixMixin'
 import { clamp, getIncrement } from './utils'
@@ -32,7 +33,7 @@ import { on, off } from '../../utils/dom'
 
 export default {
   name: 'Saturation',
-  mixins: [HSAMixin, Prefixes],
+  mixins: [HSAMixin, Prefixes, TinyEmmitterBus],
   data() {
     const normalStep = 0.01
 
@@ -58,7 +59,7 @@ export default {
   },
   methods: {
     change(h, s, v, a) {
-      this.$emit('change', { h, s, v, a, source: 'hsva' })
+      this.vueEmit('change', { h, s, v, a, source: 'hsva' })
     },
     handleSlide(e, direction, key) {
       e.preventDefault()

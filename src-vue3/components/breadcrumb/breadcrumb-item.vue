@@ -48,7 +48,8 @@ export default {
     },
   },
   mounted() {
-    this.showSeparator = this.$slots.separator !== undefined
+    this.showSeparator =
+      (this.$slots.separator && this.$slots.separator()) !== undefined
   },
 }
 </script>

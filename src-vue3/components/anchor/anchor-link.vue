@@ -15,12 +15,6 @@
 
 <script>
 import tiny_emitter from 'tiny-emitter/instance'
-const tiny_emitter_override = {
-  $on: (...args) => tiny_emitter.on(...args),
-  $once: (...args) => tiny_emitter.once(...args),
-  $off: (...args) => tiny_emitter.off(...args),
-  $emit: (...args) => tiny_emitter.emit(...args),
-}
 export default {
   name: 'AnchorLink',
   inject: ['anchorCom'],
@@ -55,8 +49,7 @@ export default {
       this.currentLink = this.href
       this.anchorCom.handleHashChange()
       this.anchorCom.handleScrollTo()
-      Object.assign(this.anchorCom, tiny_emitter_override)
-      this.anchorCom.$emit('on-select', this.href)
+      tiny_emitter.emit('on-select', this.href)
       const isRoute = this.$router
       if (isRoute) {
         this.$router.push(this.href, () => {})

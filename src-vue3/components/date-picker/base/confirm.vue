@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../../utils/tinyEmitterBus'
 import iButton from '../../button/button.vue'
 import Locale from '../../../mixins/locale'
 import Emitter from '../../../mixins/emitter'
@@ -32,7 +33,7 @@ import Emitter from '../../../mixins/emitter'
 const prefixCls = 'ivu-picker'
 
 export default {
-  mixins: [Locale, Emitter],
+  mixins: [Locale, Emitter, TinyEmmitterBus],
   components: { iButton },
   props: {
     showTime: false,
@@ -59,14 +60,14 @@ export default {
   },
   methods: {
     handleClear() {
-      this.$emit('on-pick-clear')
+      this.vueEmit('on-pick-clear')
     },
     handleSuccess() {
-      this.$emit('on-pick-success')
+      this.vueEmit('on-pick-success')
     },
     handleToggleTime() {
       if (this.timeDisabled) return
-      this.$emit('on-pick-toggle-time')
+      this.vueEmit('on-pick-toggle-time')
       this.dispatch('CalendarPicker', 'focus-input')
       this.dispatch('CalendarPicker', 'update-popper')
     },

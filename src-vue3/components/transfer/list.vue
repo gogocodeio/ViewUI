@@ -165,7 +165,8 @@ export default {
     this.updateFilteredData()
   },
   mounted() {
-    this.showFooter = this.$slots.default !== undefined
+    this.showFooter =
+      (this.$slots.default && this.$slots.default()) !== undefined
   },
   emits: ['on-checked-keys-change'],
 }

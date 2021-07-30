@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import { $children } from '../../utils/gogocodeTransfer'
 import Drop from '../select/dropdown.vue'
 import Icon from '../icon/icon.vue'
@@ -50,7 +51,7 @@ const prefixCls = 'ivu-menu'
 
 export default {
   name: 'Submenu',
-  mixins: [Emitter, mixin],
+  mixins: [Emitter, mixin, TinyEmmitterBus],
   components: { Icon, Drop, CollapseTransition },
   props: {
     name: {
@@ -187,12 +188,12 @@ export default {
     },
   },
   mounted() {
-    this.$on('on-menu-item-select', (name) => {
+    this.vueOn('on-menu-item-select', (name) => {
       if (this.mode === 'horizontal') this.opened = false
       this.dispatch('Menu', 'on-menu-item-select', name)
       return true
     })
-    this.$on('on-update-active-name', (status) => {
+    this.vueOn('on-update-active-name', (status) => {
       if (findComponentUpward(this, 'Submenu'))
         this.dispatch('Submenu', 'on-update-active-name', status)
       if (findComponentsDownward(this, 'Submenu'))

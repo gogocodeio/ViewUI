@@ -33,6 +33,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import { findComponentUpward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
@@ -41,7 +42,7 @@ const prefixCls = 'ivu-checkbox'
 
 export default {
   name: 'Checkbox',
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
   props: {
     disabled: {
       type: Boolean,
@@ -140,7 +141,8 @@ export default {
       this.parent.updateModel(true)
     } else {
       this.updateModel()
-      this.showSlot = this.$slots.default !== undefined
+      this.showSlot =
+        (this.$slots.default && this.$slots.default()) !== undefined
     }
   },
   methods: {
@@ -153,12 +155,12 @@ export default {
       this.currentValue = checked
 
       const value = checked ? this.trueValue : this.falseValue
-      this.$emit('update:modelValue', value)
+      this.vueEmit('update:modelValue', value)
 
       if (this.group) {
         this.parent.change(this.model)
       } else {
-        this.$emit('on-change', value)
+        this.vueEmit('on-change', value)
         this.dispatch('FormItem', 'on-form-change', value)
       }
     },

@@ -114,8 +114,9 @@ export default {
     },
   },
   mounted() {
-    this.showHead = this.title || this.$slots.title !== undefined
-    this.showExtra = this.$slots.extra !== undefined
+    this.showHead =
+      this.title || (this.$slots.title && this.$slots.title()) !== undefined
+    this.showExtra = (this.$slots.extra && this.$slots.extra()) !== undefined
   },
 }
 </script>

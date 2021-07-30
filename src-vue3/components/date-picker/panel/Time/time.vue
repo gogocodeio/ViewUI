@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../../../utils/tinyEmitterBus'
 import TimeSpinner from '../../base/time-spinner.vue'
 import Confirm from '../../base/confirm.vue'
 import Options from '../../time-mixins'
@@ -55,7 +56,7 @@ const returnFalse = () => false
 
 export default {
   name: 'TimePickerPanel',
-  mixins: [Mixin, Locale, Options],
+  mixins: [Mixin, Locale, Options, TinyEmmitterBus],
   components: { TimeSpinner, Confirm },
   props: {
     disabledDate: {
@@ -150,7 +151,7 @@ export default {
         newDate[`set${capitalize(type)}`](date[type])
       )
 
-      if (emit) this.$emit('on-pick', newDate, 'time')
+      if (emit) this.vueEmit('on-pick', newDate, 'time')
     },
   },
   mounted() {

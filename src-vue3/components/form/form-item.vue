@@ -25,15 +25,9 @@
 
 <script>
 import tiny_emitter from 'tiny-emitter/instance'
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import AsyncValidator from 'async-validator'
 import Emitter from '../../mixins/emitter'
-
-const tiny_emitter_override = {
-  $on: (...args) => tiny_emitter.on(...args),
-  $once: (...args) => tiny_emitter.once(...args),
-  $off: (...args) => tiny_emitter.off(...args),
-  $emit: (...args) => tiny_emitter.emit(...args),
-}
 
 const prefixCls = 'ivu-form-item'
 
@@ -64,7 +58,7 @@ function getPropByPath(obj, path) {
 
 export default {
   name: 'FormItem',
-  mixins: [Emitter],
+  mixins: [Emitter, TinyEmmitterBus],
   props: {
     label: {
       type: String,
@@ -200,10 +194,10 @@ export default {
       } else if (this.required) {
         this.isRequired = this.required
       }
-      this.$off('on-form-blur', this.onFieldBlur)
-      this.$off('on-form-change', this.onFieldChange)
-      this.$on('on-form-blur', this.onFieldBlur)
-      this.$on('on-form-change', this.onFieldChange)
+      this.vueOff('on-form-blur', this.onFieldBlur)
+      this.vueOff('on-form-change', this.onFieldChange)
+      this.vueOn('on-form-blur', this.onFieldBlur)
+      this.vueOn('on-form-change', this.onFieldChange)
     },
     getRules() {
       let formRules = this.FormInstance.rules
@@ -247,10 +241,8 @@ export default {
 
         callback(this.validateMessage)
 
-        Object.assign(this.FormInstance, tiny_emitter_override)
-
         this.FormInstance &&
-          this.FormInstance.$emit(
+          tiny_emitter.emit(
             'on-validate',
             this.prop,
             !errors,

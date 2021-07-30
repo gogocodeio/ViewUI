@@ -45,7 +45,9 @@
           @on-clear="clearSingleSelect"
           @on-enter="handleCreateItem"
         >
-          <slot name="prefix" slot="prefix"></slot>
+          <template v-slot:prefix>
+            <slot name="prefix"></slot>
+          </template>
         </select-head>
       </slot>
     </div>
@@ -105,6 +107,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import { $children } from '../../utils/gogocodeTransfer'
 import Drop from './dropdown.vue'
 import Icon from '../icon'
@@ -184,7 +187,7 @@ const checkValuesNotEqual = (value, publicValue, values) => {
   const strPublic = JSON.stringify(publicValue)
   const strValues = JSON.stringify(
     values.map((item) => {
-      return this.modelValue
+      return item.value
     })
   )
   return (
@@ -196,7 +199,7 @@ const ANIMATION_TIMEOUT = 300
 
 export default {
   name: 'iSelect',
-  mixins: [Emitter, Locale, mixinsForm],
+  mixins: [Emitter, Locale, mixinsForm, TinyEmmitterBus],
   components: { FunctionalOptions, Drop, SelectHead, Icon },
   directives: { clickOutside, TransferDom },
   props: {
@@ -335,7 +338,7 @@ export default {
     },
   },
   mounted() {
-    this.$on('on-select-selected', this.onOptionClick)
+    this.vueOn('on-select-selected', this.onOptionClick)
 
     // set the initial values if there are any
     if (!this.remote && this.selectOptions.length > 0) {
@@ -364,7 +367,10 @@ export default {
             label: this.defaultLabel[index],
           }
         })
-        this.$emit('on-set-default-options', JSON.parse(JSON.stringify(values)))
+        this.vueEmit(
+          'on-set-default-options',
+          JSON.parse(JSON.stringify(values))
+        )
         setTimeout(() => {
           this.values = values
         })
@@ -372,7 +378,7 @@ export default {
     }
   },
   beforeUnmount() {
-    this.$off('on-select-selected')
+    this.vueOff('on-select-selected')
   },
   data() {
     return {
@@ -385,7 +391,7 @@ export default {
       query: '',
       initialLabel: this.label,
       hasMouseHoverHead: false,
-      slotOptions: this.$slots.default(),
+      slotOptions: this.$slots.default && this.$slots.default(),
       caretPosition: -1,
       lastRemoteQuery: '',
       unchangedQuery: true,
@@ -478,8 +484,8 @@ export default {
       //     return this.multiple ? this.values.map(option => option.value) : (this.values[0] || {}).value;
       // }
       return this.multiple
-        ? this.values.map((option) => this.modelValue)
-        : this.modelValue
+        ? this.values.map((option) => option.value)
+        : (this.values[0] || {}).value
     },
     canBeCleared() {
       const uiStateMatch = this.hasMouseHoverHead || this.active
@@ -599,14 +605,14 @@ export default {
     clearSingleSelect() {
       // PUBLIC API
       // fix #446
-      if (!this.multiple) this.$emit('update:modelValue', '')
-      this.$emit('on-clear')
+      if (!this.multiple) this.vueEmit('update:modelValue', '')
+      this.vueEmit('on-clear')
       this.hideMenu()
       if (this.clearable) this.reset()
     },
     getOptionData(value) {
       const option = this.flatOptions.find(
-        ({ componentOptions }) => this.modelValue === value
+        ({ componentOptions }) => componentOptions.propsData.value === value
       )
       if (!option) return null
       const label = getOptionLabel(option)
@@ -638,7 +644,7 @@ export default {
     },
     processOption(option, values, isFocused) {
       if (!option.componentOptions) return option
-      const optionValue = this.modelValue
+      const optionValue = option.componentOptions.propsData.value
       const disabled = option.componentOptions.propsData.disabled
       const isSelected = values.includes(optionValue)
 
@@ -659,7 +665,7 @@ export default {
     },
 
     validateOption({ children, elm, propsData }) {
-      const value = this.modelValue
+      const value = propsData.value
       const label = propsData.label || ''
       const textContent =
         (elm && elm.textContent) ||
@@ -712,7 +718,7 @@ export default {
           this.$nextTick(() => {
             const caretPosition =
               this.caretPosition === -1
-                ? this.modelValue.length
+                ? input.value.length
                 : this.caretPosition
             input.setSelectionRange(caretPosition, caretPosition)
           })
@@ -722,7 +728,7 @@ export default {
         event.preventDefault()
         this.hideMenu()
         this.isFocused = true
-        this.$emit('on-clickoutside', event)
+        this.vueEmit('on-clickoutside', event)
       } else {
         this.caretPosition = -1
         this.isFocused = false
@@ -768,7 +774,9 @@ export default {
 
           // fix a script error when searching
           if (optionComponent) {
-            const option = this.getOptionData(this.modelValue)
+            const option = this.getOptionData(
+              optionComponent.componentOptions.propsData.value
+            )
             this.onOptionClick(option)
           } else {
             this.hideMenu()
@@ -817,11 +825,11 @@ export default {
         else this.lastRemoteQuery = ''
 
         const valueIsSelected = this.values.find(
-          ({ value }) => value === this.modelValue
+          ({ value }) => value === option.value
         )
         if (valueIsSelected) {
           this.values = this.values.filter(
-            ({ value }) => value !== this.modelValue
+            ({ value }) => value !== option.value
           )
         } else {
           this.values = this.values.concat(option)
@@ -837,14 +845,14 @@ export default {
 
       this.focusIndex = this.flatOptions.findIndex((opt) => {
         if (!opt || !opt.componentOptions) return false
-        return this.modelValue === this.modelValue
+        return opt.componentOptions.propsData.value === option.value
       })
 
       if (this.filterable) {
         const inputField = this.$el.querySelector('input[type="text"]')
         if (!this.autoComplete) this.$nextTick(() => inputField.focus())
       }
-      this.$emit('on-select', option) // # 4441
+      this.vueEmit('on-select', option) // # 4441
       this.broadcast('Drop', 'on-update-popper')
       setTimeout(() => {
         this.filterQueryChange = false
@@ -878,7 +886,7 @@ export default {
       this.isFocused = type === 'focus'
     },
     updateSlotOptions() {
-      this.slotOptions = this.$slots.default()
+      this.slotOptions = this.$slots.default && this.$slots.default()
     },
     checkUpdateStatus() {
       if (
@@ -892,7 +900,7 @@ export default {
     handleCreateItem() {
       if (this.allowCreate && this.query !== '' && this.showCreateItem) {
         const query = this.query
-        this.$emit('on-create', query)
+        this.vueEmit('on-create', query)
         this.query = ''
 
         const option = {
@@ -945,13 +953,13 @@ export default {
             emitValue = this.values[0]
           }
         }
-        this.$emit('update:modelValue', vModelValue) // to update v-model
-        this.$emit('on-change', emitValue)
+        this.vueEmit('update:modelValue', vModelValue) // to update v-model
+        this.vueEmit('on-change', emitValue)
         this.dispatch('FormItem', 'on-form-change', emitValue)
       }
     },
     query(query) {
-      this.$emit('on-query-change', query)
+      this.vueEmit('on-query-change', query)
       const { remoteMethod, lastRemoteQuery } = this
       const hasValidQuery =
         query !== '' && (query !== lastRemoteQuery || !lastRemoteQuery)
@@ -986,7 +994,7 @@ export default {
       const [selectedOption] = this.values
       if (selectedOption && this.filterable && !this.multiple && !focused) {
         const selectedLabel = String(
-          selectedOption.label || this.modelValue
+          selectedOption.label || selectedOption.value
         ).trim()
         if (selectedLabel && this.query !== selectedLabel) {
           this.preventRemoteCall = true
@@ -997,11 +1005,12 @@ export default {
     focusIndex(index) {
       if (index < 0 || this.autoComplete) return
       // update scroll
-      const optionValue = this.modelValue
+      const optionValue =
+        this.flatOptions[index].componentOptions.propsData.value
       const optionInstance = findChild(this, ({ $options }) => {
         return (
           $options.componentName === 'select-item' &&
-          this.modelValue === optionValue
+          $options.propsData.value === optionValue
         )
       })
 
@@ -1039,7 +1048,7 @@ export default {
       this.broadcast('Drop', 'on-update-popper')
     },
     visible(state) {
-      this.$emit('on-open-change', state)
+      this.vueEmit('on-open-change', state)
     },
     slotOptions(options, old) {
       // #4626，当 Options 的 label 更新时，v-model 的值未更新

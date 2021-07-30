@@ -1,4 +1,5 @@
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import { plantRenderPara } from '../../utils/gogocodeTransfer'
 import * as Vue from 'vue'
 import List from './list.vue'
@@ -10,7 +11,7 @@ const prefixCls = 'ivu-transfer'
 
 export default {
   name: 'Transfer',
-  mixins: [Emitter, Locale],
+  mixins: [Emitter, Locale, TinyEmmitterBus],
   render() {
     function cloneVNode(vnode) {
       const clonedChildren =
@@ -28,9 +29,12 @@ export default {
       return cloned
     }
 
-    const vNodes = this.$slots.default === undefined ? [] : this.$slots.default
+    const vNodes =
+      (this.$slots.default && this.$slots.default()) === undefined
+        ? []
+        : this.$slots.default && this.$slots.default()
     const clonedVNodes =
-      this.$slots.default === undefined
+      (this.$slots.default && this.$slots.default()) === undefined
         ? []
         : vNodes.map((vnode) => cloneVNode(vnode))
 
@@ -265,7 +269,7 @@ export default {
             )
 
       this.$refs[opposite].toggleSelectAll(false)
-      this.$emit('on-change', newTargetKeys, direction, moveKeys)
+      this.vueEmit('on-change', newTargetKeys, direction, moveKeys)
       this.dispatch('FormItem', 'on-form-change', {
         tarketKeys: newTargetKeys,
         direction: direction,
@@ -281,7 +285,7 @@ export default {
     handleCheckedKeys() {
       const sourceSelectedKeys = this.getValidKeys('left')
       const targetSelectedKeys = this.getValidKeys('right')
-      this.$emit('on-selected-change', sourceSelectedKeys, targetSelectedKeys)
+      this.vueEmit('on-selected-change', sourceSelectedKeys, targetSelectedKeys)
     },
   },
   watch: {

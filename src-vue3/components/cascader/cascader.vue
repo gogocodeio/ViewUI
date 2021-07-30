@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import iInput from '../input/input.vue'
 import Drop from '../select/dropdown.vue'
 import Icon from '../icon/icon.vue'
@@ -104,7 +105,7 @@ const selectPrefixCls = 'ivu-select'
 
 export default {
   name: 'Cascader',
-  mixins: [Emitter, Locale, mixinsForm],
+  mixins: [Emitter, Locale, mixinsForm, TinyEmmitterBus],
   components: { iInput, Drop, Icon, Caspanel },
   directives: { clickOutside, TransferDom },
   props: {
@@ -271,7 +272,7 @@ export default {
         for (let i = 0; i < arr.length; i++) {
           let item = arr[i]
           item.__label = label ? label + ' / ' + item.label : item.label
-          item.__value = value ? value + ',' + this.modelValue : this.modelValue
+          item.__value = value ? value + ',' + item.value : item.value
 
           if (item.children && item.children.length) {
             getSelections(item.children, item.__label, item.__value)
@@ -384,7 +385,7 @@ export default {
     },
     emitValue(val, oldVal) {
       if (JSON.stringify(val) !== oldVal) {
-        this.$emit(
+        this.vueEmit(
           'on-change',
           this.currentValue,
           JSON.parse(JSON.stringify(this.selected))
@@ -398,7 +399,7 @@ export default {
       }
     },
     handleInput(event) {
-      this.query = this.modelValue
+      this.query = event.target.value
     },
     handleSelectItem(index) {
       const item = this.querySelections[index]
@@ -407,7 +408,7 @@ export default {
       this.query = ''
       this.$refs.input.currentValue = ''
       const oldVal = JSON.stringify(this.currentValue)
-      this.currentValue = this.modelValue.split(',')
+      this.currentValue = item.value.split(',')
       // use setTimeout for #4786, can not use nextTick, because @on-find-selected use nextTick
       setTimeout(() => {
         this.emitValue(this.currentValue, oldVal)
@@ -441,7 +442,7 @@ export default {
   },
   created() {
     this.validDataStr = JSON.stringify(this.getValidData(this.data))
-    this.$on('on-result-change', (params) => {
+    this.vueOn('on-result-change', (params) => {
       // lastValue: is click the final val
       // fromInit: is this emit from update value
       const lastValue = params.lastValue
@@ -454,7 +455,7 @@ export default {
 
         let newVal = []
         this.selected.forEach((item) => {
-          newVal.push(this.modelValue)
+          newVal.push(item.value)
         })
 
         if (!fromInit) {
@@ -491,14 +492,14 @@ export default {
         }
         this.broadcast('Drop', 'on-destroy-popper')
       }
-      this.$emit('on-visible-change', val)
+      this.vueEmit('on-visible-change', val)
     },
     modelValue(val) {
       this.currentValue = val
       if (!val.length) this.selected = []
     },
     currentValue() {
-      this.$emit('update:modelValue', this.currentValue)
+      this.vueEmit('update:modelValue', this.currentValue)
       if (this.updatingValue) {
         this.updatingValue = false
         return

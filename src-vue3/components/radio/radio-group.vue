@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import { oneOf, findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 
@@ -16,7 +17,7 @@ const getUuid = () => `ivuRadioGroup_${now}_${seed++}`
 
 export default {
   name: 'RadioGroup',
-  mixins: [Emitter],
+  mixins: [Emitter, TinyEmmitterBus],
   props: {
     modelValue: {
       type: [String, Number],
@@ -88,11 +89,11 @@ export default {
       }
     },
     change(data) {
-      this.currentValue = this.modelValue
+      this.currentValue = data.value
       this.updateValue()
-      this.$emit('update:modelValue', this.modelValue)
-      this.$emit('on-change', this.modelValue)
-      this.dispatch('FormItem', 'on-form-change', this.modelValue)
+      this.vueEmit('update:modelValue', data.value)
+      this.vueEmit('on-change', data.value)
+      this.dispatch('FormItem', 'on-form-change', data.value)
     },
   },
   watch: {

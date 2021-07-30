@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../../../utils/tinyEmitterBus'
 import TimeSpinner from '../../base/time-spinner.vue'
 import Confirm from '../../base/confirm.vue'
 import Options from '../../time-mixins'
@@ -67,7 +68,7 @@ const capitalize = (str) => str[0].toUpperCase() + str.slice(1)
 
 export default {
   name: 'RangeTimePickerPanel',
-  mixins: [Mixin, Locale, Options],
+  mixins: [Mixin, Locale, Options, TinyEmmitterBus],
   components: { TimeSpinner, Confirm },
   props: {
     steps: {
@@ -149,7 +150,7 @@ export default {
       // judge endTime > startTime?
       if (dateEnd < dateStart) dateEnd = dateStart
 
-      if (emit) this.$emit('on-pick', [dateStart, dateEnd], 'time')
+      if (emit) this.vueEmit('on-pick', [dateStart, dateEnd], 'time')
     },
     handleStartChange(date) {
       this.handleChange(date, {})

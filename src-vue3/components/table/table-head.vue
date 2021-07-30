@@ -82,46 +82,43 @@
                   ></i>
                 </span>
 
-                <div
-                  slot="content"
-                  :class="[prefixCls + '-filter-list']"
-                  v-if="getColumn(rowIndex, index)._filterMultiple"
-                >
-                  <div :class="[prefixCls + '-filter-list-item']">
-                    <checkbox-group
-                      v-model="getColumn(rowIndex, index)._filterChecked"
-                    >
-                      <checkbox
-                        v-for="(item, index) in column.filters"
-                        :key="index"
-                        :label="item.value"
-                        >{{ item.label }}</checkbox
+                <template v-slot:getColumn(rowIndex, index)._filterMultiple>
+                  <div
+                    :class="[prefixCls + '-filter-list']"
+                    v-if="getColumn(rowIndex, index)._filterMultiple"
+                  >
+                    <div :class="[prefixCls + '-filter-list-item']">
+                      <checkbox-group
+                        v-model="getColumn(rowIndex, index)._filterChecked"
                       >
-                    </checkbox-group>
+                        <checkbox
+                          v-for="(item, index) in column.filters"
+                          :key="index"
+                          :label="item.value"
+                          >{{ item.label }}</checkbox
+                        >
+                      </checkbox-group>
+                    </div>
+                    <div :class="[prefixCls + '-filter-footer']">
+                      <i-button
+                        type="text"
+                        size="small"
+                        :disabled="
+                          !getColumn(rowIndex, index)._filterChecked.length
+                        "
+                        @click="handleFilter(getColumn(rowIndex, index)._index)"
+                        >{{ t('i.table.confirmFilter') }}</i-button
+                      >
+                      <i-button
+                        type="text"
+                        size="small"
+                        @click="handleReset(getColumn(rowIndex, index)._index)"
+                        >{{ t('i.table.resetFilter') }}</i-button
+                      >
+                    </div>
                   </div>
-                  <div :class="[prefixCls + '-filter-footer']">
-                    <i-button
-                      type="text"
-                      size="small"
-                      :disabled="
-                        !getColumn(rowIndex, index)._filterChecked.length
-                      "
-                      @click="handleFilter(getColumn(rowIndex, index)._index)"
-                      >{{ t('i.table.confirmFilter') }}</i-button
-                    >
-                    <i-button
-                      type="text"
-                      size="small"
-                      @click="handleReset(getColumn(rowIndex, index)._index)"
-                      >{{ t('i.table.resetFilter') }}</i-button
-                    >
-                  </div>
-                </div>
-                <div
-                  slot="content"
-                  :class="[prefixCls + '-filter-list']"
-                  v-else
-                >
+                </template>
+                <div :class="[prefixCls + '-filter-list']" v-else>
                   <ul :class="[prefixCls + '-filter-list-single']">
                     <li
                       :class="itemAllClasses(getColumn(rowIndex, index))"

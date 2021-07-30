@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import Locale from '../../mixins/locale'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
@@ -47,7 +48,7 @@ const prefixCls = 'ivu-rate'
 
 export default {
   name: 'Rate',
-  mixins: [Locale, Emitter, mixinsForm],
+  mixins: [Locale, Emitter, mixinsForm, TinyEmmitterBus],
   components: { Icon },
   props: {
     count: {
@@ -188,8 +189,8 @@ export default {
       }
 
       this.currentValue = value
-      this.$emit('update:modelValue', value)
-      this.$emit('on-change', value)
+      this.vueEmit('update:modelValue', value)
+      this.vueEmit('on-change', value)
       this.dispatch('FormItem', 'on-form-change', value)
     },
   },

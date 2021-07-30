@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../../utils/tinyEmitterBus'
 import Options from '../time-mixins'
 import { deepCopy, scrollTop, firstUpperCase } from '../../../utils/assist'
 
@@ -48,7 +49,7 @@ const timeParts = ['hours', 'minutes', 'seconds']
 
 export default {
   name: 'TimeSpinner',
-  mixins: [Options],
+  mixins: [Options, TinyEmmitterBus],
   props: {
     hours: {
       type: [Number, String],
@@ -203,8 +204,8 @@ export default {
       this.emitChange(data)
     },
     emitChange(changes) {
-      this.$emit('on-change', changes)
-      this.$emit('on-pick-click')
+      this.vueEmit('on-change', changes)
+      this.vueEmit('on-pick-click')
     },
     scroll(type, index) {
       const from = this.$refs[type].scrollTop

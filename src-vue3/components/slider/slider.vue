@@ -102,6 +102,7 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import InputNumber from '../../components/input-number/input-number.vue'
 import Tooltip from '../../components/tooltip/tooltip.vue'
 import SliderMarker from './marker'
@@ -115,7 +116,7 @@ const prefixCls = 'ivu-slider'
 
 export default {
   name: 'Slider',
-  mixins: [Emitter, mixinsForm],
+  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
   components: { InputNumber, Tooltip, SliderMarker },
   props: {
     min: {
@@ -221,8 +222,8 @@ export default {
         }
       })
       const value = this.range ? values : values[0]
-      this.$emit('update:modelValue', value)
-      this.$emit('on-input', value)
+      this.vueEmit('update:modelValue', value)
+      this.vueEmit('on-input', value)
     },
   },
   computed: {
@@ -437,7 +438,7 @@ export default {
     },
     emitChange() {
       const value = this.range ? this.exportValue : this.exportValue[0]
-      this.$emit('on-change', value)
+      this.vueEmit('on-change', value)
       this.dispatch('FormItem', 'on-form-change', value)
     },
 
@@ -484,7 +485,7 @@ export default {
   },
   mounted() {
     // #2852
-    this.$on('on-visible-change', (val) => {
+    this.vueOn('on-visible-change', (val) => {
       if (val && this.showTip === 'always') {
         this.$refs.minTooltip.doDestroy()
         if (this.range) {

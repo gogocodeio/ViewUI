@@ -31,13 +31,14 @@
 </template>
 
 <script>
+import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import HSAMixin from './hsaMixin'
 import Prefixes from './prefixMixin'
 import { clamp, toRGBAString } from './utils'
 
 export default {
   name: 'Alpha',
-  mixins: [HSAMixin, Prefixes],
+  mixins: [HSAMixin, Prefixes, TinyEmmitterBus],
   data() {
     const normalStep = 1
     const jumpStep = 10
@@ -67,7 +68,7 @@ export default {
       const { a } = this.value
 
       if (a !== newAlpha) {
-        this.$emit('change', { h, s, l, a: newAlpha, source: 'rgba' })
+        this.vueEmit('change', { h, s, l, a: newAlpha, source: 'rgba' })
       }
     },
     handleSlide(e, direction) {

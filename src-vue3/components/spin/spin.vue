@@ -84,7 +84,7 @@ export default {
     },
   },
   mounted() {
-    this.showText = this.$slots.default !== undefined
+    this.showText = (this.$slots.default && this.$slots.default()) !== undefined
   },
 }
 </script>
