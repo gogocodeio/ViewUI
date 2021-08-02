@@ -1,7 +1,5 @@
 <script>
 import tiny_emitter from 'tiny-emitter/instance'
-import { plantRenderPara } from '../../utils/gogocodeTransfer'
-import * as Vue from 'vue'
 // todo :key="row"
 import TableTr from './table-tr.vue'
 import TableCell from './cell.vue'
@@ -281,20 +279,17 @@ export default {
       }
     },
   },
-  render() {
+  render(h) {
     let $cols = []
     this.columns.forEach((column) => {
-      const $col = Vue.h(
-        'col',
-        plantRenderPara({
-          attrs: {
-            width: this.setCellWidth(column),
-          },
-        })
-      )
+      const $col = h('col', {
+        attrs: {
+          width: this.setCellWidth(column),
+        },
+      })
       $cols.push($col)
     })
-    const $colgroup = Vue.h('colgroup', {}, $cols)
+    const $colgroup = h('colgroup', {}, $cols)
 
     let $tableTrs = []
     this.data.forEach((row, index) => {
@@ -302,42 +297,39 @@ export default {
 
       this.columns.forEach((column, colIndex) => {
         if (this.showWithSpan(row, column, index, colIndex)) {
-          const $tableCell = Vue.h(
-            TableCell,
-            plantRenderPara({
-              props: {
-                fixed: this.fixed,
-                'prefix-cls': this.prefixCls,
-                row: row,
-                column: column,
-                'natural-index': index,
-                index: row._index,
-                checked: this.rowChecked(row._index),
-                disabled: this.rowDisabled(row._index),
-                expanded: this.rowExpanded(row._index),
-              },
-              key: column._columnKey,
-            })
-          )
+          const $tableCell = h(TableCell, {
+            props: {
+              fixed: this.fixed,
+              'prefix-cls': this.prefixCls,
+              row: row,
+              column: column,
+              'natural-index': index,
+              index: row._index,
+              checked: this.rowChecked(row._index),
+              disabled: this.rowDisabled(row._index),
+              expanded: this.rowExpanded(row._index),
+            },
+            key: column._columnKey,
+          })
 
-          const $td = Vue.h(
+          const $td = h(
             'td',
-            plantRenderPara({
+            {
               class: this.alignCls(column, row),
               attrs: this.getSpan(row, column, index, colIndex),
               on: {
                 click: (e) => this.clickCell(row, column, column.key, e),
               },
-            }),
+            },
             [$tableCell]
           )
           $tds.push($td)
         }
       })
 
-      const $tableTr = Vue.h(
+      const $tableTr = h(
         TableTr,
-        plantRenderPara({
+        {
           props: {
             draggable: this.draggable,
             row: row,
@@ -352,41 +344,38 @@ export default {
             contextmenu: (e) => this.contextmenuCurrentRow(row._index, e),
             selectstart: (e) => this.selectStartCurrentRow(row._index, e),
           },
-        }),
+        },
         $tds
       )
       $tableTrs.push($tableTr)
 
       // 可展开
       if (this.rowExpanded(row._index)) {
-        const $Expand = Vue.h(
-          Expand,
-          plantRenderPara({
-            props: {
-              row: row,
-              render: this.expandRender,
-              index: row._index,
-            },
-            key: this.rowKey ? row._rowKey : index,
-          })
-        )
-        const $td = Vue.h(
+        const $Expand = h(Expand, {
+          props: {
+            row: row,
+            render: this.expandRender,
+            index: row._index,
+          },
+          key: this.rowKey ? row._rowKey : index,
+        })
+        const $td = h(
           'td',
-          plantRenderPara({
+          {
             attrs: {
               colspan: this.columns.length,
             },
             class: this.prefixCls + '-expanded-cell',
-          }),
+          },
           [$Expand]
         )
-        const $tr = Vue.h(
+        const $tr = h(
           'tr',
-          plantRenderPara({
+          {
             class: {
               [this.prefixCls + '-expanded-hidden']: this.fixed,
             },
-          }),
+          },
           [$td]
         )
         $tableTrs.push($tr)
@@ -394,31 +383,31 @@ export default {
 
       // 子数据
       if (row.children && row.children.length) {
-        const $childNodes = this.getChildNode(Vue.h, row, [])
+        const $childNodes = this.getChildNode(h, row, [])
         $childNodes.forEach((item) => {
           $tableTrs.push(item)
         })
       }
     })
 
-    const $tbody = Vue.h(
+    const $tbody = h(
       'tbody',
-      plantRenderPara({
+      {
         class: this.prefixCls + '-tbody',
-      }),
+      },
       [$tableTrs]
     )
 
-    return Vue.h(
+    return h(
       'table',
-      plantRenderPara({
+      {
         attrs: {
           cellspacing: '0',
           cellpadding: '0',
           border: '0',
         },
         style: this.styleObject,
-      }),
+      },
       [$colgroup, $tbody]
     )
   },

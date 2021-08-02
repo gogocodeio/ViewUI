@@ -85,7 +85,7 @@ export default {
     },
   },
   data() {
-    const [dateStart, dateEnd] = this.value.slice()
+    const [dateStart, dateEnd] = this.modelValue.slice()
     return {
       prefixCls: prefixCls,
       timePrefixCls: timePrefixCls,

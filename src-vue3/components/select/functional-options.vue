@@ -1,5 +1,4 @@
 <script>
-import * as Vue from 'vue'
 const returnArrayFn = () => []
 
 export default {
@@ -19,7 +18,7 @@ export default {
   },
   // if use functional, there will be memory leaks
   // functional: true,
-  render() {
+  render(h) {
     // to detect changes in the $slot children/options we do this hack
     // so we can trigger the parents computed properties and have everything reactive
     // although $slot.default is not
@@ -28,10 +27,7 @@ export default {
       (this.$parent.$slots.default && this.$parent.$slots.default())
     )
       this.slotUpdateHook()
-    return Vue.h('ul', [
-      this.$slots.default && this.$slots.default(),
-      this.options,
-    ])
+    return h('ul', [this.$slots.default && this.$slots.default(), this.options])
   },
 }
 </script>

@@ -55,7 +55,7 @@ export default {
     updateModel(update) {
       this.childrens = findComponentsDownward(this, 'Checkbox')
       if (this.childrens) {
-        const { modelValue } = this
+        const { modelValue: value } = this
         this.childrens.forEach((child) => {
           child.model = value
 

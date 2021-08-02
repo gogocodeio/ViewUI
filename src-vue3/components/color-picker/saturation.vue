@@ -48,12 +48,12 @@ export default {
   },
   computed: {
     bgColorStyle() {
-      return { background: `hsl(${this.value.hsv.h}, 100%, 50%)` }
+      return { background: `hsl(${this.modelValue.hsv.h}, 100%, 50%)` }
     },
     pointerStyle() {
       return {
-        top: `${-(this.value.hsv.v * 100) + 1 + 100}%`,
-        left: `${this.value.hsv.s * 100}%`,
+        top: `${-(this.modelValue.hsv.v * 100) + 1 + 100}%`,
+        left: `${this.modelValue.hsv.s * 100}%`,
       }
     },
   },
@@ -67,7 +67,7 @@ export default {
 
       const isPowerKey = e[this.powerKey]
       const increment = isPowerKey ? direction * this.multiplier : direction
-      const { h, s, v, a } = this.value.hsv
+      const { h, s, v, a } = this.modelValue.hsv
       const saturation = clamp(
         s + getIncrement(key, ['left', 'right'], increment),
         0,
@@ -91,7 +91,12 @@ export default {
       const saturation = left / clientWidth
       const bright = clamp(1 - top / clientHeight, 0, 1)
 
-      this.change(this.value.hsv.h, saturation, bright, this.value.hsv.a)
+      this.change(
+        this.modelValue.hsv.h,
+        saturation,
+        bright,
+        this.modelValue.hsv.a
+      )
     },
     handleMouseDown(e) {
       HSAMixin.methods.handleMouseDown.call(this, e)

@@ -625,7 +625,7 @@ export default {
       }
     },
     getInitialValue() {
-      const { modelValue, multiple, remote } = this
+      const { modelValue: value, multiple, remote } = this
       let initialValue = Array.isArray(value) ? value : [value]
       if (
         !multiple &&

@@ -189,16 +189,18 @@ export default {
     },
   },
   data() {
-    const [minDate, maxDate] = this.value.map((date) => date || initTimeDate())
+    const [minDate, maxDate] = this.modelValue.map(
+      (date) => date || initTimeDate()
+    )
     const leftPanelDate = this.startDate ? this.startDate : minDate
 
     return {
       prefixCls: prefixCls,
       datePrefixCls: datePrefixCls,
-      dates: this.value,
+      dates: this.modelValue,
       rangeState: {
-        from: this.value[0],
-        to: this.value[1],
+        from: this.modelValue[0],
+        to: this.modelValue[1],
         selecting: minDate && !maxDate,
       },
       currentView: this.selectionMode || 'range',

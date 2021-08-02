@@ -120,7 +120,7 @@ export default {
     },
   },
   data() {
-    const { selectionMode, value } = this
+    const { modelValue: value, selectionMode } = this
 
     const dates = value.slice().sort()
     return {

@@ -1,4 +1,3 @@
-import { plantRenderPara } from '../../../utils/gogocodeTransfer'
 import { $children } from '../../../utils/gogocodeTransfer'
 import Notification from './notification.vue'
 import * as Vue from 'vue'
@@ -7,13 +6,10 @@ Notification.newInstance = (properties) => {
   const _props = properties || {}
 
   const Instance = new Vue({
-    render() {
-      return Vue.h(
-        Notification,
-        plantRenderPara({
-          props: _props,
-        })
-      )
+    render(h) {
+      return h(Notification, {
+        props: _props,
+      })
     },
   })
 
