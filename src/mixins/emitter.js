@@ -4,7 +4,7 @@ function broadcast(componentName, eventName, params) {
     const name = child.$options.name
 
     if (name === componentName) {
-      child.$emit.apply(child, [eventName].concat(params))
+      $emit(child, eventName, params)
     } else {
       // todo 如果 params 是空数组，接收到的会是 undefined
       broadcast.apply(child, [componentName, eventName].concat([params]))
@@ -25,7 +25,7 @@ export default {
         }
       }
       if (parent) {
-        $emit(parent, eventName, ...params)
+        $emit(parent, eventName, params)
       }
     },
     broadcast(componentName, eventName, params) {

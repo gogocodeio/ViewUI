@@ -13,19 +13,19 @@ export function $on(instance, event, fn) {
     const events = getRegistry(instance)
     ;(events[event] || (events[event] = [])).push(fn)
   }
-  return instance.proxy
+  return instance
 }
 export function $once(instance, event, fn) {
   const wrapped = (...args) => {
-    off(instance, event, wrapped)
-    fn.call(instance.proxy, ...args)
+    $off(instance, event, wrapped)
+    fn.call(instance, ...args)
   }
   wrapped.fn = fn
   $on(instance, event, wrapped)
-  return instance.proxy
+  return instance
 }
 export function $off(instance, event, fn) {
-  const vm = instance.proxy
+  const vm = instance
   // all
   if (!event) {
     eventRegistryMap.set(instance, Object.create(null))
@@ -33,7 +33,7 @@ export function $off(instance, event, fn) {
   }
   // array of events
   if (Array.isArray(event)) {
-    event.forEach((e) => off(instance, e, fn))
+    event.forEach((e) => $off(instance, e, fn))
     return vm
   }
   // specific event
@@ -50,12 +50,12 @@ export function $off(instance, event, fn) {
   return vm
 }
 export function $emit(instance, event, ...args) {
-  instance.proxy && instance.proxy.$emit && instance.proxy.$emit(event, ...args)
+  instance && instance.$emit && instance.$emit(event, ...args)
   const cbs = getRegistry(instance)[event]
   if (cbs) {
-    cbs.map((cb) => cb.apply(instance.proxy, args))
+    cbs.map((cb) => cb.apply(instance, args))
   }
-  return instance.proxy
+  return instance
 }
 export function $children(instance) {
   function $walk(vnode, children) {

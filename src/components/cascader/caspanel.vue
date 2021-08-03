@@ -146,8 +146,8 @@ export default {
       if (this.$parent.$options.name === 'Caspanel') {
         this.$parent.updateResult(result)
       } else {
-        this.$parent.$parent.updateResult(result)
-      }
+        const cascaderNode = findComponentUpward(this, 'Cascader')
+        cascaderNode.updateResult(result)      }
     },
     getKey() {
       return key++
