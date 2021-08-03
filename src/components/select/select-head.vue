@@ -5,10 +5,11 @@
         <Icon :type="prefix" v-if="prefix" />
       </slot>
     </span>
-    <template
+    <div
       class="ivu-tag ivu-tag-checked"
       v-for="(item, index) in selectedMultiple"
-      ><div v-if="maxTagCount === undefined || index < maxTagCount">
+    >
+      <template v-if="maxTagCount === undefined || index < maxTagCount">
         <span
           class="ivu-tag-text"
           :class="{ 'ivu-select-multiple-tag-hidden': item.disabled }"
@@ -18,8 +19,9 @@
           type="ios-close"
           v-if="!item.disabled"
           @click.native.stop="removeTag(item)"
-        ></Icon></div
-    ></template>
+        ></Icon>
+      </template>
+    </div>
     <div
       class="ivu-tag ivu-tag-checked"
       v-if="maxTagCount !== undefined && selectedMultiple.length > maxTagCount"
@@ -71,16 +73,16 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Icon from '../icon'
 import Emitter from '../../mixins/emitter'
-import Bus from '../../mixins/bus'
 import Locale from '../../mixins/locale'
 
 const prefixCls = 'ivu-select'
 
 export default {
   name: 'iSelectHead',
-  mixins: [Emitter, Locale, Bus],
+  mixins: [Emitter, Locale],
   components: { Icon },
   props: {
     disabled: {
@@ -154,7 +156,8 @@ export default {
       const { filterable, multiple, showPlaceholder } = this
       return [
         {
-          [prefixCls + '-head-with-prefix']: this.$slots.prefix || this.prefix,
+          [prefixCls + '-head-with-prefix']:
+            (this.$slots.prefix && this.$slots.prefix()) || this.prefix,
           [prefixCls + '-placeholder']: showPlaceholder && !filterable,
           [prefixCls + '-selected-value']:
             !showPlaceholder && !multiple && !filterable,
@@ -214,7 +217,8 @@ export default {
     headCls() {
       return {
         [`${prefixCls}-head-flex`]:
-          this.filterable && (this.$slots.prefix || this.prefix),
+          this.filterable &&
+          ((this.$slots.prefix && this.$slots.prefix()) || this.prefix),
       }
     },
     // 3.4.0, global setting customArrow 有值时，arrow 赋值空
@@ -255,12 +259,12 @@ export default {
   },
   methods: {
     onInputFocus() {
-      this.$emit('on-input-focus')
+      $emit(this, 'on-input-focus')
     },
     onInputBlur() {
       if (this.showCreateItem) return
       if (!this.values.length) this.query = '' // #5155
-      this.$emit('on-input-blur')
+      $emit(this, 'on-input-blur')
     },
     removeTag(value) {
       if (this.disabled) return false
@@ -268,7 +272,7 @@ export default {
     },
     resetInputState() {
       this.inputLength = this.$refs.input.value.length * 12 + 20
-      this.$emit('on-keydown')
+      $emit(this, 'on-keydown')
     },
     handleInputDelete(e) {
       const targetValue = e.target.value
@@ -282,7 +286,7 @@ export default {
       }
     },
     handleInputEnter() {
-      this.$emit('on-enter')
+      $emit(this, 'on-enter')
     },
     onHeaderClick(e) {
       if (this.filterable && e.target === this.$el) {
@@ -290,7 +294,7 @@ export default {
       }
     },
     onClear() {
-      this.$emit('on-clear')
+      $emit(this, 'on-clear')
     },
   },
   watch: {
@@ -314,7 +318,7 @@ export default {
         return
       }
 
-      this.$emit('on-query-change', val)
+      $emit(this, 'on-query-change', val)
     },
     queryProp(query) {
       if (query !== this.query) this.query = query

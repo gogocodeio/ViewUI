@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Icon from '../icon'
 import { oneOf } from '../../utils/assist'
 
@@ -101,11 +102,11 @@ export default {
   methods: {
     close(e) {
       this.closed = true
-      this.$emit('on-close', e)
+      $emit(this, 'on-close', e)
     },
   },
   mounted() {
-    this.desc = this.$slots.desc !== undefined
+    this.desc = (this.$slots.desc && this.$slots.desc()) !== undefined
   },
   emits: ['on-close'],
 }

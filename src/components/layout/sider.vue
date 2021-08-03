@@ -24,6 +24,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { on, off } from '../../utils/dom'
 import { oneOf, dimensionMap, setMatchMedia } from '../../utils/assist'
 const prefixCls = 'ivu-layout-sider'
@@ -135,7 +136,7 @@ export default {
   methods: {
     toggleCollapse() {
       let value = this.collapsible ? !this.modelValue : false
-      this.$emit('update:modelValue', value)
+      $emit(this, 'update:modelValue', value)
     },
     matchMedia() {
       let matchMedia
@@ -148,7 +149,7 @@ export default {
       ).matches
 
       if (this.mediaMatched !== mediaMatched) {
-        this.$emit('update:modelValue', this.mediaMatched)
+        $emit(this, 'update:modelValue', this.mediaMatched)
       }
     },
     onWindowResize() {
@@ -157,12 +158,12 @@ export default {
   },
   watch: {
     modelValue(stat) {
-      this.$emit('on-collapse', stat)
+      $emit(this, 'on-collapse', stat)
     },
   },
   mounted() {
     if (this.defaultCollapsed) {
-      this.$emit('update:modelValue', this.defaultCollapsed)
+      $emit(this, 'update:modelValue', this.defaultCollapsed)
     }
     if (this.breakpoint !== undefined) {
       on(window, 'resize', this.onWindowResize)

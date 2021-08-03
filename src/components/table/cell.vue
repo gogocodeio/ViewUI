@@ -7,7 +7,7 @@
     >
     <template v-if="renderType === 'selection'">
       <Checkbox
-        :value="checked"
+        :modelValue="checked"
         @click.native.stop="handleClick"
         @on-change="toggleSelect"
         :disabled="disabled"

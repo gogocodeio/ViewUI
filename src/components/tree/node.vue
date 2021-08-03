@@ -16,7 +16,7 @@
         </span>
         <Checkbox
           v-if="showCheckbox"
-          :value="data.checked"
+          :modelValue="data.checked"
           :indeterminate="data.indeterminate"
           :disabled="data.disabled || data.disableCheckbox"
           @click.native.prevent="handleCheck"
@@ -36,16 +36,17 @@
           ></Render>
           <template v-else>{{ data.title }}</template>
         </span>
-        <template
-          :appear="appearByClickArrow"
-          v-for="(item, i) in children"
-          :key="i"
-          :data="item"
-          :multiple="multiple"
-          :show-checkbox="showCheckbox"
-          :children-key="childrenKey"
-          ><Tree-node v-if="data.expand"> </Tree-node
-        ></template>
+        <template v-for="(item, i) in children">
+          <Tree-node
+              v-if="data.expand"
+              :appear="appearByClickArrow"
+              :key="i"
+              :data="item"
+              :multiple="multiple"
+              :show-checkbox="showCheckbox"
+              :children-key="childrenKey">
+          </Tree-node>
+        </template>
       </li>
     </ul>
   </collapse-transition>
@@ -56,16 +57,14 @@ import Checkbox from '../checkbox/checkbox.vue'
 import Icon from '../icon/icon.vue'
 import Render from './render'
 import CollapseTransition from '../base/collapse-transition'
-import Bus from '../../mixins/bus'
 import Emitter from '../../mixins/emitter'
-
 import { findComponentUpward } from '../../utils/assist'
 
 const prefixCls = 'ivu-tree'
 
 export default {
   name: 'TreeNode',
-  mixins: [Emitter, Bus],
+  mixins: [Emitter],
   inject: ['TreeInstance'],
   components: { Checkbox, Icon, CollapseTransition, Render },
   props: {

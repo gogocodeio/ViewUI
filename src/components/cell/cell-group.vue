@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 export default {
   name: 'CellGroup',
   provide() {
@@ -14,7 +15,7 @@ export default {
   },
   methods: {
     handleClick(name) {
-      this.$emit('on-click', name)
+      $emit(this, 'on-click', name)
     },
   },
   emits: ['on-click'],

@@ -37,6 +37,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Locale from '../../mixins/locale'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
@@ -188,8 +189,8 @@ export default {
       }
 
       this.currentValue = value
-      this.$emit('update:modelValue', value)
-      this.$emit('on-change', value)
+      $emit(this, 'update:modelValue', value)
+      $emit(this, 'on-change', value)
       this.dispatch('FormItem', 'on-form-change', value)
     },
   },

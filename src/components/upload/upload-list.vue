@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Icon from '../icon/icon.vue'
 import iProgress from '../progress/progress.vue'
 const prefixCls = 'ivu-upload'
@@ -57,13 +58,13 @@ export default {
       ]
     },
     handleClick(file) {
-      this.$emit('on-file-click', file)
+      $emit(this, 'on-file-click', file)
     },
     handlePreview(file) {
-      this.$emit('on-file-preview', file)
+      $emit(this, 'on-file-preview', file)
     },
     handleRemove(file) {
-      this.$emit('on-file-remove', file)
+      $emit(this, 'on-file-remove', file)
     },
     format(file) {
       const format = file.name.split('.').pop().toLocaleLowerCase() || ''

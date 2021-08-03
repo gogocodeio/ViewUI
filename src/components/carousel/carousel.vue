@@ -48,8 +48,10 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
+import { $children } from '../../utils/gogocodeTransfer'
 import Icon from '../icon/icon.vue'
-import { getStyle, oneOf, $children } from '../../utils/assist'
+import { getStyle, oneOf } from '../../utils/assist'
 import { on, off } from '../../utils/dom'
 
 const prefixCls = 'ivu-carousel'
@@ -167,11 +169,11 @@ export default {
     findChild(cb) {
       const find = function (child) {
         const name = child.$options.componentName
-        const children = $children(child)
+
         if (name) {
           cb(child)
-        } else if (children.length) {
-          children.forEach((innerChild) => {
+        } else if ($children(child).length) {
+          $children(child).forEach((innerChild) => {
             find(innerChild, cb)
           })
         }
@@ -182,7 +184,7 @@ export default {
           find(child)
         })
       } else {
-        !$children(this).forEach((child) => {
+        $children(this).forEach((child) => {
           find(child)
         })
       }
@@ -285,8 +287,8 @@ export default {
         this.updateTrackIndex(index)
       }
       this.currentIndex = index === this.slides.length ? 0 : index
-      this.$emit('on-change', oldIndex, this.currentIndex)
-      this.$emit('update:modelValue', this.currentIndex)
+      $emit(this, 'on-change', oldIndex, this.currentIndex)
+      $emit(this, 'update:modelValue', this.currentIndex)
     },
     arrowEvent(offset) {
       this.setAutoplay()
@@ -297,8 +299,8 @@ export default {
       const oldCurrentIndex = this.currentIndex
       if (event === this.trigger && curIndex !== n) {
         this.updateTrackIndex(n)
-        this.$emit('on-change', oldCurrentIndex, this.currentIndex)
-        this.$emit('update:modelValue', n)
+        $emit(this, 'on-change', oldCurrentIndex, this.currentIndex)
+        $emit(this, 'update:modelValue', n)
         // Reset autoplay timer when trigger be activated
         this.setAutoplay()
       }
@@ -320,7 +322,7 @@ export default {
       })
     },
     handleClick(type) {
-      this.$emit('on-click', this[type])
+      $emit(this, 'on-click', this[type])
     },
   },
   watch: {

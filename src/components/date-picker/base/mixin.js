@@ -1,3 +1,4 @@
+import { $on, $off, $once, $emit } from '../../../utils/gogocodeTransfer'
 import { clearHours } from '../util'
 
 export default {
@@ -33,9 +34,9 @@ export default {
   },
   computed: {
     dates() {
-      const { selectionMode, modelValue, rangeState } = this
+      const { modelValue: value, selectionMode, rangeState } = this
       const rangeSelecting = selectionMode === 'range' && rangeState.selecting
-      return rangeSelecting ? [rangeState.from] : modelValue
+      return rangeSelecting ? [rangeState.from] : value
     },
   },
   methods: {
@@ -45,14 +46,15 @@ export default {
       if (cell.disabled || cell.type === 'weekLabel') return
       const newDate = new Date(clearHours(cell.date))
 
-      this.$emit('on-pick', newDate)
-      this.$emit('on-pick-click')
+      $emit(this, 'on-pick', newDate)
+      $emit(this, 'on-pick-click')
     },
     handleMouseMove(cell) {
       if (!this.rangeState.selecting) return
       if (cell.disabled) return
       const newDate = cell.date
-      this.$emit('on-change-range', newDate)
+      $emit(this, 'on-change-range', newDate)
     },
   },
+  emits: ['on-pick', 'on-change-range', 'on-pick-click'],
 }

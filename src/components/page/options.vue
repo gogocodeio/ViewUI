@@ -13,7 +13,7 @@
         <i-option
           v-for="item in pageSizeOpts"
           :key="item"
-          :value="item"
+          :modelValue="item"
           style="text-align: center"
           >{{ item }} {{ t('i.page.page') }}</i-option
         >
@@ -35,6 +35,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import iSelect from '../../components/select/select.vue'
 import iOption from '../../components/select/option.vue'
 import Locale from '../../mixins/locale'
@@ -89,7 +90,7 @@ export default {
   },
   methods: {
     changeSize() {
-      this.$emit('on-size', this.currentPageSize)
+      $emit(this, 'on-size', this.currentPageSize)
     },
     changePage(event) {
       let val = event.target.value.trim()
@@ -111,7 +112,7 @@ export default {
       }
 
       if (page) {
-        this.$emit('on-page', page)
+        $emit(this, 'on-page', page)
         event.target.value = page
       }
     },

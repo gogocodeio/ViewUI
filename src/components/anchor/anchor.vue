@@ -21,13 +21,13 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import {
   scrollTop,
   findComponentsDownward,
   sharpMatcherRegx,
 } from '../../utils/assist'
 import { on, off } from '../../utils/dom'
-
 export default {
   name: 'Anchor',
   provide() {
@@ -75,7 +75,6 @@ export default {
       default: 0,
     },
   },
-
   computed: {
     wrapperComponent() {
       return this.affix ? 'Affix' : 'div'
@@ -233,7 +232,7 @@ export default {
       this.init()
     },
     currentLink(newHref, oldHref) {
-      this.$emit('on-change', newHref, oldHref)
+      $emit(this, 'on-change', newHref, oldHref)
     },
   },
   mounted() {

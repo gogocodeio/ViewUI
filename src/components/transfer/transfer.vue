@@ -1,5 +1,6 @@
 <script>
-import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
+import { plantRenderPara } from '../../utils/gogocodeTransfer'
 import * as Vue from 'vue'
 import List from './list.vue'
 import Operation from './operation.vue'
@@ -254,7 +255,7 @@ export default {
             )
 
       this.$refs[opposite].toggleSelectAll(false)
-      this.$emit('on-change', newTargetKeys, direction, moveKeys)
+      $emit(this, 'on-change', newTargetKeys, direction, moveKeys)
       this.dispatch('FormItem', 'on-form-change', {
         tarketKeys: newTargetKeys,
         direction: direction,
@@ -270,7 +271,7 @@ export default {
     handleCheckedKeys() {
       const sourceSelectedKeys = this.getValidKeys('left')
       const targetSelectedKeys = this.getValidKeys('right')
-      this.$emit('on-selected-change', sourceSelectedKeys, targetSelectedKeys)
+      $emit(this, 'on-selected-change', sourceSelectedKeys, targetSelectedKeys)
     },
   },
   watch: {

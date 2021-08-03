@@ -34,7 +34,7 @@ export default {
     },
     isItemContainsTextNode() {
       let result
-      this.$slots.default.forEach((item) => {
+      ;(this.$slots.default && this.$slots.default()).forEach((item) => {
         if (typeof item === 'string') {
           result = true
         }
@@ -42,11 +42,8 @@ export default {
       return result
     },
     isFlexMode() {
-      console.log('this.$slots', this.$slots)
-      if (!this.$slots.extra) {
-        return false
-      }
-      const extra = this.$slots.extra()
+      const extra = this.$slots.extra && this.$slots.extra()
+
 
       if (this.itemLayout === 'vertical') {
         return !!extra

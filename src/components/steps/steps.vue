@@ -5,8 +5,9 @@
 </template>
 
 <script>
-import { oneOf, $children } from '../../utils/assist'
-import Bus from '../../mixins/bus'
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
+import { $children } from '../../utils/gogocodeTransfer'
+import { oneOf } from '../../utils/assist'
 
 const prefixCls = 'ivu-steps'
 
@@ -27,7 +28,6 @@ function debounce(fn) {
 
 export default {
   name: 'Steps',
-  mixins: [Bus],
   props: {
     current: {
       type: Number,
@@ -125,8 +125,8 @@ export default {
   },
   mounted() {
     this.updateSteps()
-    this.vueOn('append', this.debouncedAppendRemove())
-    this.vueOn('remove', this.debouncedAppendRemove())
+    $on(this, 'append', this.debouncedAppendRemove())
+    $on(this, 'remove', this.debouncedAppendRemove())
   },
   watch: {
     current() {

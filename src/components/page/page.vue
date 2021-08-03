@@ -148,6 +148,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { oneOf } from '../../utils/assist'
 import Options from './options.vue'
 import Locale from '../../mixins/locale'
@@ -328,8 +329,8 @@ export default {
       if (this.disabled) return
       if (this.currentPage != page) {
         this.currentPage = page
-        this.$emit('update:current', page)
-        this.$emit('on-change', page)
+        $emit(this, 'update:current', page)
+        $emit(this, 'on-change', page)
       }
     },
     prev() {
@@ -369,7 +370,7 @@ export default {
     onSize(pageSize) {
       if (this.disabled) return
       this.currentPageSize = pageSize
-      this.$emit('on-page-size-change', pageSize)
+      $emit(this, 'on-page-size-change', pageSize)
       this.changePage(1)
     },
     onPage(page) {

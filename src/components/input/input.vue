@@ -153,11 +153,11 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { oneOf, findComponentUpward } from '../../utils/assist'
 import calcTextareaHeight from '../../utils/calcTextareaHeight'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
-
 
 const prefixCls = 'ivu-input'
 
@@ -301,24 +301,30 @@ export default {
     },
     prepend() {
       let state = false
-      if (this.type !== 'textarea') state = this.$slots.prepend !== undefined
+      if (this.type !== 'textarea')
+        state = (this.$slots.prepend && this.$slots.prepend()) !== undefined
       return state
     },
     append() {
       let state = false
-      if (this.type !== 'textarea') state = this.$slots.append !== undefined
+      if (this.type !== 'textarea')
+        state = (this.$slots.append && this.$slots.append()) !== undefined
       return state
     },
     showPrefix() {
       let state = false
       if (this.type !== 'textarea')
-        state = this.prefix !== '' || this.$slots.prefix !== undefined
+        state =
+          this.prefix !== '' ||
+          (this.$slots.prefix && this.$slots.prefix()) !== undefined
       return state
     },
     showSuffix() {
       let state = false
       if (this.type !== 'textarea')
-        state = this.suffix !== '' || this.$slots.suffix !== undefined
+        state =
+          this.suffix !== '' ||
+          (this.$slots.suffix && this.$slots.suffix()) !== undefined
       return state
     },
     wrapClasses() {
@@ -378,26 +384,26 @@ export default {
   },
   methods: {
     handleEnter(event) {
-      this.$emit('on-enter', event)
-      if (this.search) this.$emit('on-search', this.currentValue)
+      $emit(this, 'on-enter', event)
+      if (this.search) $emit(this, 'on-search', this.currentValue)
     },
     handleKeydown(event) {
-      this.$emit('on-keydown', event)
+      $emit(this, 'on-keydown', event)
     },
     handleKeypress(event) {
-      this.$emit('on-keypress', event)
+      $emit(this, 'on-keypress', event)
     },
     handleKeyup(event) {
-      this.$emit('on-keyup', event)
+      $emit(this, 'on-keyup', event)
     },
     handleIconClick(event) {
-      this.$emit('on-click', event)
+      $emit(this, 'on-click', event)
     },
     handleFocus(event) {
-      this.$emit('on-focus', event)
+      $emit(this, 'on-focus', event)
     },
     handleBlur(event) {
-      this.$emit('on-blur', event)
+      $emit(this, 'on-blur', event)
       if (
         !findComponentUpward(this, [
           'DatePicker',
@@ -424,12 +430,12 @@ export default {
       let value = event.target.value
       if (this.number && value !== '')
         value = Number.isNaN(Number(value)) ? value : Number(value)
-      this.$emit('update:modelValue', value)
+      $emit(this, 'update:modelValue', value)
       this.setCurrentValue(value)
-      this.$emit('on-change', event)
+      $emit(this, 'on-change', event)
     },
     handleChange(event) {
-      this.$emit('on-input-change', event)
+      $emit(this, 'on-input-change', event)
     },
     setCurrentValue(value) {
       if (value === this.currentValue) return
@@ -493,15 +499,15 @@ export default {
     },
     handleClear() {
       const e = { target: { value: '' } }
-      this.$emit('update:modelValue', '')
+      $emit(this, 'update:modelValue', '')
       this.setCurrentValue('')
-      this.$emit('on-change', e)
-      this.$emit('on-clear')
+      $emit(this, 'on-change', e)
+      $emit(this, 'on-clear')
     },
     handleSearch() {
       if (this.itemDisabled) return false
       this.$refs.input.focus()
-      this.$emit('on-search', this.currentValue)
+      $emit(this, 'on-search', this.currentValue)
     },
     handleToggleShowPassword() {
       if (this.itemDisabled) return false

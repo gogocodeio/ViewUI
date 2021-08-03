@@ -1,5 +1,5 @@
 import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
-import { $children } from '../../utils/assist'
+import { $children } from '../../utils/gogocodeTransfer'
 import * as Vue from 'vue'
 import Spin from './spin.vue'
 
@@ -15,7 +15,7 @@ let tIndex = handleGetIndex()
 Spin.newInstance = (properties) => {
   const _props = properties || {}
 
-  const Instance = new Vue({
+  const Instance = Vue.createApp({
     data: Object.assign({}, _props, {}),
     render() {
       let vnode = ''
@@ -55,7 +55,7 @@ Spin.newInstance = (properties) => {
     },
   })
 
-  const component = Instance.$mount()
+  const component = Instance.mount()
   document.body.appendChild(component.$el)
   const spin = $children(Instance)[0]
 

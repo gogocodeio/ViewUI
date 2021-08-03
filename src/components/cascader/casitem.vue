@@ -22,11 +22,9 @@
 <script>
 import Icon from '../icon/icon.vue'
 
-
 export default {
   name: 'Casitem',
   components: { Icon },
-
   props: {
     data: Object,
     prefixCls: String,

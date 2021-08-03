@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Icon from '../icon'
 import { oneOf } from '../../utils/assist'
 
@@ -120,7 +121,7 @@ export default {
       }
     },
     handleError(e) {
-      this.$emit('on-error', e)
+      $emit(this, 'on-error', e)
     },
   },
   beforeCreate() {

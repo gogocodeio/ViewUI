@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { scrollTop } from '../../utils/assist'
 import { on, off } from '../../utils/dom'
 const prefixCls = 'ivu-back-top'
@@ -75,7 +76,7 @@ export default {
     back() {
       const sTop = document.documentElement.scrollTop || document.body.scrollTop
       scrollTop(window, sTop, 0, this.duration)
-      this.$emit('on-click')
+      $emit(this, 'on-click')
     },
   },
   emits: ['on-click'],

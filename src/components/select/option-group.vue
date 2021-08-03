@@ -8,10 +8,8 @@
 </template>
 
 <script>
-import Bus from '../../mixins/bus'
-
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 const prefixCls = 'ivu-select-group'
-
 
 export default {
   name: 'OptionGroup',
@@ -21,7 +19,6 @@ export default {
       default: '',
     },
   },
-  mixins: [Bus],
   data() {
     return {
       prefixCls: prefixCls,
@@ -44,13 +41,13 @@ export default {
     },
   },
   mounted() {
-    this.vueOn('on-query-change', () => {
+    $on(this, 'on-query-change', () => {
       this.queryChange()
       return true
     })
   },
   beforeUnmount() {
-    this.vueOff('on-query-change')
+    $off(this, 'on-query-change')
   },
 }
 </script>

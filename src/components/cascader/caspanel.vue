@@ -23,25 +23,16 @@
 </template>
 
 <script>
-// import tiny_emitter from 'tiny-emitter/instance'
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Casitem from './casitem.vue'
 import Emitter from '../../mixins/emitter'
 import { findComponentUpward, findComponentDownward } from '../../utils/assist'
-import Bus from '../../mixins/bus'
-
-
-// const tiny_emitter_override = {
-//   vueOn: (...args) => tiny_emitter.on(...args),
-//   vueOnce: (...args) => tiny_emitter.once(...args),
-//   vueOff: (...args) => tiny_emitter.off(...args),
-//   $emit: (...args) => tiny_emitter.emit(...args),
-// }
 
 let key = 1
 
 export default {
   name: 'Caspanel',
-  mixins: [Emitter, Bus],
+  mixins: [Emitter],
   components: { Casitem },
   props: {
     data: {
@@ -122,9 +113,8 @@ export default {
         // #1553
         if (this.changeOnSelect) {
           const Caspanel = findComponentDownward(this, 'Caspanel')
-        //   Object.assign(Caspanel, tiny_emitter_override)
           if (Caspanel) {
-            Caspanel.vueEmit('on-clear', true)
+            $emit(Caspanel, 'on-clear', true)
           }
         }
       } else {
@@ -156,8 +146,7 @@ export default {
       if (this.$parent.$options.name === 'Caspanel') {
         this.$parent.updateResult(result)
       } else {
-        const cascaderNode = findComponentUpward(this, 'Cascader')
-        cascaderNode.updateResult(result)
+        this.$parent.$parent.updateResult(result)
       }
     },
     getKey() {
@@ -165,7 +154,7 @@ export default {
     },
   },
   mounted() {
-    this.vueOn('on-find-selected', (params) => {
+    $on(this, 'on-find-selected', (params) => {
       const val = params.value
       let value = [...val]
       for (let i = 0; i < value.length; i++) {
@@ -184,14 +173,13 @@ export default {
       }
     })
     // deep for #1553
-    this.vueOn('on-clear', (deep = false) => {
+    $on(this, 'on-clear', (deep = false) => {
       this.sublist = []
       this.tmpItem = {}
       if (deep) {
         const Caspanel = findComponentDownward(this, 'Caspanel')
-        // Object.assign(Caspanel, tiny_emitter_override)
         if (Caspanel) {
-          Caspanel.vueEmit('on-clear', true)
+          $emit(Caspanel, 'on-clear', true)
         }
       }
     })

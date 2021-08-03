@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { oneOf, findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 
@@ -80,7 +81,6 @@ export default {
   methods: {
     updateValue() {
       this.childrens = findComponentsDownward(this, 'Radio')
-
       if (this.childrens) {
         this.childrens.forEach((child) => {
           child.currentValue = this.currentValue === child.label
@@ -91,8 +91,8 @@ export default {
     change(data) {
       this.currentValue = data.value
       this.updateValue()
-      this.$emit('update:modelValue', data.value)
-      this.$emit('on-change', data.value)
+      $emit(this, 'update:modelValue', data.value)
+      $emit(this, 'on-change', data.value)
       this.dispatch('FormItem', 'on-form-change', data.value)
     },
   },

@@ -222,6 +222,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import tableHead from './table-head.vue'
 import tableBody from './table-body.vue'
 import tableSummary from './summary.vue'
@@ -233,7 +234,6 @@ import { on, off } from '../../utils/dom'
 import Csv from '../../utils/csv'
 import ExportCsv from './export-csv'
 import Locale from '../../mixins/locale'
-import Bus from '../../mixins/bus'
 import elementResizeDetectorMaker from 'element-resize-detector'
 import {
   getAllColumns,
@@ -249,7 +249,7 @@ let columnKey = 1
 
 export default {
   name: 'Table',
-  mixins: [Locale, Bus],
+  mixins: [Locale],
   components: {
     tableHead,
     tableBody,
@@ -812,7 +812,7 @@ export default {
             ? JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey)))
             : JSON.parse(JSON.stringify(this.cloneData[_index]))
           : null
-      this.$emit('on-current-change', newData, oldData)
+      $emit(this, 'on-current-change', newData, oldData)
     },
     handleResetChildrenRow(objData) {
       let data = null
@@ -844,12 +844,14 @@ export default {
     clickCurrentRow(_index, rowKey) {
       this.highlightCurrentRow(_index, rowKey)
       if (rowKey) {
-        this.$emit(
+        $emit(
+          this,
           'on-row-click',
           JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey)))
         )
       } else {
-        this.$emit(
+        $emit(
+          this,
           'on-row-click',
           JSON.parse(JSON.stringify(this.cloneData[_index])),
           _index
@@ -859,12 +861,14 @@ export default {
     dblclickCurrentRow(_index, rowKey) {
       this.highlightCurrentRow(_index, rowKey)
       if (rowKey) {
-        this.$emit(
+        $emit(
+          this,
           'on-row-dblclick',
           JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey)))
         )
       } else {
-        this.$emit(
+        $emit(
+          this,
           'on-row-dblclick',
           JSON.parse(JSON.stringify(this.cloneData[_index])),
           _index
@@ -883,14 +887,16 @@ export default {
         this.contextMenuStyles = position
         this.contextMenuVisible = true
         if (rowKey) {
-          this.$emit(
+          $emit(
+            this,
             'on-contextmenu',
             JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey))),
             event,
             position
           )
         } else {
-          this.$emit(
+          $emit(
+            this,
             'on-contextmenu',
             JSON.parse(JSON.stringify(this.cloneData[_index])),
             event,
@@ -980,12 +986,13 @@ export default {
       const selectedData = rowKey
         ? this.getBaseDataByRowKey(rowKey, this.data)
         : this.data[_index]
-      this.$emit(
+      $emit(
+        this,
         status ? 'on-select' : 'on-select-cancel',
         selection,
         JSON.parse(JSON.stringify(selectedData))
       )
-      this.$emit('on-selection-change', selection)
+      $emit(this, 'on-selection-change', selection)
     },
     toggleExpand(_index) {
       let data = {}
@@ -998,7 +1005,8 @@ export default {
       }
       const status = !data._isExpanded
       this.objData[_index]._isExpanded = status
-      this.$emit(
+      $emit(
+        this,
         'on-expand',
         JSON.parse(JSON.stringify(this.cloneData[_index])),
         status
@@ -1040,7 +1048,7 @@ export default {
       // #675，增加 updateShowChildren
       if (this.updateShowChildren)
         this.updateDataStatus(rowKey, '_showChildren', data._isShowChildren)
-      this.$emit('on-expand-tree', rowKey, data._isShowChildren)
+      $emit(this, 'on-expand-tree', rowKey, data._isShowChildren)
     },
     /**
      * @description 当修改某内置属性，如 _isShowChildren 时，因当将原 data 对应 _showChildren 也修改，否则修改 data 时，状态会重置
@@ -1139,11 +1147,11 @@ export default {
       }
       const selection = this.getSelection()
       if (status) {
-        this.$emit('on-select-all', selection)
+        $emit(this, 'on-select-all', selection)
       } else {
-        this.$emit('on-select-all-cancel', selection)
+        $emit(this, 'on-select-all-cancel', selection)
       }
-      this.$emit('on-selection-change', selection)
+      $emit(this, 'on-selection-change', selection)
     },
     selectAllChildren(data, status) {
       if (data.children && data.children.length) {
@@ -1314,7 +1322,7 @@ export default {
       }
       this.cloneColumns[index]._sortType = type
 
-      this.$emit('on-sort-change', {
+      $emit(this, 'on-sort-change', {
         column: JSON.parse(
           JSON.stringify(this.allColumns[this.cloneColumns[index]._index])
         ),
@@ -1368,7 +1376,7 @@ export default {
 
       this.cloneColumns[index]._isFiltered = true
       this.cloneColumns[index]._filterVisible = false
-      this.$emit('on-filter-change', column)
+      $emit(this, 'on-filter-change', column)
     },
     /**
      * #2832
@@ -1394,7 +1402,7 @@ export default {
       let filterData = this.makeDataWithSort()
       filterData = this.filterOtherData(filterData, index)
       this.rebuildData = filterData
-      this.$emit('on-filter-change', this.cloneColumns[index])
+      $emit(this, 'on-filter-change', this.cloneColumns[index])
     },
     makeData() {
       let data = deepCopy(this.data)
@@ -1598,7 +1606,7 @@ export default {
       else ExportCsv.download(params.filename, data)
     },
     dragAndDrop(a, b) {
-      this.$emit('on-drag-drop', a, b)
+      $emit(this, 'on-drag-drop', a, b)
     },
     handleClickContextMenuOutside() {
       this.contextMenuVisible = false
@@ -1606,8 +1614,10 @@ export default {
   },
   created() {
     if (!this.context) this.currentContext = this.$parent
-    this.showSlotHeader = this.$slots.header !== undefined
-    this.showSlotFooter = this.$slots.footer !== undefined
+    this.showSlotHeader =
+      (this.$slots.header && this.$slots.header()) !== undefined
+    this.showSlotFooter =
+      (this.$slots.footer && this.$slots.footer()) !== undefined
     this.rebuildData = this.makeDataWithSortAndFilter()
   },
   mounted() {
@@ -1618,7 +1628,7 @@ export default {
     this.observer = elementResizeDetectorMaker()
     this.observer.listenTo(this.$el, this.handleResize)
 
-    this.vueOn('on-visible-change', (val) => {
+    $on(this, 'on-visible-change', (val) => {
       if (val) {
         this.$nextTick(() => {
           this.handleResize()
@@ -1627,7 +1637,7 @@ export default {
     })
   },
   beforeUnmount() {
-    this.vueOff('on-visible-change')
+    $off(this, 'on-visible-change')
     off(window, 'resize', this.handleResize)
     this.observer.removeAllListeners(this.$el)
     this.observer.uninstall(this.$el)

@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
+import { $children } from '../../utils/gogocodeTransfer'
 import Drop from '../select/dropdown.vue'
 import Icon from '../icon/icon.vue'
 import CollapseTransition from '../base/collapse-transition'
@@ -41,17 +43,15 @@ import {
   getStyle,
   findComponentUpward,
   findComponentsDownward,
-  $children,
 } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
-import Bus from '../../mixins/bus'
 import mixin from './mixin'
 
 const prefixCls = 'ivu-menu'
 
 export default {
   name: 'Submenu',
-  mixins: [Emitter, mixin, Bus],
+  mixins: [Emitter, mixin],
   components: { Icon, Drop, CollapseTransition },
   props: {
     name: {
@@ -188,12 +188,12 @@ export default {
     },
   },
   mounted() {
-    this.vueOn('on-menu-item-select', (name) => {
+    $on(this, 'on-menu-item-select', (name) => {
       if (this.mode === 'horizontal') this.opened = false
       this.dispatch('Menu', 'on-menu-item-select', name)
       return true
     })
-    this.vueOn('on-update-active-name', (status) => {
+    $on(this, 'on-update-active-name', (status) => {
       if (findComponentUpward(this, 'Submenu'))
         this.dispatch('Submenu', 'on-update-active-name', status)
       if (findComponentsDownward(this, 'Submenu'))

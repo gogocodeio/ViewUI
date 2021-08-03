@@ -11,5 +11,5 @@ export default function render(_props, _context) {
     node: ctx.props.node[1],
     data: ctx.props.data,
   }
-  return ctx.props.render(h, params)
+  return ctx.props.render(Vue.h, params)
 }

@@ -33,10 +33,10 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { findComponentUpward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
-
 
 const prefixCls = 'ivu-checkbox'
 
@@ -141,7 +141,8 @@ export default {
       this.parent.updateModel(true)
     } else {
       this.updateModel()
-      this.showSlot = this.$slots.default !== undefined
+      this.showSlot =
+        (this.$slots.default && this.$slots.default()) !== undefined
     }
   },
   methods: {
@@ -154,12 +155,12 @@ export default {
       this.currentValue = checked
 
       const value = checked ? this.trueValue : this.falseValue
-      this.$emit('update:modelValue', value)
+      $emit(this, 'update:modelValue', value)
 
       if (this.group) {
         this.parent.change(this.model)
       } else {
-        this.$emit('on-change', value)
+        $emit(this, 'on-change', value)
         this.dispatch('FormItem', 'on-form-change', value)
       }
     },

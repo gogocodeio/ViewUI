@@ -5,7 +5,6 @@ import Options from '../time-mixins'
 
 import { findComponentsDownward, oneOf } from '../../../utils/assist'
 
-
 export default {
   mixins: [Picker, Options],
   components: { TimePickerPanel, RangeTimePickerPanel },

@@ -2,7 +2,7 @@
   <div :class="classes" :style="listStyle">
     <div :class="prefixCls + '-header'">
       <Checkbox
-        :value="checkedAll"
+        :modelValue="checkedAll"
         :disabled="checkedAllDisabled"
         @on-change="toggleSelectAll"
       ></Checkbox>
@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Search from './search.vue'
 import Checkbox from '../checkbox/checkbox.vue'
 
@@ -152,7 +153,7 @@ export default {
               (data) => data.disabled && this.checkedKeys.indexOf(data.key) > -1
             )
             .map((data) => data.key)
-      this.$emit('on-checked-keys-change', keys)
+      $emit(this, 'on-checked-keys-change', keys)
     },
     handleQueryClear() {
       this.query = ''
@@ -165,7 +166,8 @@ export default {
     this.updateFilteredData()
   },
   mounted() {
-    this.showFooter = this.$slots.default !== undefined
+    this.showFooter =
+      (this.$slots.default && this.$slots.default()) !== undefined
   },
   emits: ['on-checked-keys-change'],
 }

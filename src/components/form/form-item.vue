@@ -24,10 +24,9 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import AsyncValidator from 'async-validator'
 import Emitter from '../../mixins/emitter'
-import Bus from '../../mixins/bus'
-
 
 const prefixCls = 'ivu-form-item'
 
@@ -58,7 +57,7 @@ function getPropByPath(obj, path) {
 
 export default {
   name: 'FormItem',
-  mixins: [Emitter, Bus],
+  mixins: [Emitter],
   props: {
     label: {
       type: String,
@@ -194,10 +193,10 @@ export default {
       } else if (this.required) {
         this.isRequired = this.required
       }
-      this.vueOff('on-form-blur', this.onFieldBlur)
-      this.vueOff('on-form-change', this.onFieldChange)
-      this.vueOn('on-form-blur', this.onFieldBlur)
-      this.vueOn('on-form-change', this.onFieldChange)
+      $off(this, 'on-form-blur', this.onFieldBlur)
+      $off(this, 'on-form-change', this.onFieldChange)
+      $on(this, 'on-form-blur', this.onFieldBlur)
+      $on(this, 'on-form-change', this.onFieldChange)
     },
     getRules() {
       let formRules = this.FormInstance.rules
@@ -241,14 +240,14 @@ export default {
 
         callback(this.validateMessage)
 
-        // Object.assign(this.FormInstance, tiny_emitter_override)
-
-        this.vueEmit(
+        this.FormInstance &&
+          $emit(
+            this.FormInstance,
             'on-validate',
             this.prop,
             !errors,
             this.validateMessage || null
-        )
+          )
       })
       this.validateDisabled = false
     },

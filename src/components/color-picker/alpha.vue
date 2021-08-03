@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import HSAMixin from './hsaMixin'
 import Prefixes from './prefixMixin'
 import { clamp, toRGBAString } from './utils'
@@ -67,7 +68,7 @@ export default {
       const { a } = this.modelValue
 
       if (a !== newAlpha) {
-        this.$emit('change', { h, s, l, a: newAlpha, source: 'rgba' })
+        $emit(this, 'change', { h, s, l, a: newAlpha, source: 'rgba' })
       }
     },
     handleSlide(e, direction) {

@@ -25,6 +25,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import HSAMixin from './hsaMixin'
 import Prefixes from './prefixMixin'
 import { clamp, getIncrement } from './utils'
@@ -58,7 +59,7 @@ export default {
   },
   methods: {
     change(h, s, v, a) {
-      this.$emit('change', { h, s, v, a, source: 'hsva' })
+      $emit(this, 'change', { h, s, v, a, source: 'hsva' })
     },
     handleSlide(e, direction, key) {
       e.preventDefault()

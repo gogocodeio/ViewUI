@@ -22,12 +22,11 @@ import { clearHours, isInRange } from '../util'
 import Locale from '../../../mixins/locale'
 import jsCalendar from 'js-calendar'
 
-import Bus from '../../../mixins/bus'
 import mixin from './mixin'
 import prefixCls from './prefixCls'
 
 export default {
-  mixins: [Locale, mixin, Bus],
+  mixins: [Locale, mixin],
 
   props: {
     /* more props in mixin */

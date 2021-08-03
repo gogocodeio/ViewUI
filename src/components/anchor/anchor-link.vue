@@ -14,9 +14,7 @@
 </template>
 
 <script>
-import Bus from '../../mixins/bus'
-import tiny_emitter from 'tiny-emitter/instance';
-
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 export default {
   name: 'AnchorLink',
   inject: ['anchorCom'],
@@ -27,7 +25,6 @@ export default {
       type: Number,
     },
   },
-  mixins: [Bus],
   data() {
     return {
       scrollOffset: this.scrollOffset || this.anchorCom.scrollOffset,
@@ -50,7 +47,7 @@ export default {
       this.currentLink = this.href
       this.anchorCom.handleHashChange()
       this.anchorCom.handleScrollTo()
-      tiny_emitter.emit('on-select', this.href)
+      $emit(this.anchorCom, 'on-select', this.href)
       const isRoute = this.$router
       if (isRoute) {
         this.$router.push(this.href, () => {})

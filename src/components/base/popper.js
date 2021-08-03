@@ -1,4 +1,4 @@
-import * as Vue from 'vue'
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 const isServer = false
 const Popper = isServer
   ? function () {}
@@ -58,18 +58,18 @@ export default {
       immediate: true,
       handler(val) {
         this.visible = val
-        this.$emit('input', val)
+        $emit(this, 'update:modelValue', val)
       },
     },
     visible(val) {
       if (val) {
         if (this.handleIndexIncrease) this.handleIndexIncrease() // just use for Poptip
         this.updatePopper()
-        this.$emit('on-popper-show')
+        $emit(this, 'on-popper-show')
       } else {
-        this.$emit('on-popper-hide')
+        $emit(this, 'on-popper-hide')
       }
-      this.$emit('input', val)
+      $emit(this, 'update:modelValue', val)
     },
   },
   methods: {
@@ -99,7 +99,7 @@ export default {
       options.modifiers.offset.offset = this.offset
       options.onCreate = () => {
         this.$nextTick(this.updatePopper)
-        this.$emit('created', this)
+        $emit(this, 'created', this)
       }
 
       this.popperJS = new Popper(reference, popper, options)
@@ -124,4 +124,5 @@ export default {
       this.popperJS.destroy()
     }
   },
+  emits: ['update:modelValue', 'created', 'on-popper-show', 'on-popper-hide'],
 }

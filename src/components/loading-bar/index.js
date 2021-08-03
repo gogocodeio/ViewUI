@@ -21,7 +21,7 @@ function getLoadingBarInstance() {
 
 function update(options) {
   let instance = getLoadingBarInstance()
-  console.log('instance!!!', instance, options)
+
   instance.update(options)
 }
 

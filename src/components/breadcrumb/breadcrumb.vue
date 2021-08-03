@@ -5,8 +5,8 @@
 </template>
 
 <script>
+import { $children } from '../../utils/gogocodeTransfer'
 const prefixCls = 'ivu-breadcrumb'
-import {  $children } from '../../utils/assist'
 
 export default {
   name: 'Breadcrumb',

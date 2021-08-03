@@ -5,8 +5,8 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Emitter from '../../mixins/emitter'
-import Bus from '../../mixins/bus'
 import mixinsForm from '../../mixins/form'
 import { findComponentUpward } from '../../utils/assist'
 
@@ -15,7 +15,7 @@ const prefixCls = 'ivu-select-item'
 export default {
   name: 'iOption',
   componentName: 'select-item',
-  mixins: [Emitter, mixinsForm, Bus],
+  mixins: [Emitter, mixinsForm],
   props: {
     modelValue: {
       type: [String, Number],
@@ -74,7 +74,7 @@ export default {
         label: this.optionLabel,
         tag: this.tag,
       })
-      this.$emit('on-select-selected', {
+      $emit(this, 'on-select-selected', {
         value: this.modelValue,
         label: this.optionLabel,
         tag: this.tag,

@@ -107,16 +107,16 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
+import { $children } from '../../utils/gogocodeTransfer'
 import Drop from './dropdown.vue'
 import Icon from '../icon'
 import { directive as clickOutside } from '../../directives/v-click-outside-x'
 import TransferDom from '../../directives/transfer-dom'
-import { oneOf, findComponentsDownward, $children } from '../../utils/assist'
+import { oneOf, findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
 import Locale from '../../mixins/locale'
-import Bus from '../../mixins/bus'
-
 import SelectHead from './select-head.vue'
 import FunctionalOptions from './functional-options.vue'
 
@@ -199,7 +199,7 @@ const ANIMATION_TIMEOUT = 300
 
 export default {
   name: 'iSelect',
-  mixins: [Emitter, Locale, mixinsForm, Bus],
+  mixins: [Emitter, Locale, mixinsForm],
   components: { FunctionalOptions, Drop, SelectHead, Icon },
   directives: { clickOutside, TransferDom },
   props: {
@@ -338,7 +338,7 @@ export default {
     },
   },
   mounted() {
-    this.vueOn('on-select-selected', this.onOptionClick)
+    $on(this, 'on-select-selected', this.onOptionClick)
 
     // set the initial values if there are any
     if (!this.remote && this.selectOptions.length > 0) {
@@ -367,7 +367,11 @@ export default {
             label: this.defaultLabel[index],
           }
         })
-        this.$emit('on-set-default-options', JSON.parse(JSON.stringify(values)))
+        $emit(
+          this,
+          'on-set-default-options',
+          JSON.parse(JSON.stringify(values))
+        )
         setTimeout(() => {
           this.values = values
         })
@@ -375,7 +379,7 @@ export default {
     }
   },
   beforeUnmount() {
-    this.vueOff('on-select-selected')
+    $off(this, 'on-select-selected')
   },
   data() {
     return {
@@ -502,11 +506,9 @@ export default {
         const copyChildren = (node, fn) => {
           return {
             ...node,
-            children: Array.isArray(node.children)
-              ? (node.children || [])
-                  .map(fn)
-                  .map((child) => copyChildren(child, fn))
-              : node.children,
+            children: (node.children || [])
+              .map(fn)
+              .map((child) => copyChildren(child, fn)),
           }
         }
         const autoCompleteOptions = extractOptions(slotOptions)
@@ -519,7 +521,6 @@ export default {
               this.modelValue
           )
             return applyProp(node, 'isFocused', true)
-
           return copyChildren(node, (child) => {
             if (child !== selectedSlotOption) return child
             return applyProp(child, 'isFocused', true)
@@ -605,8 +606,8 @@ export default {
     clearSingleSelect() {
       // PUBLIC API
       // fix #446
-      if (!this.multiple) this.$emit('update:modelValue', '')
-      this.$emit('on-clear')
+      if (!this.multiple) $emit(this, 'update:modelValue', '')
+      $emit(this, 'on-clear')
       this.hideMenu()
       if (this.clearable) this.reset()
     },
@@ -625,7 +626,7 @@ export default {
       }
     },
     getInitialValue() {
-      const { multiple, remote, value } = this
+      const { modelValue: value, multiple, remote } = this
       let initialValue = Array.isArray(value) ? value : [value]
       if (
         !multiple &&
@@ -728,7 +729,7 @@ export default {
         event.preventDefault()
         this.hideMenu()
         this.isFocused = true
-        this.$emit('on-clickoutside', event)
+        $emit(this, 'on-clickoutside', event)
       } else {
         this.caretPosition = -1
         this.isFocused = false
@@ -798,8 +799,8 @@ export default {
       if (direction > 0) {
         let nearestActiveOption = -1
         for (let i = 0; i < this.flatOptions.length; i++) {
-          const optionIsActive = !this.flatOptions[i].componentOptions.propsData
-            .disabled
+          const optionIsActive =
+            !this.flatOptions[i].componentOptions.propsData.disabled
           if (optionIsActive) nearestActiveOption = i
           if (nearestActiveOption >= index) break
         }
@@ -807,8 +808,8 @@ export default {
       } else {
         let nearestActiveOption = this.flatOptions.length
         for (let i = optionsLength; i >= 0; i--) {
-          const optionIsActive = !this.flatOptions[i].componentOptions.propsData
-            .disabled
+          const optionIsActive =
+            !this.flatOptions[i].componentOptions.propsData.disabled
           if (optionIsActive) nearestActiveOption = i
           if (nearestActiveOption <= index) break
         }
@@ -852,7 +853,7 @@ export default {
         const inputField = this.$el.querySelector('input[type="text"]')
         if (!this.autoComplete) this.$nextTick(() => inputField.focus())
       }
-      this.$emit('on-select', option) // # 4441
+      $emit(this, 'on-select', option) // # 4441
       this.broadcast('Drop', 'on-update-popper')
       setTimeout(() => {
         this.filterQueryChange = false
@@ -886,7 +887,6 @@ export default {
       this.isFocused = type === 'focus'
     },
     updateSlotOptions() {
-      console.log('$slot', this.$slots)
       this.slotOptions = this.$slots.default && this.$slots.default()
     },
     checkUpdateStatus() {
@@ -901,7 +901,7 @@ export default {
     handleCreateItem() {
       if (this.allowCreate && this.query !== '' && this.showCreateItem) {
         const query = this.query
-        this.$emit('on-create', query)
+        $emit(this, 'on-create', query)
         this.query = ''
 
         const option = {
@@ -954,13 +954,13 @@ export default {
             emitValue = this.values[0]
           }
         }
-        this.$emit('update:modelValue', vModelValue) // to update v-model
-        this.$emit('on-change', emitValue)
+        $emit(this, 'update:modelValue', vModelValue) // to update v-model
+        $emit(this, 'on-change', emitValue)
         this.dispatch('FormItem', 'on-form-change', emitValue)
       }
     },
     query(query) {
-      this.$emit('on-query-change', query)
+      $emit(this, 'on-query-change', query)
       const { remoteMethod, lastRemoteQuery } = this
       const hasValidQuery =
         query !== '' && (query !== lastRemoteQuery || !lastRemoteQuery)
@@ -1006,8 +1006,8 @@ export default {
     focusIndex(index) {
       if (index < 0 || this.autoComplete) return
       // update scroll
-      const optionValue = this.flatOptions[index].componentOptions.propsData
-        .value
+      const optionValue =
+        this.flatOptions[index].componentOptions.propsData.value
       const optionInstance = findChild(this, ({ $options }) => {
         return (
           $options.componentName === 'select-item' &&
@@ -1049,7 +1049,7 @@ export default {
       this.broadcast('Drop', 'on-update-popper')
     },
     visible(state) {
-      this.$emit('on-open-change', state)
+      $emit(this, 'on-open-change', state)
     },
     slotOptions(options, old) {
       // #4626，当 Options 的 label 更新时，v-model 的值未更新

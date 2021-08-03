@@ -5,20 +5,19 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import {
   oneOf,
   findComponentsDownward,
   findComponentsUpward,
 } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
-import Bus from '../../mixins/bus'
-
 
 const prefixCls = 'ivu-menu'
 
 export default {
   name: 'Menu',
-  mixins: [Emitter, Bus],
+  mixins: [Emitter],
   props: {
     mode: {
       validator(value) {
@@ -132,7 +131,7 @@ export default {
         .filter((item) => item.opened)
         .map((item) => item.name)
       this.openedNames = [...openedNames]
-      this.$emit('on-open-change', openedNames)
+      $emit(this, 'on-open-change', openedNames)
     },
     updateOpened() {
       const items = findComponentsDownward(this, 'Submenu')
@@ -145,16 +144,16 @@ export default {
       }
     },
     handleEmitSelectEvent(name) {
-      this.$emit('on-select', name)
+      $emit(this, 'on-select', name)
     },
   },
   mounted() {
     this.openedNames = [...this.openNames]
     this.updateOpened()
     this.$nextTick(() => this.updateActiveName())
-    this.vueOn('on-menu-item-select', (name) => {
+    $on(this, 'on-menu-item-select', (name) => {
       this.currentActiveName = name
-      this.$emit('on-select', name)
+      $emit(this, 'on-select', name)
     })
   },
   watch: {

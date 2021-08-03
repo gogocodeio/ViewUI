@@ -88,6 +88,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import iInput from '../input/input.vue'
 import Drop from '../select/dropdown.vue'
 import Icon from '../icon/icon.vue'
@@ -98,15 +99,13 @@ import { oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import Locale from '../../mixins/locale'
 import mixinsForm from '../../mixins/form'
-import Bus from '../../mixins/bus'
-
 
 const prefixCls = 'ivu-cascader'
 const selectPrefixCls = 'ivu-select'
 
 export default {
   name: 'Cascader',
-  mixins: [Emitter, Locale, mixinsForm, Bus],
+  mixins: [Emitter, Locale, mixinsForm],
   components: { iInput, Drop, Icon, Caspanel },
   directives: { clickOutside, TransferDom },
   props: {
@@ -239,7 +238,6 @@ export default {
     },
     displayRender() {
       let label = []
-      console.log('this.selected', this.selected)
       for (let i = 0; i < this.selected.length; i++) {
         label.push(this.selected[i].label)
       }
@@ -387,7 +385,8 @@ export default {
     },
     emitValue(val, oldVal) {
       if (JSON.stringify(val) !== oldVal) {
-        this.$emit(
+        $emit(
+          this,
           'on-change',
           this.currentValue,
           JSON.parse(JSON.stringify(this.selected))
@@ -444,7 +443,7 @@ export default {
   },
   created() {
     this.validDataStr = JSON.stringify(this.getValidData(this.data))
-    this.vueOn('on-result-change', (params) => {
+    $on(this, 'on-result-change', (params) => {
       // lastValue: is click the final val
       // fromInit: is this emit from update value
       const lastValue = params.lastValue
@@ -494,14 +493,14 @@ export default {
         }
         this.broadcast('Drop', 'on-destroy-popper')
       }
-      this.$emit('on-visible-change', val)
+      $emit(this, 'on-visible-change', val)
     },
     modelValue(val) {
       this.currentValue = val
       if (!val.length) this.selected = []
     },
     currentValue() {
-      this.$emit('update:modelValue', this.currentValue)
+      $emit(this, 'update:modelValue', this.currentValue)
       if (this.updatingValue) {
         this.updatingValue = false
         return

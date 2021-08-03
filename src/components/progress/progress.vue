@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Icon from '../icon'
 import { oneOf } from '../../utils/assist'
 
@@ -157,11 +158,11 @@ export default {
     handleStatus(isDown) {
       if (isDown) {
         this.currentStatus = 'normal'
-        this.$emit('on-status-change', 'normal')
+        $emit(this, 'on-status-change', 'normal')
       } else {
         if (parseInt(this.percent, 10) == 100) {
           this.currentStatus = 'success'
-          this.$emit('on-status-change', 'success')
+          $emit(this, 'on-status-change', 'success')
         }
       }
     },

@@ -240,7 +240,7 @@ Modal.newInstance = (properties) => {
     },
   })
 
-  const component = Instance.$mount()
+  const component = Instance.mount()
   document.body.appendChild(component.$el)
   const modal = $children(Instance)[0]
 

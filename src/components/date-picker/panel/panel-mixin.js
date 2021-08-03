@@ -1,3 +1,4 @@
+import { $on, $off, $once, $emit } from '../../../utils/gogocodeTransfer'
 const prefixCls = 'ivu-picker-panel'
 const datePrefixCls = 'ivu-date-picker'
 
@@ -17,19 +18,19 @@ export default {
       ]
     },
     handleShortcutClick(shortcut) {
-      if (shortcut.value) this.$emit('on-pick', shortcut.value())
+      if (shortcut.value) $emit(this, 'on-pick', shortcut.value())
       if (shortcut.onClick) shortcut.onClick(this)
     },
     handlePickClear() {
       this.resetView()
-      this.$emit('on-pick-clear')
+      $emit(this, 'on-pick-clear')
     },
     handlePickSuccess() {
       this.resetView()
-      this.$emit('on-pick-success')
+      $emit(this, 'on-pick-success')
     },
     handlePickClick() {
-      this.$emit('on-pick-click')
+      $emit(this, 'on-pick-click')
     },
     resetView() {
       setTimeout(
@@ -40,12 +41,12 @@ export default {
     handleClear() {
       this.dates = this.dates.map(() => null)
       this.rangeState = {}
-      this.$emit('on-pick', this.dates)
+      $emit(this, 'on-pick', this.dates)
       this.handleConfirm()
       //  if (this.showTime) this.$refs.timePicker.handleClear();
     },
     handleConfirm(visible, type) {
-      this.$emit('on-pick', this.dates, visible, type || this.type)
+      $emit(this, 'on-pick', this.dates, visible, type || this.type)
     },
     onToggleVisibility(open) {
       const { timeSpinner, timeSpinnerEnd } = this.$refs
@@ -53,4 +54,5 @@ export default {
       if (open && timeSpinnerEnd) timeSpinnerEnd.updateScroll()
     },
   },
+  emits: ['on-pick', 'on-pick-clear', 'on-pick-success', 'on-pick-click'],
 }

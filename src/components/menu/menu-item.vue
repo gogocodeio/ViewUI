@@ -16,18 +16,17 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Emitter from '../../mixins/emitter'
 import { findComponentUpward } from '../../utils/assist'
 import mixin from './mixin'
 import mixinsLink from '../../mixins/link'
-import Bus from '../../mixins/bus'
-
 
 const prefixCls = 'ivu-menu'
 
 export default {
   name: 'MenuItem',
-  mixins: [Emitter, mixin, mixinsLink, Bus],
+  mixins: [Emitter, mixin, mixinsLink],
   props: {
     name: {
       type: [String, Number],
@@ -85,7 +84,7 @@ export default {
     },
   },
   mounted() {
-    this.vueOn('on-update-active-name', (name) => {
+    $on(this, 'on-update-active-name', (name) => {
       if (this.name === name) {
         this.active = true
         this.dispatch('Submenu', 'on-update-active-name', name)

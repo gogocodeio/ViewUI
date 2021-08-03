@@ -180,7 +180,7 @@ export default {
       else return false
     },
     alone() {
-      return this.$slots.default === undefined
+      return (this.$slots.default && this.$slots.default()) === undefined
     },
   },
 }

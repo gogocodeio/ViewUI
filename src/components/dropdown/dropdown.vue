@@ -32,25 +32,16 @@
 </template>
 
 <script>
-// import tiny_emitter from 'tiny-emitter/instance'
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Drop from '../select/dropdown.vue'
 import clickOutside from '../../directives/clickoutside'
 import TransferDom from '../../directives/transfer-dom'
 import { oneOf, findComponentUpward } from '../../utils/assist'
-import Bus from '../../mixins/bus'
-
-// const tiny_emitter_override = {
-//   vueOn: (...args) => tiny_emitter.on(...args),
-//   vueOnce: (...args) => tiny_emitter.once(...args),
-//   vueOff: (...args) => tiny_emitter.off(...args),
-//   $emit: (...args) => tiny_emitter.emit(...args),
-// }
 
 const prefixCls = 'ivu-dropdown'
 
 export default {
   name: 'Dropdown',
-  mixins: [Bus],
   directives: { clickOutside, TransferDom },
   components: { Drop },
   props: {
@@ -149,7 +140,7 @@ export default {
       } else {
         this.$refs.drop.destroy()
       }
-      this.$emit('on-visible-change', val)
+      $emit(this, 'on-visible-change', val)
     },
   },
   methods: {
@@ -160,7 +151,6 @@ export default {
       }
       // #661
       const $parent = this.hasParent()
-    //   Object.assign($parent, tiny_emitter_override)
       if (!$parent) this.currentVisible = !this.currentVisible
     },
     handleRightClick() {
@@ -195,7 +185,7 @@ export default {
     onClickoutside(e) {
       this.handleClose()
       this.handleRightClose()
-      if (this.currentVisible) this.$emit('on-clickoutside', e)
+      if (this.currentVisible) $emit(this, 'on-clickoutside', e)
     },
     handleClose() {
       if (this.trigger === 'custom') return false
@@ -214,7 +204,6 @@ export default {
     hasParent() {
       //                const $parent = this.$parent.$parent.$parent;
       const $parent = findComponentUpward(this, 'Dropdown')
-    //   Object.assign($parent, tiny_emitter_override)
       if ($parent) {
         return $parent
       } else {
@@ -223,22 +212,19 @@ export default {
     },
   },
   mounted() {
-
-    this.vueOn('on-click', (key) => {
+    $on(this, 'on-click', (key) => {
       if (this.stopPropagation) return
       const $parent = this.hasParent()
-    //   Object.assign($parent, tiny_emitter_override)
-      if ($parent) $parent.$emit('on-click', key)
+      if ($parent) $emit($parent, 'on-click', key)
     })
-    this.vueOn('on-hover-click', () => {
+    $on(this, 'on-hover-click', () => {
       const $parent = this.hasParent()
-    //   Object.assign($parent, tiny_emitter_override)
       if ($parent) {
         this.$nextTick(() => {
           if (this.trigger === 'custom') return false
           this.currentVisible = false
         })
-        $parent.$emit('on-hover-click')
+        $emit($parent, 'on-hover-click')
       } else {
         this.$nextTick(() => {
           if (this.trigger === 'custom') return false
@@ -246,14 +232,13 @@ export default {
         })
       }
     })
-    this.vueOn('on-haschild-click', () => {
+    $on(this, 'on-haschild-click', () => {
       this.$nextTick(() => {
         if (this.trigger === 'custom') return false
         this.currentVisible = true
       })
       const $parent = this.hasParent()
-    //   Object.assign($parent, tiny_emitter_override)
-      if ($parent) $parent.$emit('on-haschild-click')
+      if ($parent) $emit($parent, 'on-haschild-click')
     })
   },
   emits: [

@@ -1,4 +1,4 @@
-<template>
+<template lang="html">
   <div :class="wrapperClasses">
     <div :class="spinnerClasses">
       <Spin fix>

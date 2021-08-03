@@ -15,9 +15,9 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
-
 import mixinsForm from '../../mixins/form'
 
 const prefixCls = 'ivu-switch'
@@ -107,8 +107,8 @@ export default {
         this.currentValue === this.trueValue ? this.falseValue : this.trueValue
 
       this.currentValue = checked
-      this.$emit('update:modelValue', checked)
-      this.$emit('on-change', checked)
+      $emit(this, 'update:modelValue', checked)
+      $emit(this, 'on-change', checked)
       this.dispatch('FormItem', 'on-form-change', checked)
     },
     toggle(event) {

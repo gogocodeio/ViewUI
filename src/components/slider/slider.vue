@@ -6,7 +6,7 @@
       :size="inputSize"
       :max="max"
       :step="step"
-      :value="exportValue[0]"
+      :modelValue="exportValue[0]"
       :disabled="itemDisabled"
       :active-change="activeChange"
       @on-change="handleInputChange"
@@ -102,6 +102,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import InputNumber from '../../components/input-number/input-number.vue'
 import Tooltip from '../../components/tooltip/tooltip.vue'
 import SliderMarker from './marker'
@@ -109,15 +110,13 @@ import { getStyle, oneOf } from '../../utils/assist'
 import { on, off } from '../../utils/dom'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
-import Bus from '../../mixins/bus'
-
 import elementResizeDetectorMaker from 'element-resize-detector'
 
 const prefixCls = 'ivu-slider'
 
 export default {
   name: 'Slider',
-  mixins: [Emitter, mixinsForm, Bus],
+  mixins: [Emitter, mixinsForm],
   components: { InputNumber, Tooltip, SliderMarker },
   props: {
     min: {
@@ -223,8 +222,8 @@ export default {
         }
       })
       const value = this.range ? values : values[0]
-      this.$emit('update:modelValue', value)
-      this.$emit('on-input', value)
+      $emit(this, 'update:modelValue', value)
+      $emit(this, 'on-input', value)
     },
   },
   computed: {
@@ -439,7 +438,7 @@ export default {
     },
     emitChange() {
       const value = this.range ? this.exportValue : this.exportValue[0]
-      this.$emit('on-change', value)
+      $emit(this, 'on-change', value)
       this.dispatch('FormItem', 'on-form-change', value)
     },
 
@@ -486,7 +485,7 @@ export default {
   },
   mounted() {
     // #2852
-    this.vueOn('on-visible-change', (val) => {
+    $on(this, 'on-visible-change', (val) => {
       if (val && this.showTip === 'always') {
         this.$refs.minTooltip.doDestroy()
         if (this.range) {

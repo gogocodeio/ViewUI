@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { on, off } from '../../utils/dom'
 const prefixCls = 'ivu-affix'
 
@@ -121,7 +122,7 @@ export default {
           width: `${this.$el.offsetWidth}px`,
         }
 
-        this.$emit('on-change', true)
+        $emit(this, 'on-change', true)
       } else if (
         elOffset.top - this.offsetTop > scrollTop &&
         this.offsetType == 'top' &&
@@ -132,7 +133,7 @@ export default {
         this.affix = false
         this.styles = null
 
-        this.$emit('on-change', false)
+        $emit(this, 'on-change', false)
       }
 
       // Fixed Bottom
@@ -149,7 +150,7 @@ export default {
           width: `${this.$el.offsetWidth}px`,
         }
 
-        this.$emit('on-change', true)
+        $emit(this, 'on-change', true)
       } else if (
         elOffset.top + this.offsetBottom + elHeight <
           scrollTop + windowHeight &&
@@ -159,7 +160,7 @@ export default {
         this.affix = false
         this.styles = null
 
-        this.$emit('on-change', false)
+        $emit(this, 'on-change', false)
       }
     },
   },

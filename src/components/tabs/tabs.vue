@@ -95,6 +95,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Icon from '../icon/icon.vue'
 import Render from '../base/render'
 import Dropdown from '../dropdown/dropdown.vue'
@@ -105,7 +106,6 @@ import {
   findComponentsDownward,
 } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
-import Bus from '../../mixins/bus'
 import elementResizeDetectorMaker from 'element-resize-detector'
 
 const prefixCls = 'ivu-tabs'
@@ -136,7 +136,7 @@ const focusFirst = (element, root) => {
 
 export default {
   name: 'Tabs',
-  mixins: [Emitter, Bus],
+  mixins: [Emitter],
   components: { Icon, Render, Dropdown, DropdownMenu },
   provide() {
     return { TabsInstance: this }
@@ -292,7 +292,7 @@ export default {
   },
   methods: {
     getTabs() {
-      // return this.vueChildren.filter(item => item.$options.name === 'TabPane');
+      // return this.$children.filter(item => item.$options.name === 'TabPane');
       const AllTabPanes = findComponentsDownward(this, 'TabPane')
       const TabPanes = []
 
@@ -382,13 +382,13 @@ export default {
       const nav = this.navList[index]
       if (!nav || nav.disabled) return
       this.activeKey = nav.name
-      this.$emit('update:modelValue', nav.name)
-      this.$emit('on-click', nav.name)
+      $emit(this, 'update:modelValue', nav.name)
+      $emit(this, 'on-click', nav.name)
     },
     handleDblclick(index) {
       const nav = this.navList[index]
       if (!nav || nav.disabled) return
-      this.$emit('on-dblclick', nav.name)
+      $emit(this, 'on-dblclick', nav.name)
     },
     handleContextmenu(index, event) {
       if (this.contextMenuVisible) this.handleClickContextMenuOutside()
@@ -405,7 +405,7 @@ export default {
         }
         this.contextMenuStyles = position
         this.contextMenuVisible = true
-        this.$emit('on-contextmenu', nav, event, position)
+        $emit(this, 'on-contextmenu', nav, event, position)
       })
     },
     handleClickContextMenuOutside() {
@@ -472,9 +472,9 @@ export default {
           }
         }
         this.activeKey = activeKey
-        this.$emit('update:modelValue', activeKey)
+        $emit(this, 'update:modelValue', activeKey)
       }
-      this.$emit('on-tab-remove', tab.currentName)
+      $emit(this, 'on-tab-remove', tab.currentName)
       this.updateNav()
     },
     showClose(item) {
@@ -636,7 +636,7 @@ export default {
         const a = parseInt(navNames.findIndex((item) => item === dragName))
         const b = parseInt(navNames.findIndex((item) => item === nav.name))
         navNames.splice(b, 1, ...navNames.splice(a, 1, navNames[b]))
-        this.$emit('on-drag-drop', dragName, nav.name, a, b, navNames)
+        $emit(this, 'on-drag-drop', dragName, nav.name, a, b, navNames)
       }
     },
   },
@@ -660,7 +660,7 @@ export default {
     },
   },
   mounted() {
-    this.showSlot = this.$slots.extra !== undefined
+    this.showSlot = (this.$slots.extra && this.$slots.extra()) !== undefined
     this.observer = elementResizeDetectorMaker()
     this.observer.listenTo(this.$refs.navWrap, this.handleResize)
 

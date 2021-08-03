@@ -31,18 +31,18 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import TreeNode from './node.vue'
 import Dropdown from '../dropdown/dropdown.vue'
 import DropdownMenu from '../dropdown/dropdown-menu.vue'
 import Emitter from '../../mixins/emitter'
 import Locale from '../../mixins/locale'
-import Bus from '../../mixins/bus'
 
 const prefixCls = 'ivu-tree'
 
 export default {
   name: 'Tree',
-  mixins: [Emitter, Locale, Bus],
+  mixins: [Emitter, Locale],
   components: { TreeNode, Dropdown, DropdownMenu },
   provide() {
     return { TreeInstance: this }
@@ -233,7 +233,7 @@ export default {
       }
       node['selected'] = !node.selected
 
-      this.$emit('on-select-change', this.getSelectedNodes(), node)
+      $emit(this, 'on-select-change', this.getSelectedNodes(), node)
     },
     handleCheck({ checked, nodeKey }) {
       if (!this.flatState[nodeKey]) return
@@ -244,7 +244,7 @@ export default {
       this.updateTreeUp(nodeKey) // propagate up
       this.updateTreeDown(node, { checked, indeterminate: false }) // reset `indeterminate` when going down
 
-      this.$emit('on-check-change', this.getCheckedNodes(), node)
+      $emit(this, 'on-check-change', this.getCheckedNodes(), node)
     },
     handleContextmenu({ data, event }) {
       if (this.contextMenuVisible) this.handleClickContextMenuOutside()
@@ -257,7 +257,7 @@ export default {
         }
         this.contextMenuStyles = position
         this.contextMenuVisible = true
-        this.$emit('on-contextmenu', data, event, position)
+        $emit(this, 'on-contextmenu', data, event, position)
       })
     },
     handleClickContextMenuOutside() {
@@ -269,10 +269,10 @@ export default {
     this.rebuildTree()
   },
   mounted() {
-    this.vueOn('on-check', this.handleCheck)
-    this.vueOn('on-selected', this.handleSelect)
-    this.vueOn('toggle-expand', (node) => this.$emit('on-toggle-expand', node))
-    this.vueOn('contextmenu', this.handleContextmenu)
+    $on(this, 'on-check', this.handleCheck)
+    $on(this, 'on-selected', this.handleSelect)
+    $on(this, 'toggle-expand', (node) => $emit(this, 'on-toggle-expand', node))
+    $on(this, 'contextmenu', this.handleContextmenu)
   },
   emits: [
     'on-select-change',

@@ -8,7 +8,7 @@
     :placeholder="placeholder"
     :size="size"
     :placement="placement"
-    :value="currentValue"
+    :modelValue="currentValue"
     :transfer-class-name="transferClassName"
     filterable
     remote
@@ -38,7 +38,7 @@
       </template>
     </slot>
     <slot>
-      <i-option v-for="item in filteredData" :value="item" :key="item">{{
+      <i-option v-for="item in filteredData" :modelValue="item" :key="item">{{
         item
       }}</i-option>
     </slot>
@@ -46,6 +46,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import iSelect from '../select/select.vue'
 import iOption from '../select/option.vue'
 import iInput from '../input/input.vue'
@@ -176,37 +177,37 @@ export default {
     },
     currentValue(val) {
       this.$refs.select.setQuery(val)
-      this.$emit('update:modelValue', val)
+      $emit(this, 'update:modelValue', val)
       if (this.disableEmitChange) {
         this.disableEmitChange = false
         return
       }
-      this.$emit('on-change', val)
+      $emit(this, 'on-change', val)
       this.dispatch('FormItem', 'on-form-change', val)
     },
   },
   methods: {
     remoteMethod(query) {
-      this.$emit('on-search', query)
+      $emit(this, 'on-search', query)
     },
     handleSelect(option) {
       const val = option.value
       if (val === undefined || val === null) return
       this.currentValue = val
       this.$refs.input.blur()
-      this.$emit('on-select', val)
+      $emit(this, 'on-select', val)
     },
     handleFocus(event) {
-      this.$emit('on-focus', event)
+      $emit(this, 'on-focus', event)
     },
     handleBlur(event) {
-      this.$emit('on-blur', event)
+      $emit(this, 'on-blur', event)
     },
     handleClear() {
       if (!this.clearable) return
       this.currentValue = ''
       this.$refs.select.reset()
-      this.$emit('on-clear')
+      $emit(this, 'on-clear')
     },
     handleClickOutside() {
       this.$nextTick(() => {

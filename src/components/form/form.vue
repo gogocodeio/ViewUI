@@ -3,8 +3,8 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { oneOf } from '../../utils/assist'
-import Bus from '../../mixins/bus'
 
 const prefixCls = 'ivu-form'
 
@@ -56,7 +56,6 @@ export default {
       default: false,
     },
   },
-  mixins: [Bus],
   provide() {
     return { FormInstance: this }
   },
@@ -134,11 +133,11 @@ export default {
     },
   },
   created() {
-    this.vueOn('on-form-item-add', (field) => {
+    $on(this, 'on-form-item-add', (field) => {
       if (field) this.fields.push(field)
       return false
     })
-    this.vueOn('on-form-item-remove', (field) => {
+    $on(this, 'on-form-item-remove', (field) => {
       if (field.prop) this.fields.splice(this.fields.indexOf(field), 1)
       return false
     })

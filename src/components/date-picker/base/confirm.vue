@@ -25,10 +25,10 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../../utils/gogocodeTransfer'
 import iButton from '../../button/button.vue'
 import Locale from '../../../mixins/locale'
 import Emitter from '../../../mixins/emitter'
-
 
 const prefixCls = 'ivu-picker'
 
@@ -60,14 +60,14 @@ export default {
   },
   methods: {
     handleClear() {
-      this.$emit('on-pick-clear')
+      $emit(this, 'on-pick-clear')
     },
     handleSuccess() {
-      this.$emit('on-pick-success')
+      $emit(this, 'on-pick-success')
     },
     handleToggleTime() {
       if (this.timeDisabled) return
-      this.$emit('on-pick-toggle-time')
+      $emit(this, 'on-pick-toggle-time')
       this.dispatch('CalendarPicker', 'focus-input')
       this.dispatch('CalendarPicker', 'update-popper')
     },

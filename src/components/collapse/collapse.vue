@@ -5,9 +5,9 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
+import { $children } from '../../utils/gogocodeTransfer'
 const prefixCls = 'ivu-collapse'
-import { $children } from '../../utils/assist'
-
 
 export default {
   name: 'Collapse',
@@ -97,8 +97,8 @@ export default {
       }
 
       this.currentValue = newActiveKey
-      this.$emit('update:modelValue', newActiveKey)
-      this.$emit('on-change', newActiveKey)
+      $emit(this, 'update:modelValue', newActiveKey)
+      $emit(this, 'on-change', newActiveKey)
     },
   },
   watch: {

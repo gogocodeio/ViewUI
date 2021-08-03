@@ -40,6 +40,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../../utils/gogocodeTransfer'
 import Options from '../time-mixins'
 import { deepCopy, scrollTop, firstUpperCase } from '../../../utils/assist'
 
@@ -203,8 +204,8 @@ export default {
       this.emitChange(data)
     },
     emitChange(changes) {
-      this.$emit('on-change', changes)
-      this.$emit('on-pick-click')
+      $emit(this, 'on-change', changes)
+      $emit(this, 'on-pick-click')
     },
     scroll(type, index) {
       const from = this.$refs[type].scrollTop

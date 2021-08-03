@@ -26,6 +26,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Icon from '../icon'
 import { oneOf } from '../../utils/assist'
 const prefixCls = 'ivu-tag'
@@ -230,9 +231,9 @@ export default {
   methods: {
     close(event) {
       if (this.name === undefined) {
-        this.$emit('on-close', event)
+        $emit(this, 'on-close', event)
       } else {
-        this.$emit('on-close', event, this.name)
+        $emit(this, 'on-close', event, this.name)
       }
     },
     check() {
@@ -240,9 +241,9 @@ export default {
       const checked = !this.isChecked
       this.isChecked = checked
       if (this.name === undefined) {
-        this.$emit('on-change', checked)
+        $emit(this, 'on-change', checked)
       } else {
-        this.$emit('on-change', checked, this.name)
+        $emit(this, 'on-change', checked, this.name)
       }
     },
   },

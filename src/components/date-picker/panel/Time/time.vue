@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../../../utils/gogocodeTransfer'
 import TimeSpinner from '../../base/time-spinner.vue'
 import Confirm from '../../base/confirm.vue'
 import Options from '../../time-mixins'
@@ -150,7 +151,7 @@ export default {
         newDate[`set${capitalize(type)}`](date[type])
       )
 
-      if (emit) this.$emit('on-pick', newDate, 'time')
+      if (emit) $emit(this, 'on-pick', newDate, 'time')
     },
   },
   mounted() {

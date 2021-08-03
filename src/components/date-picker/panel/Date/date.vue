@@ -57,7 +57,7 @@
           v-bind="timePickerOptions"
           ref="timePicker"
           v-if="currentView === 'time'"
-          :value="dates"
+          :modelValue="dates"
           :format="format"
           :time-disabled="timeDisabled"
           :disabled-date="disabledDate"
@@ -82,6 +82,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../../../utils/gogocodeTransfer'
 import Icon from '../../../icon/icon.vue'
 import DateTable from '../../base/date-table.vue'
 import YearTable from '../../base/year-table.vue'
@@ -119,9 +120,9 @@ export default {
     },
   },
   data() {
-    const { selectionMode, modelValue } = this
+    const { modelValue: value, selectionMode } = this
 
-    const dates = modelValue.slice().sort()
+    const dates = value.slice().sort()
     return {
       prefixCls: prefixCls,
       datePrefixCls: datePrefixCls,
@@ -177,7 +178,7 @@ export default {
       this.panelDate = panelDate || new Date()
     },
     currentView(currentView) {
-      this.$emit('on-selection-mode-change', currentView)
+      $emit(this, 'on-selection-mode-change', currentView)
 
       if (this.currentView === 'time') {
         this.$nextTick(() => {
@@ -231,7 +232,7 @@ export default {
       else value = new Date(value)
 
       this.dates = [value]
-      this.$emit('on-pick', value, false, type || selectionMode)
+      $emit(this, 'on-pick', value, false, type || selectionMode)
     },
   },
   emits: ['on-selection-mode-change', 'on-pick'],

@@ -1,12 +1,6 @@
-import { $children } from '../utils/assist'
-
+import { $children, $emit } from '../utils/gogocodeTransfer'
 function broadcast(componentName, eventName, params) {
-  const children = $children(this)
-  if (!$children(this)) {
-    console.log('boardcast', this)
-  }
-
-  children.forEach((child) => {
+  $children(this).forEach((child) => {
     const name = child.$options.name
 
     if (name === componentName) {
@@ -31,7 +25,7 @@ export default {
         }
       }
       if (parent) {
-        parent.vueEmit.apply(parent, [eventName].concat(params))
+        $emit(parent, eventName, ...params)
       }
     },
     broadcast(componentName, eventName, params) {

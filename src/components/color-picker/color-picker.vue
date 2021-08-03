@@ -24,10 +24,7 @@
           >
             <i :class="[iconPrefixCls, iconPrefixCls + '-ios-close']"></i>
           </div>
-          <div
-            v-show="modelValue || visible"
-            :style="displayedColorStyle"
-          ></div>
+          <div v-show="modelValue || visible" :style="displayedColorStyle"></div>
         </div>
       </div>
     </div>
@@ -78,7 +75,7 @@
                 <template v-if="editable">
                   <i-input
                     ref="editColorInput"
-                    :value="formatColor"
+                    :modelValue="formatColor"
                     size="small"
                     @on-enter="handleEditColor"
                     @on-blur="handleEditColor"
@@ -115,6 +112,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import tinycolor from 'tinycolor2'
 import { directive as clickOutside } from '../../directives/v-click-outside-x'
 import TransferDom from '../../directives/transfer-dom'
@@ -132,7 +130,6 @@ import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
 import Prefixes from './prefixMixin'
 import { changeColor, toRGBAString } from './utils'
-import Bus from '../../mixins/bus'
 
 export default {
   name: 'ColorPicker',
@@ -147,7 +144,7 @@ export default {
     Icon,
   },
   directives: { clickOutside, TransferDom },
-  mixins: [Emitter, Locale, Prefixes, mixinsForm, Bus],
+  mixins: [Emitter, Locale, Prefixes, mixinsForm],
   props: {
     modelValue: {
       type: String,
@@ -300,7 +297,7 @@ export default {
       },
       set(newVal) {
         this.val = newVal
-        this.$emit('on-active-change', this.formatColor)
+        $emit(this, 'on-active-change', this.formatColor)
       },
     },
     classes() {
@@ -428,12 +425,12 @@ export default {
     visible(val) {
       this.val = changeColor(this.modelValue)
       this.$refs.drop[val ? 'update' : 'destroy']()
-      this.$emit('on-open-change', Boolean(val))
+      $emit(this, 'on-open-change', Boolean(val))
     },
   },
   mounted() {
-    this.vueOn('on-escape-keydown', this.closer)
-    this.vueOn('on-dragging', this.setDragging)
+    $on(this, 'on-escape-keydown', this.closer)
+    $on(this, 'on-dragging', this.setDragging)
   },
   methods: {
     setDragging(value) {
@@ -491,23 +488,22 @@ export default {
     },
     handleButtons(event, value) {
       this.currentValue = value
-      this.$emit('update:modelValue', value)
-      this.$emit('on-change', value)
+      $emit(this, 'update:modelValue', value)
+      $emit(this, 'on-change', value)
       this.dispatch('FormItem', 'on-form-change', value)
       this.closer(event)
     },
     handleSuccess(event) {
-      console.log('this.formatColor', this.formatColor)
       this.handleButtons(event, this.formatColor)
-      this.$emit('on-pick-success')
+      $emit(this, 'on-pick-success')
     },
     handleClear(event) {
       this.handleButtons(event, '')
-      this.$emit('on-pick-clear')
+      $emit(this, 'on-pick-clear')
     },
     handleSelectColor(color) {
       this.val = changeColor(color)
-      this.$emit('on-active-change', this.formatColor)
+      $emit(this, 'on-active-change', this.formatColor)
     },
     handleEditColor(event) {
       const value = event.target.value

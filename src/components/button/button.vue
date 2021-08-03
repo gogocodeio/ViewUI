@@ -33,63 +33,64 @@
 </template>
 
 <script>
-import Icon from "../icon";
-import { oneOf } from "../../utils/assist";
-import mixinsLink from "../../mixins/link";
-import mixinsForm from "../../mixins/form";
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
+import Icon from '../icon'
+import { oneOf } from '../../utils/assist'
+import mixinsLink from '../../mixins/link'
+import mixinsForm from '../../mixins/form'
 
-const prefixCls = "ivu-btn";
+const prefixCls = 'ivu-btn'
 
 export default {
-  name: "Button",
+  name: 'Button',
   mixins: [mixinsLink, mixinsForm],
   components: { Icon },
   props: {
     type: {
       validator(value) {
         return oneOf(value, [
-          "default",
-          "primary",
-          "dashed",
-          "text",
-          "info",
-          "success",
-          "warning",
-          "error",
-        ]);
+          'default',
+          'primary',
+          'dashed',
+          'text',
+          'info',
+          'success',
+          'warning',
+          'error',
+        ])
       },
-      default: "default",
+      default: 'default',
     },
     shape: {
       validator(value) {
-        return oneOf(value, ["circle", "circle-outline"]);
+        return oneOf(value, ['circle', 'circle-outline'])
       },
     },
     size: {
       validator(value) {
-        return oneOf(value, ["small", "large", "default"]);
+        return oneOf(value, ['small', 'large', 'default'])
       },
       default() {
-        return !window.$IVIEW || window.$IVIEW.size === ""
-          ? "default"
-          : window.$IVIEW.size;
+        return !window.$IVIEW || window.$IVIEW.size === ''
+          ? 'default'
+          : window.$IVIEW.size
       },
     },
     loading: Boolean,
     disabled: Boolean,
     htmlType: {
-      default: "button",
+      default: 'button',
       validator(value) {
-        return oneOf(value, ["button", "submit", "reset"]);
+        return oneOf(value, ['button', 'submit', 'reset'])
       },
     },
     icon: {
       type: String,
-      default: "",
+      default: '',
     },
     customIcon: {
       type: String,
-      default: "",
+      default: '',
     },
     long: {
       type: Boolean,
@@ -102,7 +103,7 @@ export default {
   },
   computed: {
     showSlot() {
-      return !!this.$slots.default;
+      return !!(this.$slots.default && this.$slots.default())
     },
     classes() {
       return [
@@ -111,44 +112,44 @@ export default {
         {
           [`${prefixCls}-long`]: this.long,
           [`${prefixCls}-${this.shape}`]: !!this.shape,
-          [`${prefixCls}-${this.size}`]: this.size !== "default",
+          [`${prefixCls}-${this.size}`]: this.size !== 'default',
           [`${prefixCls}-loading`]: this.loading != null && this.loading,
           [`${prefixCls}-icon-only`]:
             !this.showSlot &&
             (!!this.icon || !!this.customIcon || this.loading),
           [`${prefixCls}-ghost`]: this.ghost,
         },
-      ];
+      ]
     },
     // Point out if it should render as <a> tag
     isHrefPattern() {
-      const { to } = this;
-      return !!to;
+      const { to } = this
+      return !!to
     },
     tagName() {
-      const { isHrefPattern } = this;
-      return isHrefPattern ? "a" : "button";
+      const { isHrefPattern } = this
+      return isHrefPattern ? 'a' : 'button'
     },
     tagProps() {
-      const { isHrefPattern } = this;
+      const { isHrefPattern } = this
       if (isHrefPattern) {
-        const { linkUrl, target } = this;
-        return { href: linkUrl, target };
+        const { linkUrl, target } = this
+        return { href: linkUrl, target }
       } else {
-        const { htmlType } = this;
-        return { type: htmlType };
+        const { htmlType } = this
+        return { type: htmlType }
       }
     },
   },
   methods: {
     // Ctrl or CMD and click, open in new window when use `to`
     handleClickLink(event) {
-      this.$emit("click", event);
-      const openInNewWindow = event.ctrlKey || event.metaKey;
+      $emit(this, 'click', event)
+      const openInNewWindow = event.ctrlKey || event.metaKey
 
-      this.handleCheckClick(event, openInNewWindow);
+      this.handleCheckClick(event, openInNewWindow)
     },
   },
-  emits: ["click"],
-};
+  emits: ['click'],
+}
 </script>

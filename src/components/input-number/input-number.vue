@@ -56,10 +56,10 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { oneOf, findComponentUpward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
-
 
 const prefixCls = 'ivu-input-number'
 const iconPrefixCls = 'ivu-icon'
@@ -299,18 +299,18 @@ export default {
 
       this.$nextTick(() => {
         this.currentValue = val
-        this.$emit('update:modelValue', val)
-        this.$emit('on-change', val)
+        $emit(this, 'update:modelValue', val)
+        $emit(this, 'on-change', val)
         this.dispatch('FormItem', 'on-form-change', val)
       })
     },
     focus(event) {
       this.focused = true
-      this.$emit('on-focus', event)
+      $emit(this, 'on-focus', event)
     },
     blur() {
       this.focused = false
-      this.$emit('on-blur')
+      $emit(this, 'on-blur')
       if (
         !findComponentUpward(this, [
           'DatePicker',

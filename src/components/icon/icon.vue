@@ -3,6 +3,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 const prefixCls = 'ivu-icon'
 
 export default {
@@ -45,7 +46,7 @@ export default {
   },
   methods: {
     handleClick(event) {
-      this.$emit('click', event)
+      $emit(this, 'click', event)
     },
   },
   emits: ['click'],

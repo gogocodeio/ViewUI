@@ -54,6 +54,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { oneOf } from '../../utils/assist'
 import { on, off } from '../../utils/dom'
 import Trigger from './trigger.vue'
@@ -175,14 +176,14 @@ export default {
         ? this.getAnotherOffset(this.modelValue) === this.computedMax
         : this.getAnotherOffset(this.modelValue).toFixed(5) ===
           this.computedMax.toFixed(5)
-      this.$emit('update:modelValue', value)
-      this.$emit('on-moving', e)
+      $emit(this, 'update:modelValue', value)
+      $emit(this, 'on-moving', e)
     },
     handleUp() {
       this.isMoving = false
       off(document, 'mousemove', this.handleMove)
       off(document, 'mouseup', this.handleUp)
-      this.$emit('on-move-end')
+      $emit(this, 'on-move-end')
     },
     handleMousedown(e) {
       this.initOffset = this.isHorizontal ? e.pageX : e.pageY
@@ -190,7 +191,7 @@ export default {
       this.isMoving = true
       on(document, 'mousemove', this.handleMove)
       on(document, 'mouseup', this.handleUp)
-      this.$emit('on-move-start')
+      $emit(this, 'on-move-start')
     },
     computeOffset() {
       this.$nextTick(() => {

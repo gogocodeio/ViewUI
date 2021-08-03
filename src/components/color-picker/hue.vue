@@ -27,6 +27,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import HASMixin from './hsaMixin'
 import Prefixes from './prefixMixin'
 import { clamp } from './utils'
@@ -60,7 +61,7 @@ export default {
       const newHue = clamp((percent / 100) * 360, 0, 360)
 
       if (h !== newHue) {
-        this.$emit('change', { h: newHue, s, l, a, source: 'hsl' })
+        $emit(this, 'change', { h: newHue, s, l, a, source: 'hsl' })
       }
     },
     handleSlide(e, direction) {

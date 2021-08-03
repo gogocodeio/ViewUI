@@ -3,8 +3,7 @@
 </template>
 
 <script>
-import { $children } from '../../utils/assist'
-
+import { $children } from '../../utils/gogocodeTransfer'
 const prefixCls = 'ivu-layout'
 
 export default {

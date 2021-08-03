@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { findComponentUpward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
@@ -140,7 +141,7 @@ export default {
       this.currentValue = checked
 
       const value = checked ? this.trueValue : this.falseValue
-      this.$emit('update:modelValue', value)
+      $emit(this, 'update:modelValue', value)
 
       if (this.group) {
         if (this.label !== undefined) {
@@ -150,7 +151,7 @@ export default {
           })
         }
       } else {
-        this.$emit('on-change', value)
+        $emit(this, 'on-change', value)
         this.dispatch('FormItem', 'on-form-change', value)
       }
     },

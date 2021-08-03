@@ -3,16 +3,9 @@
 </template>
 
 <script>
-// import tiny_emitter from 'tiny-emitter/instance'
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 const prefixCls = 'ivu-dropdown-item'
 import { findComponentUpward } from '../../utils/assist'
-import Bus from '../../mixins/bus'
-// const tiny_emitter_override = {
-//   vueOn: (...args) => tiny_emitter.on(...args),
-//   vueOnce: (...args) => tiny_emitter.once(...args),
-//   vueOff: (...args) => tiny_emitter.off(...args),
-//   $emit: (...args) => tiny_emitter.emit(...args),
-// }
 export default {
   name: 'DropdownItem',
   props: {
@@ -32,10 +25,9 @@ export default {
       default: false,
     },
   },
-      mixins: [Bus],
   computed: {
-      classes() {
-          return [
+    classes() {
+      return [
         `${prefixCls}`,
         {
           [`${prefixCls}-disabled`]: this.disabled,
@@ -49,19 +41,17 @@ export default {
     handleClick() {
       if (this.disabled) return
       const $parent = findComponentUpward(this, 'Dropdown')
-    //   Object.assign($parent, tiny_emitter_override)
       const hasChildren =
         this.$parent && this.$parent.$options.name === 'Dropdown'
 
       if (hasChildren) {
-        // Object.assign(this.$parent, tiny_emitter_override)
-        this.$parent.$emit('on-haschild-click')
+        $emit(this.$parent, 'on-haschild-click')
       } else {
         if ($parent && $parent.$options.name === 'Dropdown') {
-          $parent.$emit('on-hover-click')
+          $emit($parent, 'on-hover-click')
         }
       }
-      $parent.$emit('on-click', this.name)
+      $emit($parent, 'on-click', this.name)
     },
   },
   emits: ['on-click', 'on-haschild-click', 'on-hover-click'],

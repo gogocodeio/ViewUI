@@ -5,9 +5,9 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import { findComponentsDownward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
-
 
 const prefixCls = 'ivu-checkbox-group'
 
@@ -55,12 +55,12 @@ export default {
     updateModel(update) {
       this.childrens = findComponentsDownward(this, 'Checkbox')
       if (this.childrens) {
-        const { modelValue } = this
+        const { modelValue: value } = this
         this.childrens.forEach((child) => {
-          child.model = modelValue
+          child.model = value
 
           if (update) {
-            child.currentValue = modelValue.indexOf(child.label) >= 0
+            child.currentValue = value.indexOf(child.label) >= 0
             child.group = true
           }
         })
@@ -68,8 +68,8 @@ export default {
     },
     change(data) {
       this.currentValue = data
-      this.$emit('update:modelValue', data)
-      this.$emit('on-change', data)
+      $emit(this, 'update:modelValue', data)
+      $emit(this, 'on-change', data)
       this.dispatch('FormItem', 'on-form-change', data)
     },
   },

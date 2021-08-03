@@ -189,7 +189,9 @@ export default {
     },
   },
   data() {
-    const [minDate, maxDate] = this.modelValue.map((date) => date || initTimeDate())
+    const [minDate, maxDate] = this.modelValue.map(
+      (date) => date || initTimeDate()
+    )
     const leftPanelDate = this.startDate ? this.startDate : minDate
 
     return {

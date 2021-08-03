@@ -27,7 +27,7 @@
             </template>
             <template v-else-if="column.type === 'selection'"
               ><Checkbox
-                :value="isSelectAll"
+                :modelValue="isSelectAll"
                 :disabled="isSelectDisabled"
                 @on-change="selectAll"
               ></Checkbox
@@ -66,6 +66,7 @@
               </span>
               <Poptip
                 v-if="isPopperShow(column)"
+                v-model="getColumn(rowIndex, index)._filterVisible"
                 placement="bottom"
                 popper-class="ivu-table-popper"
                 transfer
@@ -87,7 +88,9 @@
                 >
                   <div :class="[prefixCls + '-filter-list']">
                     <div :class="[prefixCls + '-filter-list-item']">
-                      <checkbox-group>
+                      <checkbox-group
+                        v-model="getColumn(rowIndex, index)._filterChecked"
+                      >
                         <checkbox
                           v-for="(item, index) in column.filters"
                           :key="index"
@@ -162,7 +165,7 @@
 </template>
 
 <script>
-// import tiny_emitter from 'tiny-emitter/instance'
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import CheckboxGroup from '../checkbox/checkbox-group.vue'
 import Checkbox from '../checkbox/checkbox.vue'
 import Poptip from '../poptip/poptip.vue'
@@ -170,17 +173,10 @@ import iButton from '../button/button.vue'
 import renderHeader from './header'
 import Mixin from './mixin'
 import Locale from '../../mixins/locale'
-import Bus from '../../mixins/bus'
 
-// const tiny_emitter_override = {
-//   vueOn: (...args) => tiny_emitter.on(...args),
-//   vueOnce: (...args) => tiny_emitter.once(...args),
-//   vueOff: (...args) => tiny_emitter.off(...args),
-//   $emit: (...args) => tiny_emitter.emit(...args),
-// }
 export default {
   name: 'TableHead',
-  mixins: [Mixin, Locale, Bus],
+  mixins: [Mixin, Locale],
   components: { CheckboxGroup, Checkbox, Poptip, iButton, renderHeader },
   props: {
     prefixCls: String,
@@ -308,8 +304,8 @@ export default {
       return [
         `${this.prefixCls}-filter-select-item`,
         {
-          [`${this.prefixCls}-filter-select-item-selected`]: !column
-            ._filterChecked.length,
+          [`${this.prefixCls}-filter-select-item-selected`]:
+            !column._filterChecked.length,
         },
       ]
     },
@@ -371,7 +367,6 @@ export default {
         this.dragging = true
 
         const table = this.$parent
-        // Object.assign(table, tiny_emitter_override)
         const tableEl = table.$el
         const tableLeft = tableEl.getBoundingClientRect().left
         const columnEl = this.$el.querySelector(
@@ -417,7 +412,8 @@ export default {
               (item) => item.__id === column.__id
             )
             if (_column) _column.width = columnWidth
-            table.$emit(
+            $emit(
+              table,
               'on-column-width-resize',
               _column.width,
               startLeft - startColumnLeft,

@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Icon from '../icon'
 import {
   oneOf,
@@ -58,7 +59,6 @@ import {
 } from '../../utils/assist'
 import TransferDom from '../../directives/transfer-dom'
 import Emitter from '../../mixins/emitter'
-import Bus from '../../mixins/bus'
 import ScrollbarMixins from '../modal/mixins-scrollbar'
 
 import { on, off } from '../../utils/dom'
@@ -67,7 +67,7 @@ const prefixCls = 'ivu-drawer'
 
 export default {
   name: 'Drawer',
-  mixins: [Emitter, ScrollbarMixins, Bus],
+  mixins: [Emitter, ScrollbarMixins],
   components: { Icon },
   directives: { TransferDom },
   props: {
@@ -245,8 +245,8 @@ export default {
     },
     handleClose() {
       this.visible = false
-      this.$emit('update:modelValue', false)
-      this.$emit('on-close')
+      $emit(this, 'update:modelValue', false)
+      $emit(this, 'on-close')
     },
     handleMask() {
       if (this.maskClosable && this.mask) {
@@ -272,7 +272,7 @@ export default {
       // 如果当前width不大于100，视为百分比
       if (width <= 100) width = (width / this.wrapperWidth) * 100
       this.dragWidth = width
-      this.$emit('on-resize-width', parseInt(this.dragWidth))
+      $emit(this, 'on-resize-width', parseInt(this.dragWidth))
     },
     handleSetWrapperWidth() {
       const { width, left } = this.$el.getBoundingClientRect()
@@ -296,7 +296,10 @@ export default {
 
     let showHead = true
 
-    if (this.$slots.header === undefined && !this.title) {
+    if (
+      (this.$slots.header && this.$slots.header()) === undefined &&
+      !this.title
+    ) {
       showHead = false
     }
 
@@ -342,7 +345,7 @@ export default {
       }
       this.broadcast('Table', 'on-visible-change', val)
       this.broadcast('Slider', 'on-visible-change', val) // #2852
-      this.$emit('on-visible-change', val)
+      $emit(this, 'on-visible-change', val)
     },
     scrollable(val) {
       if (!val) {
@@ -352,7 +355,7 @@ export default {
       }
     },
     title(val) {
-      if (this.$slots.header === undefined) {
+      if ((this.$slots.header && this.$slots.header()) === undefined) {
         this.showHead = !!val
       }
     },

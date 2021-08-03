@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import iInput from '../input/input.vue'
 
 export default {
@@ -31,7 +32,7 @@ export default {
       this.currentQuery = val
     },
     currentQuery(val) {
-      this.$emit('on-query-change', val)
+      $emit(this, 'on-query-change', val)
     },
   },
   computed: {
@@ -43,7 +44,7 @@ export default {
     handleClick() {
       if (this.currentQuery === '') return
       this.currentQuery = ''
-      this.$emit('on-query-clear')
+      $emit(this, 'on-query-clear')
     },
   },
   emits: ['on-query-change', 'on-query-clear'],

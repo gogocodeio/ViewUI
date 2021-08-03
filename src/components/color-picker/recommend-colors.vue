@@ -31,6 +31,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import Emitter from '../../mixins/emitter'
 import HandleEscapeMixin from './handleEscapeMixin'
 import Prefixes from './prefixMixin'
@@ -130,8 +131,8 @@ export default {
         this.grid.x = id % this.columns || this.columns
         this.grid.y = Math.ceil(id / this.columns)
         this.focusColor()
-        this.$emit('picker-color', this.list[colorId])
-        this.$emit('change', { hex: this.list[colorId], source: 'hex' })
+        $emit(this, 'picker-color', this.list[colorId])
+        $emit(this, 'change', { hex: this.list[colorId], source: 'hex' })
       }
     },
     lineBreak(list, index) {

@@ -1,23 +1,5 @@
-export function $children(instance) {
-  const root = instance.$.subTree
-  const children = []
-  if (root) {
-    $walk(root, children)
-  }
-  return children
-}
-
-function $walk(vnode, children) {
-  if (vnode.component && vnode.component.proxy) {
-    children.push(vnode.component.proxy)
-  } else if (vnode.shapeFlag & (1 << 4)) {
-    const vnodes = vnode.children
-    for (let i = 0; i < vnodes.length; i++) {
-      $walk(vnodes[i], children)
-    }
-  }
-}
-
+import { $children } from './gogocodeTransfer'
+import * as Vue from 'vue'
 const isServer = false
 // 判断参数是否是其中之一
 export function oneOf(value, validList) {
@@ -265,7 +247,6 @@ export function findBrothersComponents(
   componentName,
   exceptMe = true
 ) {
-  console.log('$parent', context)
   let res = $children(context.$parent).filter((item) => {
     return item.$options.name === componentName
   })

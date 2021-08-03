@@ -81,6 +81,7 @@
 </template>
 
 <script>
+import { $on, $off, $once, $emit } from '../../utils/gogocodeTransfer'
 import iInput from '../../components/input/input.vue'
 import Drop from '../../components/select/dropdown.vue'
 import Icon from '../../components/icon/icon.vue'
@@ -95,7 +96,6 @@ import {
 import { findComponentsDownward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
-import Bus from '../../mixins/bus'
 
 const prefixCls = 'ivu-date-picker'
 const pickerPrefixCls = 'ivu-picker'
@@ -132,7 +132,7 @@ const extractTime = (date) => {
 }
 
 export default {
-  mixins: [Emitter, mixinsForm, Bus],
+  mixins: [Emitter, mixinsForm],
   components: { iInput, Drop, Icon },
   directives: { clickOutside, TransferDom },
   props: {
@@ -449,7 +449,7 @@ export default {
         this.visible = false
         e && e.preventDefault()
         e && e.stopPropagation()
-        this.$emit('on-clickoutside', e)
+        $emit(this, 'on-clickoutside', e)
         return
       }
 
@@ -751,7 +751,7 @@ export default {
     handleClear() {
       this.visible = false
       this.internalValue = this.internalValue.map(() => null)
-      this.$emit('on-clear')
+      $emit(this, 'on-clear')
       this.dispatch('FormItem', 'on-form-change', '')
       this.emitChange(this.type)
       this.reset()
@@ -763,7 +763,7 @@ export default {
     },
     emitChange(type) {
       this.$nextTick(() => {
-        this.$emit('on-change', this.publicStringValue, type)
+        $emit(this, 'on-change', this.publicStringValue, type)
         this.dispatch('FormItem', 'on-form-change', this.publicStringValue)
       })
     },
@@ -848,7 +848,7 @@ export default {
     },
     onPickSuccess() {
       this.visible = false
-      this.$emit('on-ok')
+      $emit(this, 'on-ok')
       this.focus()
       this.reset()
     },
@@ -865,7 +865,7 @@ export default {
         this.$refs.drop.destroy()
       }
       if (state) this.$refs.drop.update() // 解决：修改完 #589 #590 #592，Drop 收起时闪动
-      this.$emit('on-open-change', state)
+      $emit(this, 'on-open-change', state)
     },
     modelValue(val) {
       this.internalValue = this.parseDate(val)
@@ -881,7 +881,7 @@ export default {
       const oldValue = JSON.stringify(before)
       const shouldEmitInput =
         newValue !== oldValue || typeof now !== typeof before
-      if (shouldEmitInput) this.$emit('update:modelValue', now) // to update v-model
+      if (shouldEmitInput) $emit(this, 'update:modelValue', now) // to update v-model
     },
   },
   mounted() {
@@ -891,17 +891,17 @@ export default {
       typeof initialValue !== typeof parsedValue ||
       JSON.stringify(initialValue) !== JSON.stringify(parsedValue)
     ) {
-      this.$emit('update:modelValue', this.publicVModelValue) // to update v-model
+      $emit(this, 'update:modelValue', this.publicVModelValue) // to update v-model
     }
     if (this.open !== null) this.visible = this.open
 
     // to handle focus from confirm buttons
-    this.vueOn('focus-input', () => this.focus())
-    this.vueOn('update-popper', () => this.updatePopper())
+    $on(this, 'focus-input', () => this.focus())
+    $on(this, 'update-popper', () => this.updatePopper())
   },
   beforeUnmount() {
-    this.vueOff('focus-input')
-    this.vueOff('update-popper')
+    $off(this, 'focus-input')
+    $off(this, 'update-popper')
   },
   emits: [
     'on-clickoutside',
