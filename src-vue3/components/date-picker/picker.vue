@@ -81,7 +81,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import iInput from '../../components/input/input.vue'
 import Drop from '../../components/select/dropdown.vue'
 import Icon from '../../components/icon/icon.vue'
@@ -132,7 +132,7 @@ const extractTime = (date) => {
 }
 
 export default {
-  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
+  mixins: [Emitter, mixinsForm],
   components: { iInput, Drop, Icon },
   directives: { clickOutside, TransferDom },
   props: {
@@ -449,7 +449,7 @@ export default {
         this.visible = false
         e && e.preventDefault()
         e && e.stopPropagation()
-        this.vueEmit('on-clickoutside', e)
+        tiny_emitter.emit('on-clickoutside', e)
         return
       }
 
@@ -751,7 +751,7 @@ export default {
     handleClear() {
       this.visible = false
       this.internalValue = this.internalValue.map(() => null)
-      this.vueEmit('on-clear')
+      tiny_emitter.emit('on-clear')
       this.dispatch('FormItem', 'on-form-change', '')
       this.emitChange(this.type)
       this.reset()
@@ -763,7 +763,7 @@ export default {
     },
     emitChange(type) {
       this.$nextTick(() => {
-        this.vueEmit('on-change', this.publicStringValue, type)
+        tiny_emitter.emit('on-change', this.publicStringValue, type)
         this.dispatch('FormItem', 'on-form-change', this.publicStringValue)
       })
     },
@@ -848,7 +848,7 @@ export default {
     },
     onPickSuccess() {
       this.visible = false
-      this.vueEmit('on-ok')
+      tiny_emitter.emit('on-ok')
       this.focus()
       this.reset()
     },
@@ -865,7 +865,7 @@ export default {
         this.$refs.drop.destroy()
       }
       if (state) this.$refs.drop.update() // 解决：修改完 #589 #590 #592，Drop 收起时闪动
-      this.vueEmit('on-open-change', state)
+      tiny_emitter.emit('on-open-change', state)
     },
     modelValue(val) {
       this.internalValue = this.parseDate(val)
@@ -881,7 +881,7 @@ export default {
       const oldValue = JSON.stringify(before)
       const shouldEmitInput =
         newValue !== oldValue || typeof now !== typeof before
-      if (shouldEmitInput) this.vueEmit('update:modelValue', now) // to update v-model
+      if (shouldEmitInput) tiny_emitter.emit('update:modelValue', now) // to update v-model
     },
   },
   mounted() {
@@ -891,17 +891,17 @@ export default {
       typeof initialValue !== typeof parsedValue ||
       JSON.stringify(initialValue) !== JSON.stringify(parsedValue)
     ) {
-      this.vueEmit('update:modelValue', this.publicVModelValue) // to update v-model
+      tiny_emitter.emit('update:modelValue', this.publicVModelValue) // to update v-model
     }
     if (this.open !== null) this.visible = this.open
 
     // to handle focus from confirm buttons
-    this.vueOn('focus-input', () => this.focus())
-    this.vueOn('update-popper', () => this.updatePopper())
+    tiny_emitter.on('focus-input', () => this.focus())
+    tiny_emitter.on('update-popper', () => this.updatePopper())
   },
   beforeUnmount() {
-    this.vueOff('focus-input')
-    this.vueOff('update-popper')
+    tiny_emitter.off('focus-input')
+    tiny_emitter.off('update-popper')
   },
   emits: [
     'on-clickoutside',

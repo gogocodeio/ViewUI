@@ -1,5 +1,5 @@
 import * as Vue from 'vue'
-const isServer = window.$vueApp.config.globalProperties.$isServer
+const isServer = false
 
 export default function (lang) {
   if (!isServer) {

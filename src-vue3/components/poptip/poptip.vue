@@ -74,7 +74,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import Popper from '../base/popper'
 import iButton from '../button/button.vue'
 import clickOutside from '../../directives/clickoutside'
@@ -87,7 +87,7 @@ const prefixCls = 'ivu-poptip'
 
 export default {
   name: 'Poptip',
-  mixins: [Popper, Locale, TinyEmmitterBus],
+  mixins: [Popper, Locale],
   directives: { clickOutside, TransferDom },
   components: { iButton },
   props: {
@@ -315,11 +315,11 @@ export default {
     },
     cancel() {
       this.visible = false
-      this.vueEmit('on-cancel')
+      tiny_emitter.emit('on-cancel')
     },
     ok() {
       this.visible = false
-      this.vueEmit('on-ok')
+      tiny_emitter.emit('on-ok')
     },
     getInputChildren() {
       const $input = this.$refs.reference.querySelectorAll('input')

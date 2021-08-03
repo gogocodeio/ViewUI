@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import { findComponentsDownward, oneOf } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 
@@ -13,7 +13,7 @@ const prefixCls = 'ivu-checkbox-group'
 
 export default {
   name: 'CheckboxGroup',
-  mixins: [Emitter, TinyEmmitterBus],
+  mixins: [Emitter],
   props: {
     modelValue: {
       type: Array,
@@ -68,8 +68,8 @@ export default {
     },
     change(data) {
       this.currentValue = data
-      this.vueEmit('update:modelValue', data)
-      this.vueEmit('on-change', data)
+      tiny_emitter.emit('update:modelValue', data)
+      tiny_emitter.emit('on-change', data)
       this.dispatch('FormItem', 'on-form-change', data)
     },
   },

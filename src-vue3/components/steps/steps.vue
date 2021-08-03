@@ -5,6 +5,7 @@
 </template>
 
 <script>
+import tiny_emitter from 'tiny-emitter/instance'
 import { $children } from '../../utils/gogocodeTransfer'
 import { oneOf } from '../../utils/assist'
 
@@ -124,8 +125,8 @@ export default {
   },
   mounted() {
     this.updateSteps()
-    this.$on('append', this.debouncedAppendRemove())
-    this.$on('remove', this.debouncedAppendRemove())
+    tiny_emitter.on('append', this.debouncedAppendRemove())
+    tiny_emitter.on('remove', this.debouncedAppendRemove())
   },
   watch: {
     current() {

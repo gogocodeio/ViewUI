@@ -58,7 +58,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import Icon from '../icon'
 import iButton from '../button/button.vue'
 import TransferDom from '../../directives/transfer-dom'
@@ -89,7 +89,7 @@ const dragData = {
 
 export default {
   name: 'Modal',
-  mixins: [Locale, Emitter, ScrollbarMixins, TinyEmmitterBus],
+  mixins: [Locale, Emitter, ScrollbarMixins],
   components: { Icon, iButton },
   directives: { TransferDom },
   props: {
@@ -306,8 +306,8 @@ export default {
   methods: {
     close() {
       this.visible = false
-      this.vueEmit('update:modelValue', false)
-      this.vueEmit('on-cancel')
+      tiny_emitter.emit('update:modelValue', false)
+      tiny_emitter.emit('on-cancel')
     },
     handleMask() {
       if (this.maskClosable && this.showMask) {
@@ -335,9 +335,9 @@ export default {
         this.buttonLoading = true
       } else {
         this.visible = false
-        this.vueEmit('update:modelValue', false)
+        tiny_emitter.emit('update:modelValue', false)
       }
-      this.vueEmit('on-ok')
+      tiny_emitter.emit('on-ok')
     },
     EscClose(e) {
       if (this.visible && this.closable) {
@@ -357,7 +357,7 @@ export default {
       }
     },
     animationFinish() {
-      this.vueEmit('on-hidden')
+      tiny_emitter.emit('on-hidden')
     },
     handleMoveStart(event) {
       if (!this.draggable) return false
@@ -503,7 +503,7 @@ export default {
       }
       this.broadcast('Table', 'on-visible-change', val)
       this.broadcast('Slider', 'on-visible-change', val) // #2852
-      this.vueEmit('on-visible-change', val)
+      tiny_emitter.emit('on-visible-change', val)
       this.lastVisible = val
       this.lastVisibleIndex = lastVisibleIndex
       if (val && this.resetDragPosition) {

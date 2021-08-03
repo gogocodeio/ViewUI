@@ -25,7 +25,6 @@
 
 <script>
 import tiny_emitter from 'tiny-emitter/instance'
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import AsyncValidator from 'async-validator'
 import Emitter from '../../mixins/emitter'
 
@@ -58,7 +57,7 @@ function getPropByPath(obj, path) {
 
 export default {
   name: 'FormItem',
-  mixins: [Emitter, TinyEmmitterBus],
+  mixins: [Emitter],
   props: {
     label: {
       type: String,
@@ -194,10 +193,10 @@ export default {
       } else if (this.required) {
         this.isRequired = this.required
       }
-      this.vueOff('on-form-blur', this.onFieldBlur)
-      this.vueOff('on-form-change', this.onFieldChange)
-      this.vueOn('on-form-blur', this.onFieldBlur)
-      this.vueOn('on-form-change', this.onFieldChange)
+      tiny_emitter.off('on-form-blur', this.onFieldBlur)
+      tiny_emitter.off('on-form-change', this.onFieldChange)
+      tiny_emitter.on('on-form-blur', this.onFieldBlur)
+      tiny_emitter.on('on-form-change', this.onFieldChange)
     },
     getRules() {
       let formRules = this.FormInstance.rules

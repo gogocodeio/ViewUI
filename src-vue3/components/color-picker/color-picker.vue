@@ -112,7 +112,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import tinycolor from 'tinycolor2'
 import { directive as clickOutside } from '../../directives/v-click-outside-x'
 import TransferDom from '../../directives/transfer-dom'
@@ -144,7 +144,7 @@ export default {
     Icon,
   },
   directives: { clickOutside, TransferDom },
-  mixins: [Emitter, Locale, Prefixes, mixinsForm, TinyEmmitterBus],
+  mixins: [Emitter, Locale, Prefixes, mixinsForm],
   props: {
     modelValue: {
       type: String,
@@ -297,7 +297,7 @@ export default {
       },
       set(newVal) {
         this.val = newVal
-        this.vueEmit('on-active-change', this.formatColor)
+        tiny_emitter.emit('on-active-change', this.formatColor)
       },
     },
     classes() {
@@ -425,12 +425,12 @@ export default {
     visible(val) {
       this.val = changeColor(this.modelValue)
       this.$refs.drop[val ? 'update' : 'destroy']()
-      this.vueEmit('on-open-change', Boolean(val))
+      tiny_emitter.emit('on-open-change', Boolean(val))
     },
   },
   mounted() {
-    this.vueOn('on-escape-keydown', this.closer)
-    this.vueOn('on-dragging', this.setDragging)
+    tiny_emitter.on('on-escape-keydown', this.closer)
+    tiny_emitter.on('on-dragging', this.setDragging)
   },
   methods: {
     setDragging(value) {
@@ -488,22 +488,22 @@ export default {
     },
     handleButtons(event, value) {
       this.currentValue = value
-      this.vueEmit('update:modelValue', value)
-      this.vueEmit('on-change', value)
+      tiny_emitter.emit('update:modelValue', value)
+      tiny_emitter.emit('on-change', value)
       this.dispatch('FormItem', 'on-form-change', value)
       this.closer(event)
     },
     handleSuccess(event) {
       this.handleButtons(event, this.formatColor)
-      this.vueEmit('on-pick-success')
+      tiny_emitter.emit('on-pick-success')
     },
     handleClear(event) {
       this.handleButtons(event, '')
-      this.vueEmit('on-pick-clear')
+      tiny_emitter.emit('on-pick-clear')
     },
     handleSelectColor(color) {
       this.val = changeColor(color)
-      this.vueEmit('on-active-change', this.formatColor)
+      tiny_emitter.emit('on-active-change', this.formatColor)
     },
     handleEditColor(event) {
       const value = event.target.value

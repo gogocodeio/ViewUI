@@ -1,5 +1,5 @@
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import List from './list.vue'
 import Operation from './operation.vue'
 import Locale from '../../mixins/locale'
@@ -9,7 +9,7 @@ const prefixCls = 'ivu-transfer'
 
 export default {
   name: 'Transfer',
-  mixins: [Emitter, Locale, TinyEmmitterBus],
+  mixins: [Emitter, Locale],
   render(h) {
     function cloneVNode(vnode) {
       const clonedChildren =
@@ -264,7 +264,7 @@ export default {
             )
 
       this.$refs[opposite].toggleSelectAll(false)
-      this.vueEmit('on-change', newTargetKeys, direction, moveKeys)
+      tiny_emitter.emit('on-change', newTargetKeys, direction, moveKeys)
       this.dispatch('FormItem', 'on-form-change', {
         tarketKeys: newTargetKeys,
         direction: direction,
@@ -280,7 +280,11 @@ export default {
     handleCheckedKeys() {
       const sourceSelectedKeys = this.getValidKeys('left')
       const targetSelectedKeys = this.getValidKeys('right')
-      this.vueEmit('on-selected-change', sourceSelectedKeys, targetSelectedKeys)
+      tiny_emitter.emit(
+        'on-selected-change',
+        sourceSelectedKeys,
+        targetSelectedKeys
+      )
     },
   },
   watch: {

@@ -56,7 +56,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import { oneOf, findComponentUpward } from '../../utils/assist'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
@@ -88,7 +88,7 @@ function addNum(num1, num2) {
 
 export default {
   name: 'InputNumber',
-  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
+  mixins: [Emitter, mixinsForm],
   props: {
     max: {
       type: Number,
@@ -299,18 +299,18 @@ export default {
 
       this.$nextTick(() => {
         this.currentValue = val
-        this.vueEmit('update:modelValue', val)
-        this.vueEmit('on-change', val)
+        tiny_emitter.emit('update:modelValue', val)
+        tiny_emitter.emit('on-change', val)
         this.dispatch('FormItem', 'on-form-change', val)
       })
     },
     focus(event) {
       this.focused = true
-      this.vueEmit('on-focus', event)
+      tiny_emitter.emit('on-focus', event)
     },
     blur() {
       this.focused = false
-      this.vueEmit('on-blur')
+      tiny_emitter.emit('on-blur')
       if (
         !findComponentUpward(this, [
           'DatePicker',

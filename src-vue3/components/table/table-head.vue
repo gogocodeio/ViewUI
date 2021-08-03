@@ -172,12 +172,6 @@ import renderHeader from './header'
 import Mixin from './mixin'
 import Locale from '../../mixins/locale'
 
-const tiny_emitter_override = {
-  $on: (...args) => tiny_emitter.on(...args),
-  $once: (...args) => tiny_emitter.once(...args),
-  $off: (...args) => tiny_emitter.off(...args),
-  $emit: (...args) => tiny_emitter.emit(...args),
-}
 export default {
   name: 'TableHead',
   mixins: [Mixin, Locale],
@@ -371,7 +365,6 @@ export default {
         this.dragging = true
 
         const table = this.$parent
-        Object.assign(table, tiny_emitter_override)
         const tableEl = table.$el
         const tableLeft = tableEl.getBoundingClientRect().left
         const columnEl = this.$el.querySelector(
@@ -417,7 +410,7 @@ export default {
               (item) => item.__id === column.__id
             )
             if (_column) _column.width = columnWidth
-            table.$emit(
+            tiny_emitter.emit(
               'on-column-width-resize',
               _column.width,
               startLeft - startColumnLeft,

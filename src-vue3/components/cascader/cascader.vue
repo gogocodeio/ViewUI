@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import iInput from '../input/input.vue'
 import Drop from '../select/dropdown.vue'
 import Icon from '../icon/icon.vue'
@@ -105,7 +105,7 @@ const selectPrefixCls = 'ivu-select'
 
 export default {
   name: 'Cascader',
-  mixins: [Emitter, Locale, mixinsForm, TinyEmmitterBus],
+  mixins: [Emitter, Locale, mixinsForm],
   components: { iInput, Drop, Icon, Caspanel },
   directives: { clickOutside, TransferDom },
   props: {
@@ -385,7 +385,7 @@ export default {
     },
     emitValue(val, oldVal) {
       if (JSON.stringify(val) !== oldVal) {
-        this.vueEmit(
+        tiny_emitter.emit(
           'on-change',
           this.currentValue,
           JSON.parse(JSON.stringify(this.selected))
@@ -442,7 +442,7 @@ export default {
   },
   created() {
     this.validDataStr = JSON.stringify(this.getValidData(this.data))
-    this.vueOn('on-result-change', (params) => {
+    tiny_emitter.on('on-result-change', (params) => {
       // lastValue: is click the final val
       // fromInit: is this emit from update value
       const lastValue = params.lastValue
@@ -492,14 +492,14 @@ export default {
         }
         this.broadcast('Drop', 'on-destroy-popper')
       }
-      this.vueEmit('on-visible-change', val)
+      tiny_emitter.emit('on-visible-change', val)
     },
     modelValue(val) {
       this.currentValue = val
       if (!val.length) this.selected = []
     },
     currentValue() {
-      this.vueEmit('update:modelValue', this.currentValue)
+      tiny_emitter.emit('update:modelValue', this.currentValue)
       if (this.updatingValue) {
         this.updatingValue = false
         return

@@ -46,7 +46,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import iSelect from '../select/select.vue'
 import iOption from '../select/option.vue'
 import iInput from '../input/input.vue'
@@ -56,7 +56,7 @@ import mixinsForm from '../../mixins/form'
 
 export default {
   name: 'AutoComplete',
-  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
+  mixins: [Emitter, mixinsForm],
   components: { iSelect, iOption, iInput },
   props: {
     modelValue: {
@@ -177,37 +177,37 @@ export default {
     },
     currentValue(val) {
       this.$refs.select.setQuery(val)
-      this.vueEmit('update:modelValue', val)
+      tiny_emitter.emit('update:modelValue', val)
       if (this.disableEmitChange) {
         this.disableEmitChange = false
         return
       }
-      this.vueEmit('on-change', val)
+      tiny_emitter.emit('on-change', val)
       this.dispatch('FormItem', 'on-form-change', val)
     },
   },
   methods: {
     remoteMethod(query) {
-      this.vueEmit('on-search', query)
+      tiny_emitter.emit('on-search', query)
     },
     handleSelect(option) {
       const val = option.value
       if (val === undefined || val === null) return
       this.currentValue = val
       this.$refs.input.blur()
-      this.vueEmit('on-select', val)
+      tiny_emitter.emit('on-select', val)
     },
     handleFocus(event) {
-      this.vueEmit('on-focus', event)
+      tiny_emitter.emit('on-focus', event)
     },
     handleBlur(event) {
-      this.vueEmit('on-blur', event)
+      tiny_emitter.emit('on-blur', event)
     },
     handleClear() {
       if (!this.clearable) return
       this.currentValue = ''
       this.$refs.select.reset()
-      this.vueEmit('on-clear')
+      tiny_emitter.emit('on-clear')
     },
     handleClickOutside() {
       this.$nextTick(() => {

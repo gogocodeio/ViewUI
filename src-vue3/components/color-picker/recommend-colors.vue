@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import Emitter from '../../mixins/emitter'
 import HandleEscapeMixin from './handleEscapeMixin'
 import Prefixes from './prefixMixin'
@@ -39,7 +39,7 @@ import { clamp } from './utils'
 
 export default {
   name: 'RecommendedColors',
-  mixins: [Emitter, HandleEscapeMixin, Prefixes, TinyEmmitterBus],
+  mixins: [Emitter, HandleEscapeMixin, Prefixes],
   props: {
     list: {
       type: Array,
@@ -131,8 +131,8 @@ export default {
         this.grid.x = id % this.columns || this.columns
         this.grid.y = Math.ceil(id / this.columns)
         this.focusColor()
-        this.vueEmit('picker-color', this.list[colorId])
-        this.vueEmit('change', { hex: this.list[colorId], source: 'hex' })
+        tiny_emitter.emit('picker-color', this.list[colorId])
+        tiny_emitter.emit('change', { hex: this.list[colorId], source: 'hex' })
       }
     },
     lineBreak(list, index) {

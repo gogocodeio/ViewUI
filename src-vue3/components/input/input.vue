@@ -153,7 +153,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import { oneOf, findComponentUpward } from '../../utils/assist'
 import calcTextareaHeight from '../../utils/calcTextareaHeight'
 import Emitter from '../../mixins/emitter'
@@ -163,7 +163,7 @@ const prefixCls = 'ivu-input'
 
 export default {
   name: 'Input',
-  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
+  mixins: [Emitter, mixinsForm],
   props: {
     type: {
       validator(value) {
@@ -384,26 +384,26 @@ export default {
   },
   methods: {
     handleEnter(event) {
-      this.vueEmit('on-enter', event)
-      if (this.search) this.vueEmit('on-search', this.currentValue)
+      tiny_emitter.emit('on-enter', event)
+      if (this.search) tiny_emitter.emit('on-search', this.currentValue)
     },
     handleKeydown(event) {
-      this.vueEmit('on-keydown', event)
+      tiny_emitter.emit('on-keydown', event)
     },
     handleKeypress(event) {
-      this.vueEmit('on-keypress', event)
+      tiny_emitter.emit('on-keypress', event)
     },
     handleKeyup(event) {
-      this.vueEmit('on-keyup', event)
+      tiny_emitter.emit('on-keyup', event)
     },
     handleIconClick(event) {
-      this.vueEmit('on-click', event)
+      tiny_emitter.emit('on-click', event)
     },
     handleFocus(event) {
-      this.vueEmit('on-focus', event)
+      tiny_emitter.emit('on-focus', event)
     },
     handleBlur(event) {
-      this.vueEmit('on-blur', event)
+      tiny_emitter.emit('on-blur', event)
       if (
         !findComponentUpward(this, [
           'DatePicker',
@@ -430,12 +430,12 @@ export default {
       let value = event.target.value
       if (this.number && value !== '')
         value = Number.isNaN(Number(value)) ? value : Number(value)
-      this.vueEmit('update:modelValue', value)
+      tiny_emitter.emit('update:modelValue', value)
       this.setCurrentValue(value)
-      this.vueEmit('on-change', event)
+      tiny_emitter.emit('on-change', event)
     },
     handleChange(event) {
-      this.vueEmit('on-input-change', event)
+      tiny_emitter.emit('on-input-change', event)
     },
     setCurrentValue(value) {
       if (value === this.currentValue) return
@@ -499,15 +499,15 @@ export default {
     },
     handleClear() {
       const e = { target: { value: '' } }
-      this.vueEmit('update:modelValue', '')
+      tiny_emitter.emit('update:modelValue', '')
       this.setCurrentValue('')
-      this.vueEmit('on-change', e)
-      this.vueEmit('on-clear')
+      tiny_emitter.emit('on-change', e)
+      tiny_emitter.emit('on-clear')
     },
     handleSearch() {
       if (this.itemDisabled) return false
       this.$refs.input.focus()
-      this.vueEmit('on-search', this.currentValue)
+      tiny_emitter.emit('on-search', this.currentValue)
     },
     handleToggleShowPassword() {
       if (this.itemDisabled) return false

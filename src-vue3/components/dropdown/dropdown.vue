@@ -38,13 +38,6 @@ import clickOutside from '../../directives/clickoutside'
 import TransferDom from '../../directives/transfer-dom'
 import { oneOf, findComponentUpward } from '../../utils/assist'
 
-const tiny_emitter_override = {
-  $on: (...args) => tiny_emitter.on(...args),
-  $once: (...args) => tiny_emitter.once(...args),
-  $off: (...args) => tiny_emitter.off(...args),
-  $emit: (...args) => tiny_emitter.emit(...args),
-}
-
 const prefixCls = 'ivu-dropdown'
 
 export default {
@@ -158,7 +151,6 @@ export default {
       }
       // #661
       const $parent = this.hasParent()
-      Object.assign($parent, tiny_emitter_override)
       if (!$parent) this.currentVisible = !this.currentVisible
     },
     handleRightClick() {
@@ -212,7 +204,6 @@ export default {
     hasParent() {
       //                const $parent = this.$parent.$parent.$parent;
       const $parent = findComponentUpward(this, 'Dropdown')
-      Object.assign($parent, tiny_emitter_override)
       if ($parent) {
         return $parent
       } else {
@@ -221,21 +212,19 @@ export default {
     },
   },
   mounted() {
-    this.$on('on-click', (key) => {
+    tiny_emitter.on('on-click', (key) => {
       if (this.stopPropagation) return
       const $parent = this.hasParent()
-      Object.assign($parent, tiny_emitter_override)
-      if ($parent) $parent.$emit('on-click', key)
+      if ($parent) tiny_emitter.emit('on-click', key)
     })
-    this.$on('on-hover-click', () => {
+    tiny_emitter.on('on-hover-click', () => {
       const $parent = this.hasParent()
-      Object.assign($parent, tiny_emitter_override)
       if ($parent) {
         this.$nextTick(() => {
           if (this.trigger === 'custom') return false
           this.currentVisible = false
         })
-        $parent.$emit('on-hover-click')
+        tiny_emitter.emit('on-hover-click')
       } else {
         this.$nextTick(() => {
           if (this.trigger === 'custom') return false
@@ -243,14 +232,13 @@ export default {
         })
       }
     })
-    this.$on('on-haschild-click', () => {
+    tiny_emitter.on('on-haschild-click', () => {
       this.$nextTick(() => {
         if (this.trigger === 'custom') return false
         this.currentVisible = true
       })
       const $parent = this.hasParent()
-      Object.assign($parent, tiny_emitter_override)
-      if ($parent) $parent.$emit('on-haschild-click')
+      if ($parent) tiny_emitter.emit('on-haschild-click')
     })
   },
   emits: [

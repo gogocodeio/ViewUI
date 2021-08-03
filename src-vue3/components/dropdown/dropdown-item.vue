@@ -41,7 +41,6 @@ export default {
     handleClick() {
       if (this.disabled) return
       const $parent = findComponentUpward(this, 'Dropdown')
-      Object.assign($parent, tiny_emitter_override)
       const hasChildren =
         this.$parent && this.$parent.$options.name === 'Dropdown'
 
@@ -49,10 +48,10 @@ export default {
         tiny_emitter.emit('on-haschild-click')
       } else {
         if ($parent && $parent.$options.name === 'Dropdown') {
-          $parent.$emit('on-hover-click')
+          tiny_emitter.emit('on-hover-click')
         }
       }
-      $parent.$emit('on-click', this.name)
+      tiny_emitter.emit('on-click', this.name)
     },
   },
   emits: ['on-click', 'on-haschild-click', 'on-hover-click'],

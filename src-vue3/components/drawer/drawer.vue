@@ -50,7 +50,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import Icon from '../icon'
 import {
   oneOf,
@@ -67,7 +67,7 @@ const prefixCls = 'ivu-drawer'
 
 export default {
   name: 'Drawer',
-  mixins: [Emitter, ScrollbarMixins, TinyEmmitterBus],
+  mixins: [Emitter, ScrollbarMixins],
   components: { Icon },
   directives: { TransferDom },
   props: {
@@ -245,8 +245,8 @@ export default {
     },
     handleClose() {
       this.visible = false
-      this.vueEmit('update:modelValue', false)
-      this.vueEmit('on-close')
+      tiny_emitter.emit('update:modelValue', false)
+      tiny_emitter.emit('on-close')
     },
     handleMask() {
       if (this.maskClosable && this.mask) {
@@ -272,7 +272,7 @@ export default {
       // 如果当前width不大于100，视为百分比
       if (width <= 100) width = (width / this.wrapperWidth) * 100
       this.dragWidth = width
-      this.vueEmit('on-resize-width', parseInt(this.dragWidth))
+      tiny_emitter.emit('on-resize-width', parseInt(this.dragWidth))
     },
     handleSetWrapperWidth() {
       const { width, left } = this.$el.getBoundingClientRect()
@@ -345,7 +345,7 @@ export default {
       }
       this.broadcast('Table', 'on-visible-change', val)
       this.broadcast('Slider', 'on-visible-change', val) // #2852
-      this.vueEmit('on-visible-change', val)
+      tiny_emitter.emit('on-visible-change', val)
     },
     scrollable(val) {
       if (!val) {

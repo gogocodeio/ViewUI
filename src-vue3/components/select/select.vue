@@ -107,7 +107,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import { $children } from '../../utils/gogocodeTransfer'
 import Drop from './dropdown.vue'
 import Icon from '../icon'
@@ -199,7 +199,7 @@ const ANIMATION_TIMEOUT = 300
 
 export default {
   name: 'iSelect',
-  mixins: [Emitter, Locale, mixinsForm, TinyEmmitterBus],
+  mixins: [Emitter, Locale, mixinsForm],
   components: { FunctionalOptions, Drop, SelectHead, Icon },
   directives: { clickOutside, TransferDom },
   props: {
@@ -338,7 +338,7 @@ export default {
     },
   },
   mounted() {
-    this.vueOn('on-select-selected', this.onOptionClick)
+    tiny_emitter.on('on-select-selected', this.onOptionClick)
 
     // set the initial values if there are any
     if (!this.remote && this.selectOptions.length > 0) {
@@ -367,7 +367,7 @@ export default {
             label: this.defaultLabel[index],
           }
         })
-        this.vueEmit(
+        tiny_emitter.emit(
           'on-set-default-options',
           JSON.parse(JSON.stringify(values))
         )
@@ -378,7 +378,7 @@ export default {
     }
   },
   beforeUnmount() {
-    this.vueOff('on-select-selected')
+    tiny_emitter.off('on-select-selected')
   },
   data() {
     return {
@@ -605,8 +605,8 @@ export default {
     clearSingleSelect() {
       // PUBLIC API
       // fix #446
-      if (!this.multiple) this.vueEmit('update:modelValue', '')
-      this.vueEmit('on-clear')
+      if (!this.multiple) tiny_emitter.emit('update:modelValue', '')
+      tiny_emitter.emit('on-clear')
       this.hideMenu()
       if (this.clearable) this.reset()
     },
@@ -728,7 +728,7 @@ export default {
         event.preventDefault()
         this.hideMenu()
         this.isFocused = true
-        this.vueEmit('on-clickoutside', event)
+        tiny_emitter.emit('on-clickoutside', event)
       } else {
         this.caretPosition = -1
         this.isFocused = false
@@ -852,7 +852,7 @@ export default {
         const inputField = this.$el.querySelector('input[type="text"]')
         if (!this.autoComplete) this.$nextTick(() => inputField.focus())
       }
-      this.vueEmit('on-select', option) // # 4441
+      tiny_emitter.emit('on-select', option) // # 4441
       this.broadcast('Drop', 'on-update-popper')
       setTimeout(() => {
         this.filterQueryChange = false
@@ -900,7 +900,7 @@ export default {
     handleCreateItem() {
       if (this.allowCreate && this.query !== '' && this.showCreateItem) {
         const query = this.query
-        this.vueEmit('on-create', query)
+        tiny_emitter.emit('on-create', query)
         this.query = ''
 
         const option = {
@@ -953,13 +953,13 @@ export default {
             emitValue = this.values[0]
           }
         }
-        this.vueEmit('update:modelValue', vModelValue) // to update v-model
-        this.vueEmit('on-change', emitValue)
+        tiny_emitter.emit('update:modelValue', vModelValue) // to update v-model
+        tiny_emitter.emit('on-change', emitValue)
         this.dispatch('FormItem', 'on-form-change', emitValue)
       }
     },
     query(query) {
-      this.vueEmit('on-query-change', query)
+      tiny_emitter.emit('on-query-change', query)
       const { remoteMethod, lastRemoteQuery } = this
       const hasValidQuery =
         query !== '' && (query !== lastRemoteQuery || !lastRemoteQuery)
@@ -1048,7 +1048,7 @@ export default {
       this.broadcast('Drop', 'on-update-popper')
     },
     visible(state) {
-      this.vueEmit('on-open-change', state)
+      tiny_emitter.emit('on-open-change', state)
     },
     slotOptions(options, old) {
       // #4626，当 Options 的 label 更新时，v-model 的值未更新

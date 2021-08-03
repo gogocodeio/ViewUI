@@ -73,7 +73,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import Icon from '../icon'
 import Emitter from '../../mixins/emitter'
 import Locale from '../../mixins/locale'
@@ -82,7 +82,7 @@ const prefixCls = 'ivu-select'
 
 export default {
   name: 'iSelectHead',
-  mixins: [Emitter, Locale, TinyEmmitterBus],
+  mixins: [Emitter, Locale],
   components: { Icon },
   props: {
     disabled: {
@@ -259,12 +259,12 @@ export default {
   },
   methods: {
     onInputFocus() {
-      this.vueEmit('on-input-focus')
+      tiny_emitter.emit('on-input-focus')
     },
     onInputBlur() {
       if (this.showCreateItem) return
       if (!this.values.length) this.query = '' // #5155
-      this.vueEmit('on-input-blur')
+      tiny_emitter.emit('on-input-blur')
     },
     removeTag(value) {
       if (this.disabled) return false
@@ -272,7 +272,7 @@ export default {
     },
     resetInputState() {
       this.inputLength = this.$refs.input.value.length * 12 + 20
-      this.vueEmit('on-keydown')
+      tiny_emitter.emit('on-keydown')
     },
     handleInputDelete(e) {
       const targetValue = e.target.value
@@ -286,7 +286,7 @@ export default {
       }
     },
     handleInputEnter() {
-      this.vueEmit('on-enter')
+      tiny_emitter.emit('on-enter')
     },
     onHeaderClick(e) {
       if (this.filterable && e.target === this.$el) {
@@ -294,7 +294,7 @@ export default {
       }
     },
     onClear() {
-      this.vueEmit('on-clear')
+      tiny_emitter.emit('on-clear')
     },
   },
   watch: {
@@ -318,7 +318,7 @@ export default {
         return
       }
 
-      this.vueEmit('on-query-change', val)
+      tiny_emitter.emit('on-query-change', val)
     },
     queryProp(query) {
       if (query !== this.query) this.query = query

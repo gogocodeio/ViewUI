@@ -24,23 +24,15 @@
 
 <script>
 import tiny_emitter from 'tiny-emitter/instance'
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
 import Casitem from './casitem.vue'
 import Emitter from '../../mixins/emitter'
 import { findComponentUpward, findComponentDownward } from '../../utils/assist'
-
-const tiny_emitter_override = {
-  $on: (...args) => tiny_emitter.on(...args),
-  $once: (...args) => tiny_emitter.once(...args),
-  $off: (...args) => tiny_emitter.off(...args),
-  $emit: (...args) => tiny_emitter.emit(...args),
-}
 
 let key = 1
 
 export default {
   name: 'Caspanel',
-  mixins: [Emitter, TinyEmmitterBus],
+  mixins: [Emitter],
   components: { Casitem },
   props: {
     data: {
@@ -121,9 +113,8 @@ export default {
         // #1553
         if (this.changeOnSelect) {
           const Caspanel = findComponentDownward(this, 'Caspanel')
-          Object.assign(Caspanel, tiny_emitter_override)
           if (Caspanel) {
-            Caspanel.$emit('on-clear', true)
+            tiny_emitter.emit('on-clear', true)
           }
         }
       } else {
@@ -163,7 +154,7 @@ export default {
     },
   },
   mounted() {
-    this.vueOn('on-find-selected', (params) => {
+    tiny_emitter.on('on-find-selected', (params) => {
       const val = params.value
       let value = [...val]
       for (let i = 0; i < value.length; i++) {
@@ -182,14 +173,13 @@ export default {
       }
     })
     // deep for #1553
-    this.vueOn('on-clear', (deep = false) => {
+    tiny_emitter.on('on-clear', (deep = false) => {
       this.sublist = []
       this.tmpItem = {}
       if (deep) {
         const Caspanel = findComponentDownward(this, 'Caspanel')
-        Object.assign(Caspanel, tiny_emitter_override)
         if (Caspanel) {
-          Caspanel.$emit('on-clear', true)
+          tiny_emitter.emit('on-clear', true)
         }
       }
     })

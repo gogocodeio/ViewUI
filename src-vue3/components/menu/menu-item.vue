@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import Emitter from '../../mixins/emitter'
 import { findComponentUpward } from '../../utils/assist'
 import mixin from './mixin'
@@ -26,7 +26,7 @@ const prefixCls = 'ivu-menu'
 
 export default {
   name: 'MenuItem',
-  mixins: [Emitter, mixin, mixinsLink, TinyEmmitterBus],
+  mixins: [Emitter, mixin, mixinsLink],
   props: {
     name: {
       type: [String, Number],
@@ -84,7 +84,7 @@ export default {
     },
   },
   mounted() {
-    this.vueOn('on-update-active-name', (name) => {
+    tiny_emitter.on('on-update-active-name', (name) => {
       if (this.name === name) {
         this.active = true
         this.dispatch('Submenu', 'on-update-active-name', name)

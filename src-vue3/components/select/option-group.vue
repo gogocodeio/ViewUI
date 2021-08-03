@@ -8,6 +8,7 @@
 </template>
 
 <script>
+import tiny_emitter from 'tiny-emitter/instance'
 const prefixCls = 'ivu-select-group'
 
 export default {
@@ -40,13 +41,13 @@ export default {
     },
   },
   mounted() {
-    this.$on('on-query-change', () => {
+    tiny_emitter.on('on-query-change', () => {
       this.queryChange()
       return true
     })
   },
   beforeUnmount() {
-    this.$off('on-query-change')
+    tiny_emitter.off('on-query-change')
   },
 }
 </script>

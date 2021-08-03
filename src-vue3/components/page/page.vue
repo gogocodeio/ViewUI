@@ -148,7 +148,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import { oneOf } from '../../utils/assist'
 import Options from './options.vue'
 import Locale from '../../mixins/locale'
@@ -157,7 +157,7 @@ const prefixCls = 'ivu-page'
 
 export default {
   name: 'Page',
-  mixins: [Locale, TinyEmmitterBus],
+  mixins: [Locale],
   components: { Options },
   props: {
     current: {
@@ -329,8 +329,8 @@ export default {
       if (this.disabled) return
       if (this.currentPage != page) {
         this.currentPage = page
-        this.vueEmit('update:current', page)
-        this.vueEmit('on-change', page)
+        tiny_emitter.emit('update:current', page)
+        tiny_emitter.emit('on-change', page)
       }
     },
     prev() {
@@ -370,7 +370,7 @@ export default {
     onSize(pageSize) {
       if (this.disabled) return
       this.currentPageSize = pageSize
-      this.vueEmit('on-page-size-change', pageSize)
+      tiny_emitter.emit('on-page-size-change', pageSize)
       this.changePage(1)
     },
     onPage(page) {

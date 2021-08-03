@@ -222,7 +222,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import tableHead from './table-head.vue'
 import tableBody from './table-body.vue'
 import tableSummary from './summary.vue'
@@ -249,7 +249,7 @@ let columnKey = 1
 
 export default {
   name: 'Table',
-  mixins: [Locale, TinyEmmitterBus],
+  mixins: [Locale],
   components: {
     tableHead,
     tableBody,
@@ -812,7 +812,7 @@ export default {
             ? JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey)))
             : JSON.parse(JSON.stringify(this.cloneData[_index]))
           : null
-      this.vueEmit('on-current-change', newData, oldData)
+      tiny_emitter.emit('on-current-change', newData, oldData)
     },
     handleResetChildrenRow(objData) {
       let data = null
@@ -844,12 +844,12 @@ export default {
     clickCurrentRow(_index, rowKey) {
       this.highlightCurrentRow(_index, rowKey)
       if (rowKey) {
-        this.vueEmit(
+        tiny_emitter.emit(
           'on-row-click',
           JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey)))
         )
       } else {
-        this.vueEmit(
+        tiny_emitter.emit(
           'on-row-click',
           JSON.parse(JSON.stringify(this.cloneData[_index])),
           _index
@@ -859,12 +859,12 @@ export default {
     dblclickCurrentRow(_index, rowKey) {
       this.highlightCurrentRow(_index, rowKey)
       if (rowKey) {
-        this.vueEmit(
+        tiny_emitter.emit(
           'on-row-dblclick',
           JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey)))
         )
       } else {
-        this.vueEmit(
+        tiny_emitter.emit(
           'on-row-dblclick',
           JSON.parse(JSON.stringify(this.cloneData[_index])),
           _index
@@ -883,14 +883,14 @@ export default {
         this.contextMenuStyles = position
         this.contextMenuVisible = true
         if (rowKey) {
-          this.vueEmit(
+          tiny_emitter.emit(
             'on-contextmenu',
             JSON.parse(JSON.stringify(this.getBaseDataByRowKey(rowKey))),
             event,
             position
           )
         } else {
-          this.vueEmit(
+          tiny_emitter.emit(
             'on-contextmenu',
             JSON.parse(JSON.stringify(this.cloneData[_index])),
             event,
@@ -980,12 +980,12 @@ export default {
       const selectedData = rowKey
         ? this.getBaseDataByRowKey(rowKey, this.data)
         : this.data[_index]
-      this.vueEmit(
+      tiny_emitter.emit(
         status ? 'on-select' : 'on-select-cancel',
         selection,
         JSON.parse(JSON.stringify(selectedData))
       )
-      this.vueEmit('on-selection-change', selection)
+      tiny_emitter.emit('on-selection-change', selection)
     },
     toggleExpand(_index) {
       let data = {}
@@ -998,7 +998,7 @@ export default {
       }
       const status = !data._isExpanded
       this.objData[_index]._isExpanded = status
-      this.vueEmit(
+      tiny_emitter.emit(
         'on-expand',
         JSON.parse(JSON.stringify(this.cloneData[_index])),
         status
@@ -1040,7 +1040,7 @@ export default {
       // #675，增加 updateShowChildren
       if (this.updateShowChildren)
         this.updateDataStatus(rowKey, '_showChildren', data._isShowChildren)
-      this.vueEmit('on-expand-tree', rowKey, data._isShowChildren)
+      tiny_emitter.emit('on-expand-tree', rowKey, data._isShowChildren)
     },
     /**
      * @description 当修改某内置属性，如 _isShowChildren 时，因当将原 data 对应 _showChildren 也修改，否则修改 data 时，状态会重置
@@ -1139,11 +1139,11 @@ export default {
       }
       const selection = this.getSelection()
       if (status) {
-        this.vueEmit('on-select-all', selection)
+        tiny_emitter.emit('on-select-all', selection)
       } else {
-        this.vueEmit('on-select-all-cancel', selection)
+        tiny_emitter.emit('on-select-all-cancel', selection)
       }
-      this.vueEmit('on-selection-change', selection)
+      tiny_emitter.emit('on-selection-change', selection)
     },
     selectAllChildren(data, status) {
       if (data.children && data.children.length) {
@@ -1314,7 +1314,7 @@ export default {
       }
       this.cloneColumns[index]._sortType = type
 
-      this.vueEmit('on-sort-change', {
+      tiny_emitter.emit('on-sort-change', {
         column: JSON.parse(
           JSON.stringify(this.allColumns[this.cloneColumns[index]._index])
         ),
@@ -1368,7 +1368,7 @@ export default {
 
       this.cloneColumns[index]._isFiltered = true
       this.cloneColumns[index]._filterVisible = false
-      this.vueEmit('on-filter-change', column)
+      tiny_emitter.emit('on-filter-change', column)
     },
     /**
      * #2832
@@ -1394,7 +1394,7 @@ export default {
       let filterData = this.makeDataWithSort()
       filterData = this.filterOtherData(filterData, index)
       this.rebuildData = filterData
-      this.vueEmit('on-filter-change', this.cloneColumns[index])
+      tiny_emitter.emit('on-filter-change', this.cloneColumns[index])
     },
     makeData() {
       let data = deepCopy(this.data)
@@ -1598,7 +1598,7 @@ export default {
       else ExportCsv.download(params.filename, data)
     },
     dragAndDrop(a, b) {
-      this.vueEmit('on-drag-drop', a, b)
+      tiny_emitter.emit('on-drag-drop', a, b)
     },
     handleClickContextMenuOutside() {
       this.contextMenuVisible = false
@@ -1620,7 +1620,7 @@ export default {
     this.observer = elementResizeDetectorMaker()
     this.observer.listenTo(this.$el, this.handleResize)
 
-    this.vueOn('on-visible-change', (val) => {
+    tiny_emitter.on('on-visible-change', (val) => {
       if (val) {
         this.$nextTick(() => {
           this.handleResize()
@@ -1629,7 +1629,7 @@ export default {
     })
   },
   beforeUnmount() {
-    this.vueOff('on-visible-change')
+    tiny_emitter.off('on-visible-change')
     off(window, 'resize', this.handleResize)
     this.observer.removeAllListeners(this.$el)
     this.observer.uninstall(this.$el)

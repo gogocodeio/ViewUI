@@ -5,8 +5,9 @@
 </template>
 
 <script>
+import tiny_emitter from 'tiny-emitter/instance'
 import * as Vue from 'vue'
-const isServer = window.$vueApp.config.globalProperties.$isServer
+const isServer = false
 import { getStyle } from '../../utils/assist'
 const Popper = isServer
   ? function () {}
@@ -121,12 +122,12 @@ export default {
     },
   },
   created() {
-    this.$on('on-update-popper', this.update)
-    this.$on('on-destroy-popper', this.destroy)
+    tiny_emitter.on('on-update-popper', this.update)
+    tiny_emitter.on('on-destroy-popper', this.destroy)
   },
   beforeUnmount() {
-    this.$off('on-update-popper', this.update)
-    this.$off('on-destroy-popper', this.destroy)
+    tiny_emitter.off('on-update-popper', this.update)
+    tiny_emitter.off('on-destroy-popper', this.destroy)
     if (this.popper) {
       this.popper.destroy()
       this.popper = null

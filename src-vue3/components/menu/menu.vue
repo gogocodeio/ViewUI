@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import {
   oneOf,
   findComponentsDownward,
@@ -17,7 +17,7 @@ const prefixCls = 'ivu-menu'
 
 export default {
   name: 'Menu',
-  mixins: [Emitter, TinyEmmitterBus],
+  mixins: [Emitter],
   props: {
     mode: {
       validator(value) {
@@ -131,7 +131,7 @@ export default {
         .filter((item) => item.opened)
         .map((item) => item.name)
       this.openedNames = [...openedNames]
-      this.vueEmit('on-open-change', openedNames)
+      tiny_emitter.emit('on-open-change', openedNames)
     },
     updateOpened() {
       const items = findComponentsDownward(this, 'Submenu')
@@ -144,16 +144,16 @@ export default {
       }
     },
     handleEmitSelectEvent(name) {
-      this.vueEmit('on-select', name)
+      tiny_emitter.emit('on-select', name)
     },
   },
   mounted() {
     this.openedNames = [...this.openNames]
     this.updateOpened()
     this.$nextTick(() => this.updateActiveName())
-    this.vueOn('on-menu-item-select', (name) => {
+    tiny_emitter.on('on-menu-item-select', (name) => {
       this.currentActiveName = name
-      this.vueEmit('on-select', name)
+      tiny_emitter.emit('on-select', name)
     })
   },
   watch: {

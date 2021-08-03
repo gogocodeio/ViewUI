@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import Icon from '../icon/icon.vue'
 import Render from '../base/render'
 import Dropdown from '../dropdown/dropdown.vue'
@@ -136,7 +136,7 @@ const focusFirst = (element, root) => {
 
 export default {
   name: 'Tabs',
-  mixins: [Emitter, TinyEmmitterBus],
+  mixins: [Emitter],
   components: { Icon, Render, Dropdown, DropdownMenu },
   provide() {
     return { TabsInstance: this }
@@ -382,13 +382,13 @@ export default {
       const nav = this.navList[index]
       if (!nav || nav.disabled) return
       this.activeKey = nav.name
-      this.vueEmit('update:modelValue', nav.name)
-      this.vueEmit('on-click', nav.name)
+      tiny_emitter.emit('update:modelValue', nav.name)
+      tiny_emitter.emit('on-click', nav.name)
     },
     handleDblclick(index) {
       const nav = this.navList[index]
       if (!nav || nav.disabled) return
-      this.vueEmit('on-dblclick', nav.name)
+      tiny_emitter.emit('on-dblclick', nav.name)
     },
     handleContextmenu(index, event) {
       if (this.contextMenuVisible) this.handleClickContextMenuOutside()
@@ -405,7 +405,7 @@ export default {
         }
         this.contextMenuStyles = position
         this.contextMenuVisible = true
-        this.vueEmit('on-contextmenu', nav, event, position)
+        tiny_emitter.emit('on-contextmenu', nav, event, position)
       })
     },
     handleClickContextMenuOutside() {
@@ -472,9 +472,9 @@ export default {
           }
         }
         this.activeKey = activeKey
-        this.vueEmit('update:modelValue', activeKey)
+        tiny_emitter.emit('update:modelValue', activeKey)
       }
-      this.vueEmit('on-tab-remove', tab.currentName)
+      tiny_emitter.emit('on-tab-remove', tab.currentName)
       this.updateNav()
     },
     showClose(item) {
@@ -636,7 +636,7 @@ export default {
         const a = parseInt(navNames.findIndex((item) => item === dragName))
         const b = parseInt(navNames.findIndex((item) => item === nav.name))
         navNames.splice(b, 1, ...navNames.splice(a, 1, navNames[b]))
-        this.vueEmit('on-drag-drop', dragName, nav.name, a, b, navNames)
+        tiny_emitter.emit('on-drag-drop', dragName, nav.name, a, b, navNames)
       }
     },
   },

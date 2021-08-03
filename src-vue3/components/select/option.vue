@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import Emitter from '../../mixins/emitter'
 import mixinsForm from '../../mixins/form'
 import { findComponentUpward } from '../../utils/assist'
@@ -15,7 +15,7 @@ const prefixCls = 'ivu-select-item'
 export default {
   name: 'iOption',
   componentName: 'select-item',
-  mixins: [Emitter, mixinsForm, TinyEmmitterBus],
+  mixins: [Emitter, mixinsForm],
   props: {
     modelValue: {
       type: [String, Number],
@@ -74,7 +74,7 @@ export default {
         label: this.optionLabel,
         tag: this.tag,
       })
-      this.vueEmit('on-select-selected', {
+      tiny_emitter.emit('on-select-selected', {
         value: this.modelValue,
         label: this.optionLabel,
         tag: this.tag,

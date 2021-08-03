@@ -27,14 +27,14 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import HASMixin from './hsaMixin'
 import Prefixes from './prefixMixin'
 import { clamp } from './utils'
 
 export default {
   name: 'Hue',
-  mixins: [HASMixin, Prefixes, TinyEmmitterBus],
+  mixins: [HASMixin, Prefixes],
   data() {
     const normalStep = (1 / 360) * 25
     const jumpStep = 20 * normalStep
@@ -61,7 +61,7 @@ export default {
       const newHue = clamp((percent / 100) * 360, 0, 360)
 
       if (h !== newHue) {
-        this.vueEmit('change', { h: newHue, s, l, a, source: 'hsl' })
+        tiny_emitter.emit('change', { h: newHue, s, l, a, source: 'hsl' })
       }
     },
     handleSlide(e, direction) {

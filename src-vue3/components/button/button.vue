@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import TinyEmmitterBus from '../../utils/tinyEmitterBus'
+import tiny_emitter from 'tiny-emitter/instance'
 import Icon from '../icon'
 import { oneOf } from '../../utils/assist'
 import mixinsLink from '../../mixins/link'
@@ -27,7 +27,7 @@ const prefixCls = 'ivu-btn'
 
 export default {
   name: 'Button',
-  mixins: [mixinsLink, mixinsForm, TinyEmmitterBus],
+  mixins: [mixinsLink, mixinsForm],
   components: { Icon },
   props: {
     type: {
@@ -128,7 +128,7 @@ export default {
   methods: {
     // Ctrl or CMD and click, open in new window when use `to`
     handleClickLink(event) {
-      this.vueEmit('click', event)
+      tiny_emitter.emit('click', event)
       const openInNewWindow = event.ctrlKey || event.metaKey
 
       this.handleCheckClick(event, openInNewWindow)
