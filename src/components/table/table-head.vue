@@ -66,7 +66,6 @@
               </span>
               <Poptip
                 v-if="isPopperShow(column)"
-                v-model="getColumn(rowIndex, index)._filterVisible"
                 placement="bottom"
                 popper-class="ivu-table-popper"
                 transfer
@@ -88,9 +87,7 @@
                 >
                   <div :class="[prefixCls + '-filter-list']">
                     <div :class="[prefixCls + '-filter-list-item']">
-                      <checkbox-group
-                        v-model="getColumn(rowIndex, index)._filterChecked"
-                      >
+                      <checkbox-group>
                         <checkbox
                           v-for="(item, index) in column.filters"
                           :key="index"
