@@ -17,6 +17,7 @@
     "rules": {
         "quotes": ["error", "single"],
         "vue/jsx-uses-vars": 2,
-        "no-console": ["error"]
+        "no-console": ["error"],
+        "no-unused-vars": "warn"
     }
 }

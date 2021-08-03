@@ -21,7 +21,6 @@
     :eventsEnabled="eventsEnabled"
   >
     <slot name="input">
-      <template v-slot:handleBlur>
         <i-input
           :element-id="elementId"
           ref="input"
@@ -35,7 +34,6 @@
           @on-focus="handleFocus"
           @on-blur="handleBlur"
         ></i-input>
-      </template>
     </slot>
     <slot>
       <i-option v-for="item in filteredData" :modelValue="item" :key="item">{{

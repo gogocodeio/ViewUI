@@ -35,7 +35,7 @@
     "test": "npm run lint && npm run tslint && npm run unit",
     "prepare": "npm run dist",
     "transform:src": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./src-vue2 -o ./src",
-    "transform:single": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./src-vue2/components/slider/marker.js -o ./src/components/slider/marker.js",
+    "transform:single": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./src-vue2/components/table/table-body.vue -o ./src/components/table/table-body.vue",
     "transform:examples": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./examples -o ./examples",
     "transform:pkgjson": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./package.json -o ./package.json",
     "pretty:src": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-prettier/index.js -s ./src -o ./src",

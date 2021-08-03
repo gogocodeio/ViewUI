@@ -1,23 +1,15 @@
 <script>
-import { plantRenderPara } from '../../utils/gogocodeTransfer.js'
+import { $on, $off, $once, $emit, plantRenderPara } from '../../utils/gogocodeTransfer'
 import * as Vue from 'vue'
-// import tiny_emitter from 'tiny-emitter/instance'
 // todo :key="row"
 import TableTr from './table-tr.vue'
 import TableCell from './cell.vue'
 import Expand from './expand.js'
 import Mixin from './mixin'
-import Bus from '../../mixins/bus'
 
-// const tiny_emitter_override = {
-//   vueOn: (...args) => tiny_emitter.on(...args),
-//   vueOnce: (...args) => tiny_emitter.once(...args),
-//   vueOff: (...args) => tiny_emitter.off(...args),
-//   $emit: (...args) => tiny_emitter.emit(...args),
-// }
 export default {
   name: 'TableBody',
-  mixins: [Mixin, Bus],
+  mixins: [Mixin],
   components: { TableCell, Expand, TableTr },
   props: {
     prefixCls: String,
@@ -83,8 +75,7 @@ export default {
       this.$parent.dblclickCurrentRow(_index, rowKey)
     },
     clickCell(row, column, key, event) {
-      //   Object.assign(this.$parent, tiny_emitter_override)
-      this.$parent.vueEmit('on-cell-click', row, column, row[key], event)
+      $emit(this.$parent, 'on-cell-click', row, column, row[key], event)
     },
     contextmenuCurrentRow(_index, event, rowKey) {
       event.stopPropagation()
@@ -289,7 +280,7 @@ export default {
       }
     },
   },
-  render() {
+render() {
     let $cols = []
     this.columns.forEach((column) => {
       const $col = Vue.h(
