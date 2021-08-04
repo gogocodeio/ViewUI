@@ -1,5 +1,5 @@
-import Button from './button.vue';
-import ButtonGroup from './button-group.vue';
+import Button from './button.vue'
+import ButtonGroup from './button-group.vue'
 
-Button.Group = ButtonGroup;
-export default Button;
+Button.Group = ButtonGroup
+export default Button

@@ -38,7 +38,7 @@
     "transform:single": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./src-vue2/components/table/table-body.vue -o ./src/components/table/table-body.vue",
     "transform:examples": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./examples -o ./examples",
     "transform:pkgjson": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./package.json -o ./package.json",
-    "pretty:src": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-prettier/index.js -s ./src -o ./src",
+    "pretty:src": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-prettier/index.js -s ./src-vue2 -o ./src-vue3",
     "pretty:examples": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-prettier/index.js -s ./examples -o ./examples"
   },
   "repository": {

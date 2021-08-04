@@ -1,59 +1,58 @@
-
-import {clearHours} from '../util';
+import { clearHours } from '../util'
 
 export default {
-    name: 'PanelTable',
-    props: {
-        tableDate: {
-            type: Date,
-            required: true
-        },
-        disabledDate: {
-            type: Function
-        },
-        selectionMode: {
-            type: String,
-            required: true
-        },
-        value: {
-            type: Array,
-            required: true
-        },
-        rangeState: {
-            type: Object,
-            default: () => ({
-                from: null,
-                to: null,
-                selecting: false
-            })
-        },
-        focusedDate: {
-            type: Date,
-            required: true,
-        }
+  name: 'PanelTable',
+  props: {
+    tableDate: {
+      type: Date,
+      required: true,
     },
-    computed: {
-        dates(){
-            const {selectionMode, value, rangeState} = this;
-            const rangeSelecting = selectionMode === 'range' && rangeState.selecting;
-            return rangeSelecting ? [rangeState.from] : value;
-        },
+    disabledDate: {
+      type: Function,
     },
-    methods: {
-        handleClick (cell, e) {
-            e.stopPropagation();
+    selectionMode: {
+      type: String,
+      required: true,
+    },
+    value: {
+      type: Array,
+      required: true,
+    },
+    rangeState: {
+      type: Object,
+      default: () => ({
+        from: null,
+        to: null,
+        selecting: false,
+      }),
+    },
+    focusedDate: {
+      type: Date,
+      required: true,
+    },
+  },
+  computed: {
+    dates() {
+      const { selectionMode, value, rangeState } = this
+      const rangeSelecting = selectionMode === 'range' && rangeState.selecting
+      return rangeSelecting ? [rangeState.from] : value
+    },
+  },
+  methods: {
+    handleClick(cell, e) {
+      e.stopPropagation()
 
-            if (cell.disabled || cell.type === 'weekLabel') return;
-            const newDate = new Date(clearHours(cell.date));
+      if (cell.disabled || cell.type === 'weekLabel') return
+      const newDate = new Date(clearHours(cell.date))
 
-            this.$emit('on-pick', newDate);
-            this.$emit('on-pick-click');
-        },
-        handleMouseMove (cell) {
-            if (!this.rangeState.selecting) return;
-            if (cell.disabled) return;
-            const newDate = cell.date;
-            this.$emit('on-change-range', newDate);
-        },
-    }
-};
+      this.$emit('on-pick', newDate)
+      this.$emit('on-pick-click')
+    },
+    handleMouseMove(cell) {
+      if (!this.rangeState.selecting) return
+      if (cell.disabled) return
+      const newDate = cell.date
+      this.$emit('on-change-range', newDate)
+    },
+  },
+}

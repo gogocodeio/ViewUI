@@ -1,3 +1,3 @@
-import TimelineItem from '../timeline/timeline-item.vue';
+import TimelineItem from '../timeline/timeline-item.vue'
 
-export default TimelineItem;
+export default TimelineItem

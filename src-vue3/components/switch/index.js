@@ -1,2 +1,2 @@
-import Switch from './switch.vue';
-export default Switch;
+import Switch from './switch.vue'
+export default Switch

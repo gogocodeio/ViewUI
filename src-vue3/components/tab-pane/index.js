@@ -1,3 +1,3 @@
-import TabPane from '../tabs/pane.vue';
+import TabPane from '../tabs/pane.vue'
 
-export default TabPane;
+export default TabPane
