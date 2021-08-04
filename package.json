@@ -34,7 +34,7 @@
     "unit": "cross-env BABEL_ENV=test karma start test/unit/karma.conf.js --single-run",
     "test": "npm run lint && npm run tslint && npm run unit",
     "prepare": "npm run dist",
-    "transform:src": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./src-vue2 -o ./src",
+    "transform:src": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./src-vue2 -o ./src-vue3",
     "transform:single": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./src-vue2/components/table/table-body.vue -o ./src/components/table/table-body.vue",
     "transform:examples": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./examples -o ./examples",
     "transform:pkgjson": "node ../gogocode/packages/gogocode-cli/index.js -t ../gogocode/packages/gogocode-plugin-vue/index.js -s ./package.json -o ./package.json",
