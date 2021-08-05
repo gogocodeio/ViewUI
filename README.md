@@ -1,3 +1,5 @@
+> 注意：该项目为 ViewUI 的 Vue3 迁移分支，旨在测试和完善 [GoGoCode](https://github.com/thx/gogocode) Vue 转换规则和内部项目测试，当下阶段请勿用于生产
+
 <p align="center">
     <a href="https://www.iviewui.com">
         <img width="200" src="https://file.iviewui.com/view-ui-logo-new.svg">
@@ -10,7 +12,6 @@ ViewUI
 </h1>
 
 > 该项目即为原先的 iView。iView 作者将在此仓库继续开发 iView 4.0 和后续版本，以及维护工作。新的组件库命名为 ViewUI，原仓库 iView 作者不再提交内容。
-> 
 > This project is the original iView. The iView author will continue to develop iView 4.0 and subsequent releases, as well as maintenance work, in this repository. The new component library is named ViewUI, and the iView author will no longer continue to submit content in the original repository.
 
 [![](https://img.shields.io/travis/iview/iview.svg?style=flat-square)](https://travis-ci.org/iview/iview)
